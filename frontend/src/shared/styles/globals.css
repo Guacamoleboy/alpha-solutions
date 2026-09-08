@@ -1,0 +1,51 @@
+/* -------------------------------------------------------------------------------------------------------- */
+
+/*  
+
+    Table of Content                                                                                    
+    ----------------
+
+    1.0 Application Specific
+        1.1 N/A
+        1.2 N/A
+
+    2.0 Layout Specific
+        2.1 N/A
+        2.2 N/A
+
+    3.0 N/A
+        3.1 N/A
+        3.2 N/A
+
+*/
+                                                                                                   
+/* -------------------------------------------------------------------------------------------------------- */
+
+:root {
+
+    /* Colors Defined here */
+
+    /* Application Specifics here */
+    --alpha-background: #b97070;
+    --aida-font: system-ui, sans-serif;
+
+
+}
+
+/* ----- APPLICATION SPECIFIC | #1.0 ---------------------------------------------------------------------- */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--alpha-background);
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    letter-spacing: -0.025em;
+    font-family: var(--alpha-font) !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
