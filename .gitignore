@@ -33,6 +33,7 @@ backend/.mvn/
 backend/target/
 backend/src/main/resources/http/
 backend/logs
+backend/.idea
 
 # === Editor caches ===
 .vscode/
