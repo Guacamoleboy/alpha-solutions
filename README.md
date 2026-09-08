@@ -38,6 +38,7 @@ This section is to showcase our folder structure. We are using a shared / featur
 
 ### Backend
 
+```text
 backend/
 └── src/ 
     |
@@ -60,9 +61,11 @@ backend/
                 ├── service/
                 ├── util/
                 └── Main.java
+```
 
 ### Frontend
 
+```text
 frontend/
 └── src/ 
     |
@@ -83,7 +86,7 @@ frontend/
             |   └── globals.css
             ├── data/
             └── components/
-
+```
 
 ---
 
