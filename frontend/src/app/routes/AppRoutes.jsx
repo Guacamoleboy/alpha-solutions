@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import MemberPage from '@/app/pages/MemberPage'
 import LoginPage from '@/app/pages/LoginPage'
+import MembershipPage from '@/app/pages/MembershipPage'
 import RegisterPage from '@/app/pages/LoginPage'
 
 import AppLayout from '@/app/layouts/AppLayout'
@@ -23,6 +24,7 @@ const AppRoutes = () => (
         {/* Member Portal */}
         <Route element={<AppLayout />}>
             <Route path="/member" element={<MemberPage />} />
+            <Route path="/membership" element={<MembershipPage />} />
         </Route>
 
     </Routes>

@@ -5,7 +5,7 @@
     padding: 2rem 1.25rem;
     display: flex;
     flex-direction: column;
-    color: #ffffff;
+    color: #FFF;
     flex-shrink: 0;
     border-right: 4px solid #6e6b6b;
 }
@@ -48,7 +48,7 @@
     display: flex;
     gap: 0.85rem;
     padding: 0.75rem 1rem;
-    color: #94a3b8;
+    color: #d7d9db;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
@@ -59,7 +59,7 @@
 .navLink:hover {
     box-shadow: 0 4px 1px rgba(0,0,0,0.4);
     background-color: #405169;
-    color: #ffffff;
+    color: #FFF;
 }
 
 .navIcon {
@@ -73,4 +73,14 @@
     transition: color 0.2s;
     line-height: 1;
     transform: translateY(2px);
+}
+
+.navLink.active {
+    background-color: #405169;
+    color: #FFF;
+    box-shadow: 0 4px 1px rgba(0,0,0,0.4);
+}
+
+.navLink.active .navIcon {
+    color: #FFF;
 }
