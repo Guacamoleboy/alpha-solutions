@@ -1,0 +1,74 @@
+.heroWrapper {
+    width: var(--alpha-component-width-100);
+    background-color: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--alpha-component-border-radius);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    box-shadow: var(--alpha-component-box-shadow);
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.heroTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #1b2433;
+    opacity: 0.8;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.premiumBadge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    background-color: #8baee2;
+    color: #FFF;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+}
+
+.heroMeta {
+    display: flex;
+    flex-direction: column;
+}
+
+.metaText {
+    font-size: 1rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.metaHighlight {
+    font-weight: 600;
+    color: #798eab;
+}
+
+.heroAction {
+    flex-shrink: 0;
+    width: auto;
+}
+
+.heroSubmitBtn {
+    width: auto !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    background-color: #5475ab !important;
+}
+
+.heroSubmitBtn:hover {
+    background-color: #405169 !important;
+}

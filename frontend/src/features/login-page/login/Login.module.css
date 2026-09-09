@@ -1,0 +1,33 @@
+.loginWrapper {
+    min-width: 800px;
+    border-radius: var(--alpha-component-box-radius);
+    position: relative;
+    z-index: 2;
+    background: var(--alpha-auth-background);
+    border: var(--alpha-auth-border);
+    padding: 2rem;
+    box-shadow: var(--alpha-auth-box-shadow);
+}
+
+.loginTitle {
+    opacity: var(--alpha-auth-title-opacity);
+    font-size: var(--alpha-auth-title-size);
+    margin-bottom: 0.25rem;
+}
+
+.loginText {
+    opacity: var(--alpha-auth-tex-opacity);
+    font-size: var(--alpha-auth-text-size);
+    margin-bottom: 0.5rem;
+}
+
+.loginSubmitBtn {
+    margin-top: 0.5rem;
+}
+
+.loginForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
