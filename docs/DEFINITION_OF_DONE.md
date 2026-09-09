@@ -9,4 +9,3 @@ An issue (US / TS) is considered Done when all applicable criteria below have be
 - Relevant documentation has been updated where necessary.
 - The changes have been merged into the correct branch.
 - The implementations has been reviewed through a Pull Request.
-- Khuong .. ? Tilføjelser ? Ændringer ?
