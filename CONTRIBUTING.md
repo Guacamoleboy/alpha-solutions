@@ -94,6 +94,7 @@ Should be clear, professional, short and no long essays. It's simply to establis
 ## 5. Pull Requests
 
 - Should have a title
+- Should always go to the development branch unless it's a main release
 - Should follow the pull_request_template provided during pull request
 - Should allow the other person to approve the pull request prior to codebase entry (Tine ?)
 - Pass all CI checks
