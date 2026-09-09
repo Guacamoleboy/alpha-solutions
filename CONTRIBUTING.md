@@ -31,6 +31,7 @@ This document is made to establish and define code standards for the project. Al
 
 ### Backend
 
+```text
 backend/
 └── src/ 
     |
@@ -46,6 +47,7 @@ backend/
                 ├── config/
                 ├── controller/
                 ├── dto/
+                ├── dao/
                 ├── entity/
                 ├── exception/
                 ├── route/
@@ -53,9 +55,11 @@ backend/
                 ├── service/
                 ├── util/
                 └── Main.java
+```
 
 ### Frontend
 
+```text
 frontend/
 └── src/ 
     |
@@ -76,6 +80,7 @@ frontend/
             |   └── globals.css
             ├── data/
             └── components/
+```
 
 ## 3. Branch rules
 
