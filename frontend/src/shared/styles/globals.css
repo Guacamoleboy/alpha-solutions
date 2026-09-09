@@ -1,6 +1,6 @@
 /* -------------------------------------------------------------------------------------------------------- */
 
-/*  
+/*
 
     Table of Content                                                                                    
     ----------------
@@ -10,12 +10,17 @@
         1.2 N/A
 
     2.0 Layout Specific
-        2.1 N/A
-        2.2 N/A
+        2.1 Auth Layout
+        2.2 App Layout
 
-    3.0 N/A
-        3.1 N/A
-        3.2 N/A
+    3.0 Page Specific
+        3.1 Login Page
+        3.2 Register Page
+        3.3 Member Page
+
+    4.0 Input Specific
+        4.1 Shared Input
+        4.2 Shared Submit
 
 */
                                                                                                    
@@ -24,22 +29,56 @@
 :root {
 
     /* Colors Defined here */
+    --alpha-red: #ff0000;
+    --alpha-blue: #001aff;
+    --alpha-orange: #ffbb00;
+    --alpha-green: #0dff00;
+    --alpha-black: #000;
+    --alpha-white: #FFF;
 
     /* Application Specifics here */
-    --alpha-background: #b97070;
-    --aida-font: system-ui, sans-serif;
+    --alpha-background: #fff;
+    --alpha-font: system-ui, sans-serif;
+    --alpha-component-box-radius: 0.25rem;
+    
+    /* Auth Specific */
+    --alpha-auth-background: rgba(255,255,255,0.8);
+    --alpha-auth-border: 4px solid #FFF;
+    --alpha-auth-box-shadow:  0 6px 1px rgba(0,0,0,0.6);
+    --alpha-auth-title-size: 2.5rem;
+    --alpha-auth-text-size: 1.25rem;
+    --alpha-auth-title-opacity: 0.8;
+    --alpha-auth-text-opacity: 0.9;
 
+    /* Component Specific */
+    --alpha-component-box-shadow: 0 5px 1px rgba(0,0,0,0.2);
+    --alpha-component-border-radius: 0.5rem;
+
+    /* LAYOUT CALCULATIONS */
+    --alpha-navbar-width: 256px;
+    --alpha-page-padding: 2rem;
+    --alpha-portal-content-width: calc(100vw - var(--alpha-navbar-width) - (var(--alpha-page-padding) * 2));
+    --alpha-component-width-100: var(--alpha-portal-content-width);
+    --alpha-component-width-75: calc(var(--alpha-portal-content-width) * 0.75);
+    --alpha-component-width-50: calc(var(--alpha-portal-content-width) * 0.5 - 1rem);
+    --alpha-component-width-25: calc(var(--alpha-portal-content-width) * 0.25);
 
 }
 
 /* ----- APPLICATION SPECIFIC | #1.0 ---------------------------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 html, body {
     margin: 0;
     padding: 0;
     background: var(--alpha-background);
     scrollbar-width: none;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
     -ms-overflow-style: none;
     letter-spacing: -0.025em;
     font-family: var(--alpha-font) !important;
@@ -48,4 +87,172 @@ html, body {
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
     display: none;
+}
+
+hr {
+    width: 100%;
+    margin: 2rem 0;
+    border: 0;      
+    height: 2px;
+    background: rgba(0,0,0,0.3);
+    opacity: 1;
+}
+
+
+/* ----- LAYOUT SPECIFIC | #2.0 --------------------------------------------------------------------------- */
+
+.authLayout, .appLayout {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ----- AUTH LAYOUT | #2.1 ------------------------------------------------------------------------------- */
+
+.authLayout {
+    height: 100dvh;
+    overflow: hidden;
+}
+
+/* ----- APP LAYOUT | #2.2 -------------------------------------------------------------------------------- */
+
+.appLayout {
+    min-height: 100dvh;
+    overflow: hidden;
+    flex-direction: row;
+}
+
+/* ----- PAGE SPECIFIC | #3.0 ----------------------------------------------------------------------------- */
+
+/* ----- LOGIN PAGE | #3.1 -------------------------------------------------------------------------------- */
+
+.loginPage {
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 5%;
+}
+
+/* ----- REGISTER PAGE | #3.2 ----------------------------------------------------------------------------- */
+
+.registerPage {
+
+}
+
+/* ----- MEMBER PAGE | #3.3 ------------------------------------------------------------------------------- */
+
+.memberPage {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* ----- INPUT SPECIFIC | #4.0 ---------------------------------------------------------------------------- */
+
+/* ----- SHARED INPUT | #4.1 ------------------------------------------------------------------------------ */
+
+.sharedInputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.sharedInputLabel {
+    opacity: 0.8;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: inherit;
+}
+
+.sharedInput {
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 0.25rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.sharedInput:focus {
+    border-color: #585757;
+}
+
+.sharedInput[data-size="s"] {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+.sharedInput[data-size="m"] {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+}
+
+.sharedInput[data-size="l"] {
+    padding: 0.8rem 1rem;
+    font-size: 1.1rem;
+}
+
+.sharedInput[data-size="xl"] {
+    padding: 1.1rem 1.3rem;
+    font-size: 1.25rem;
+}
+
+/* ----- SHARED SUBMIT | #4.2 ----------------------------------------------------------------------------- */
+
+.sharedSubmitButton {
+    width: 100%;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: #585757;
+    color: #ffffff;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.sharedSubmitButton:hover {
+    background-color: #383434;
+}
+
+.sharedSubmitButton:active {
+    transform: scale(0.98);
+}
+
+.sharedSubmitButton:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.4);
+}
+
+.sharedSubmitButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.sharedSubmitButton[data-size="s"] {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+.sharedSubmitButton[data-size="m"] {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+}
+
+.sharedSubmitButton[data-size="l"] {
+    padding: 0.8rem 1.6rem;
+    font-size: 1.1rem;
+}
+
+.sharedSubmitButton[data-size="xl"] {
+    padding: 1.1rem 2rem;
+    font-size: 1.25rem;
 }

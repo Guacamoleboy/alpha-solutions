@@ -1,0 +1,76 @@
+.navbarWrapper {
+    width: 256px;
+    height: 100dvh;
+    background-color: #5475ab;
+    padding: 2rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    flex-shrink: 0;
+    border-right: 4px solid #6e6b6b;
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+.logoTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: #e2e2e2;
+}
+
+.logoBadge {
+    font-size: 0.75rem;
+    background-color: #334155;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.navMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+}
+
+.navLink {
+    align-items: center;
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.75rem 1rem;
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.navLink:hover {
+    box-shadow: 0 4px 1px rgba(0,0,0,0.4);
+    background-color: #405169;
+    color: #ffffff;
+}
+
+.navIcon {
+    font-size: 1.1rem;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #dbdbdb;
+    transition: color 0.2s;
+    line-height: 1;
+    transform: translateY(2px);
+}
