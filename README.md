@@ -57,6 +57,7 @@ backend/
                 ├── entity/
                 ├── exception/
                 ├── route/
+                ├── dao/
                 ├── server/
                 ├── service/
                 ├── util/
