@@ -2,17 +2,17 @@
 // _______
 // src/features/member-page/navbar/Navbar.jsx
 
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styles from './Navbar.module.css'
 
 const Navbar = () => {
     
     // Placeholders for now. Changes as we go.
     const menuItems = [
-        { id: 1, label: 'Dashboard', icon: 'fa-briefcase', path: '/member' },
-        { id: 2, label: 'Banereservation', icon: 'fa-star', path: '/member/booking' },
-        { id: 3, label: 'Mit Medlemskab', icon: 'fa-plus', path: '/member/membership' },
-        { id: 4, label: 'Indstillinger', icon: 'fa-minus', path: '/member/settings' }
+        { id: 1, label: 'Forside', icon: 'fa-home', path: '/member' },
+        { id: 2, label: 'Banereservation', icon: 'fa-bookmark', path: '/member/booking' },
+        { id: 3, label: 'Mit Medlemskab', icon: 'fa-user', path: '/membership' },
+        { id: 4, label: 'Indstillinger', icon: 'fa-cog', path: '/member/settings' }
     ]
 
     return (
@@ -26,10 +26,20 @@ const Navbar = () => {
             {/* NAVIGATION */}
             <nav className={styles.navMenu}>
                 {menuItems.map((item) => (
-                    <Link key={item.id} to={item.path} className={styles.navLink}>
-                        <i className={`fa ${item.icon} ${styles.navIcon}`} aria-hidden="true"></i>
+                    <NavLink
+                        key={item.id}
+                        to={item.path}
+                        className={({ isActive }) =>
+                            `${styles.navLink} ${isActive ? styles.active : ''}`
+                        }
+                        end={item.path === '/member'}
+                    >
+                        <i
+                            className={`fa ${item.icon} ${styles.navIcon}`}
+                            aria-hidden="true"
+                        />
                         {item.label}
-                    </Link>
+                    </NavLink>
                 ))}
             </nav>
 
