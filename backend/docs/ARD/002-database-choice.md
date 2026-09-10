@@ -1,7 +1,7 @@
 # ADR-002: Database Choice
 
 ## Status
-Awaiting team approval
+Approved
 
 ## Context
 Our application needs a place to store its data. The database should work with Java and be able to store needed information

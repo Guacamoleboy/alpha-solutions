@@ -1,7 +1,7 @@
 # ADR-002: Frontend Styling
 
 ## Status
-Awaiting team approval
+Approved
 
 ## Context
 Our application needs an identity. In order to make it simple we need a simple and efficient way to handle mistakes and comply with equal visuals.

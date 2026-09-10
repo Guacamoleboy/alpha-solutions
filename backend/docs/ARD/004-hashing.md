@@ -1,7 +1,7 @@
 # ADR-004: Hashing
 
 ## Status
-Awaiting team approval
+Approved
 
 ## Context
 Our REST API needs to comply with EU regulation and data handling. This results in the need for Hashing.
