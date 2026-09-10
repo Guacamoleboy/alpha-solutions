@@ -1,7 +1,7 @@
 # ADR-003: Shared Featured Structure
 
 ## Status
-Awaiting team approval
+Approved
 
 ## Context
 Our application needs to be able to be maintainable. React is know for becoming Spaghetti quite fast.

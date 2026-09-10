@@ -1,7 +1,7 @@
 # ADR-001: Backend Architecture
 
 ## Status
-Awaiting team approval
+Approved
 
 ## Context
 The application requires a backend that can provide the needed functionality and implementation.

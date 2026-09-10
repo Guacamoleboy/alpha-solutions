@@ -1,7 +1,7 @@
 # ADR-003: Authentication
 
 ## Status
-Awaiting team approval
+Approved
 
 ## Context
 The application needs a validation mechanism so people can log in and access places they need to access.
