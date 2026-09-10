@@ -1,7 +1,7 @@
 # ADR-002: Frontend Architecture
 
 ## Status
-Awaiting team approval
+Approved
 
 ## Context
 The frontend application needs architecture that's easy to maintain and must be something we as a development team already have knowledge
