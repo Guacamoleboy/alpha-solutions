@@ -34,6 +34,7 @@ Closes issue #
 ### Checklist
 
 - [ ] I'm on the newest version of the Codebase
+- [ ] I've checked with LLM CLI that CONTRIBUTING.md is followed
 - [ ] I have not used AI generated code for my solution
 - [ ] I made sure it works prior to sending this Pull Request
 - [ ] Architecture follows the rest of the Codebase
