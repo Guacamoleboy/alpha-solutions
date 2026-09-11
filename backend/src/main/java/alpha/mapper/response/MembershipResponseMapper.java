@@ -17,8 +17,8 @@ public class MembershipResponseMapper {
     //      MembershipResponseDTO
     //
     // ____________________
-    // Tested: NO
-    // Last Tested: N/A
+    // Tested: YES
+    // Last Tested: 12/09-2026
 
     // _________________________________________________________________________________________________________________
 
