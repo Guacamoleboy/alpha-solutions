@@ -1,4 +1,4 @@
-package alpha.controller;
+package alpha.controller.impl;
 
 import alpha.service.internal.EntityManagerService;
 import alpha.util.ContextHelper;
