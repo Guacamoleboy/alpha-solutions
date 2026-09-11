@@ -1,6 +1,6 @@
 package alpha.config;
 
-import alpha.entity.*;
+//import alpha.entity.*;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateAnnotation {
