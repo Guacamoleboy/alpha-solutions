@@ -29,7 +29,6 @@ NOTE: This is an estimate and not the final solution.
   "date_of_birth": "1990-05-15",
   "gender": "gender",
   "membership_id": "membershipId",
-  "is_active": true,
   "last_played": "date"
 }
 ```
