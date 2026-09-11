@@ -47,7 +47,7 @@ const Login = () => {
 
                     {/* SUBMIT */}
                     <Submit
-                        label="Log ind på portalen" 
+                        label="Gå til portal" 
                         size="l"
                         className={styles.loginSubmitBtn}
                     />

@@ -6,11 +6,11 @@ import { MemberHero } from '@/features/member-page'
 
 const MemberPage = () => (
     
-    <main className="memberPage">
+    <div className="memberPage">
 
         <MemberHero />
 
-    </main>
+    </div>
 )
 
 export default MemberPage

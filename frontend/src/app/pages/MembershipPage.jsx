@@ -5,11 +5,11 @@
 import { Membership } from '@/features/member-page'
 
 const MembershipPage = () => (
-    <main className="membershipPage">
+    <div className="dashboardContent">
 
         <Membership />
         
-    </main>
+    </div>
 )
 
 export default MembershipPage

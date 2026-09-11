@@ -3,15 +3,14 @@
 // src/features/member-page/membership/Membership.jsx
 
 import styles from './Membership.module.css'
-import { useNavigate } from 'react-router-dom'
 import Submit from '@/shared/components/submit/Submit'
+import { updateMembership } from '@/api/endpoints/membership'
 
 const Membership = () => {
 
-    const navigate = useNavigate()
-
-    const handleMembershipClick = () => {
-        navigate('/membership/update')
+    const handleMembershipClick = async (e) => {
+        e.preventDefault()
+        await updateMembership();
     }
 
     const currentMembershipId = 2
