@@ -1,11 +1,19 @@
 package alpha;
 
+import alpha.server.Server;
+
 public class Main {
+
+    // Attributes
+    private static final Server server = new Server();
+
+    // _________________________________________________________________________________________________________________
 
     public static void main(String[] args) {
 
-        System.out.println("This should print if it works.. #Jonas");
-        
+        // Server start
+        server.start();
+
     }
 
 }

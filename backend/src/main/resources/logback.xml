@@ -1,0 +1,96 @@
+<!--
+
+    Handcrafted by: Guacamoleboy | Version 1.0.4
+    ________________________
+
+    Updated: 08/03-2026
+
+-->
+
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+
+    <!-- ====================================================================================================================================== -->
+    <!-- >>>>>>>>>>>>>>>  | GENERIC LOGGING |  <<<<<<<<<<<<<<< -->
+    <!-- ====================================================================================================================================== -->
+
+    <property name="MOODMAP_LOG_PATTERN" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n%ex"/>
+
+    <!-- ====================================================================================================================================== -->
+    <!-- >>>>>>>>>>>>>>>  | TERMINAL, IDE & CONSOLE |  <<<<<<<<<<<<<<< -->
+    <!-- ====================================================================================================================================== -->
+
+    <appender name="CONSOLE_LOGGER" class="ch.qos.logback.core.ConsoleAppender">
+
+        <!-- Formatting log events to text-->
+        <encoder>
+            <pattern>${MOODMAP_LOG_PATTERN}</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- ====================================================================================================================================== -->
+    <!-- >>>>>>>>>>>>>>>  | FILE LOGGING |  <<<<<<<<<<<<<<< -->
+    <!-- ====================================================================================================================================== -->
+
+    <appender name="FILE_LOGGER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- Active Logging File -->
+        <file>logs/moodmap.log</file>
+
+        <!-- Daily rotation og log files by date (compressed) -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/moodmap.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- Number of log files before deletion -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>${MOODMAP_LOG_PATTERN}</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- ====================================================================================================================================== -->
+    <!-- >>>>>>>>>>>>>>> | HIBERNATE | <<<<<<<<<<<<<<<<< -->
+    <!-- ====================================================================================================================================== -->
+
+    <!-- Hibernate makes A LOT of noise. Removing unwanted / not needed noise -->
+    <logger name="org.hibernate" level="WARN"/>
+    <!-- SQL Executed queries should be logged -->
+    <logger name="org.hibernate.SQL" level="INFO"/>
+    <!-- SQL Executed queries should be logged -->
+    <logger name="org.hibernate.orm.jdbc.bind" level="OFF"/>
+
+    <!-- ====================================================================================================================================== -->
+    <!-- >>>>>>>>>>>>>>> | ROOT |  <<<<<<<<<<<<<<<<< -->
+    <!-- ====================================================================================================================================== -->
+
+    <!-- Logger configuration for the application -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE_LOGGER"/>
+        <appender-ref ref="FILE_LOGGER"/>
+    </root>
+
+</configuration>
+
+<!--
+
+RERERENCE GUIDE
+_______________
+
+- Symbols [1]
+
+    - %d = timestamp
+    - %thread = thread name
+    - %msg = log message
+    - %-5level = log level
+    - %logger{20} = shortened logger name (20 char)
+    - %ex = exception stacktrace
+
+________________________________________________________
+
+- Date Formatting [2]
+
+    - yyyy-MM-dd = MM must be capitalized
+
+-->
