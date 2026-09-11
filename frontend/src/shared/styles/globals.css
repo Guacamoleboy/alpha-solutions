@@ -22,6 +22,14 @@
         4.1 Shared Input
         4.2 Shared Submit
 
+    5.0 Quick Navigation
+
+    6.0 Dashboard Layout
+        6.1 Dashboard Grid System
+
+    7.0 Shared Settings
+        7.1 Styling
+
 */
                                                                                                    
 /* -------------------------------------------------------------------------------------------------------- */
@@ -51,7 +59,7 @@
     --alpha-auth-text-opacity: 0.9;
 
     /* Component Specific */
-    --alpha-component-box-shadow: 0 5px 1px rgba(0,0,0,0.2);
+    --alpha-component-box-shadow: 0 5px 1px rgba(0,0,0,0.25);
     --alpha-component-border-radius: 0.5rem;
 
     /* LAYOUT CALCULATIONS */
@@ -172,6 +180,7 @@ hr {
 }
 
 .sharedInput {
+    height: 3rem;
     width: 100%;
     border: 2px solid #ccc;
     border-radius: 0.25rem;
@@ -185,21 +194,25 @@ hr {
 }
 
 .sharedInput[data-size="s"] {
+    height: 2.25rem;
     padding: 0.4rem 0.6rem;
     font-size: 0.85rem;
 }
 
 .sharedInput[data-size="m"] {
+    height: 2.5rem;
     padding: 0.6rem 0.8rem;
     font-size: 0.95rem;
 }
 
 .sharedInput[data-size="l"] {
+    height: 3rem;
     padding: 0.8rem 1rem;
     font-size: 1.1rem;
 }
 
 .sharedInput[data-size="xl"] {
+    height: 3.5rem;
     padding: 1.1rem 1.3rem;
     font-size: 1.25rem;
 }
@@ -207,16 +220,18 @@ hr {
 /* ----- SHARED SUBMIT | #4.2 ----------------------------------------------------------------------------- */
 
 .sharedSubmitButton {
+    height: 3rem;
     width: 100%;
     border: none;
     border-radius: 0.25rem;
-    background-color: #585757;
+    background-color: #787878;
     color: #ffffff;
     font-family: inherit;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     outline: none;
+    line-height: 1;
 }
 
 .sharedSubmitButton:hover {
@@ -238,21 +253,129 @@ hr {
 }
 
 .sharedSubmitButton[data-size="s"] {
+    height: 2.25rem;
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
 }
 
 .sharedSubmitButton[data-size="m"] {
+    height: 2.5rem;
     padding: 0.6rem 1.2rem;
     font-size: 0.95rem;
 }
 
 .sharedSubmitButton[data-size="l"] {
+    height: 3rem;
     padding: 0.8rem 1.6rem;
     font-size: 1.1rem;
 }
 
 .sharedSubmitButton[data-size="xl"] {
+    height: 3.5rem;
     padding: 1.1rem 2rem;
     font-size: 1.25rem;
 }
+
+/* ----- QUICK NAVIGATION | #5.0 -------------------------------------------------------------------------- */
+
+.quickNavigationWrapper {
+    width: var(--alpha-component-width-100);
+    background-color: #d3dfeb;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--alpha-component-border-radius);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: var(--alpha-component-box-shadow);
+    margin-bottom: 2rem;
+}
+
+.quickNavigationWrapper button {
+    width: auto;
+    padding: 0.75rem 1.25rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    color: #536174;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.quickNavigationWrapper button:hover {
+    box-shadow: 0 4px 1px rgba(0,0,0,0.5);
+    background-color: #89a7c8;
+    color: #FFF;
+}
+
+.quickNavigationWrapper button:focus-visible {
+    outline: 2px solid #8baee2;
+    outline-offset: 2px;
+}
+
+.quickNavigationWrapper button:active {
+    background-color: #89a7c8;
+    box-shadow: 0 4px 1px rgba(0,0,0,0.5);
+    color: #FFF;
+}
+
+/* ----- DASHBOARD LAYOUT | #6.0 -------------------------------------------------------------------------- */
+
+.dashboardWrapper {
+    flex: 1;
+    min-width: 0;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboardContent {
+    width: 100%;
+    padding: var(--alpha-page-padding);
+}
+
+/* ----- DASHBOARD GRID SYSTEM | #6.1 --------------------------------------------------------------------- */
+
+.dashboardEqual {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    align-items: start;
+}
+
+/* ----- SHARED SETTINGS | #7.0 --------------------------------------------------------------------------- */
+
+.settingsRow {
+    width: 100%;
+    background-color: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--alpha-component-border-radius);
+    padding: 2rem;
+    box-shadow: var(--alpha-component-box-shadow);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.settingsForm {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.settingsForm > * {
+    flex: 1 1 calc((100% - 3rem) / 4);
+    min-width: 0;
+}
+
+.settingsSubmit {
+    flex: 0 0 auto;
+    width: auto !important;
+}
+
+/* ----- SHARED SETTINGS STYLING | #7.1 ------------------------------------------------------------------- */
+

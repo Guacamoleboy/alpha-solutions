@@ -3,9 +3,9 @@
 // src/app/pages/RegisterPage.jsx
 
 const RegisterPage = () => (
-    <main className="registerPage">
+    <div className="registerPage">
 
-    </main>
+    </div>
 )
 
 export default RegisterPage

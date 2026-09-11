@@ -5,12 +5,12 @@
 import { LoginBackground, LoginCard } from '@/features/login-page'
 
 const LoginPage = () => (
-    <main className="loginPage">
+    <div className="loginPage">
 
         <LoginBackground />
         <LoginCard />
 
-    </main>
+    </div>
 )
 
 export default LoginPage
