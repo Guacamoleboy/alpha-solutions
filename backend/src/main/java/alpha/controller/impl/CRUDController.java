@@ -4,7 +4,6 @@ import alpha.service.internal.EntityManagerService;
 import alpha.util.ContextHelper;
 import alpha.util.TryCatchHelper;
 import io.javalin.http.Context;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -51,8 +50,11 @@ public abstract class CRUDController <T> {
 
     public void updateById(Context ctx) {
         TryCatchHelper.tryCatchHelper(ctx, () -> {
-            String idStr = ctx.pathParam("id");
-            T entity = ContextHelper.notNull(classService.getById(idStr), classSpecific.getSimpleName());
+            Integer id = Integer.valueOf(ctx.pathParam("id"));
+            T entity = ContextHelper.notNull(
+                    classService.getById(id),
+                    classSpecific.getSimpleName()
+            );
             T updated = classService.update(entity);
             return classMapper.apply(updated);
         }, classSpecific.getSimpleName() + " updated");
@@ -62,9 +64,11 @@ public abstract class CRUDController <T> {
 
     public void getById(Context ctx) {
         TryCatchHelper.tryCatchHelper(ctx, () -> {
-            String idStr = ctx.pathParam("id");
-            UUID uuid = UUID.fromString(idStr);
-            T entity = ContextHelper.notNull(classService.getById(uuid), classSpecific.getSimpleName());
+            Integer id = Integer.valueOf(ctx.pathParam("id"));
+            T entity = ContextHelper.notNull(
+                    classService.getById(id),
+                    classSpecific.getSimpleName()
+            );
             return classMapper.apply(entity);
         }, classSpecific.getSimpleName() + " retrieved");
     }
@@ -81,9 +85,11 @@ public abstract class CRUDController <T> {
 
     public void deleteById(Context ctx) {
         TryCatchHelper.tryCatchHelper(ctx, () -> {
-            String idStr = ctx.pathParam("id");
-            UUID uuid = UUID.fromString(idStr);
-            T entity = ContextHelper.notNull(classService.deleteById(uuid), classSpecific.getSimpleName());
+            Integer id = Integer.valueOf(ctx.pathParam("id"));
+            T entity = ContextHelper.notNull(
+                    classService.deleteById(id),
+                    classSpecific.getSimpleName()
+            );
             return classMapper.apply(entity);
         }, classSpecific.getSimpleName() + " deleted");
     }

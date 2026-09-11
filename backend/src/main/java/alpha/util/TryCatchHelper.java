@@ -19,20 +19,31 @@ public class TryCatchHelper {
     //      - Runnable only executes. Doesn't return anything.
 
     public static <T> void tryCatchHelper(Context ctx, Supplier<T> supplier, String successMessage) {
+        try {
 
-        // Supplier
-        T result = supplier.get();
+            T result = supplier.get();
 
-        if (result == null) {
-            ctx.status(200).json(Map.of(
-                "status", "success",
-                "message", successMessage
-            ));
-        } else {
-            ctx.status(200).json(Map.of(
-                "status", "success",
-                "message", successMessage,
-                "data", result
+            if (result == null) {
+                ctx.status(200).json(Map.of(
+                        "status", "success",
+                        "message", successMessage
+                ));
+            } else {
+                ctx.status(200).json(Map.of(
+                        "status", "success",
+                        "message", successMessage,
+                        "data", result
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            ctx.status(500).json(Map.of(
+                    "status", "error",
+                    "message", e.getMessage() != null
+                            ? e.getMessage()
+                            : "Internal Server Error",
+                    "code", 500
             ));
         }
 

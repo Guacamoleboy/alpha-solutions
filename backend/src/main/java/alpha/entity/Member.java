@@ -20,7 +20,7 @@ public class Member {
     //
     //     PgAdmin
     //     _______
-    //     id | first_name | last_name | email | phone | date_of_birth | gender | membership_id | last_played
+    //     id | first_name | last_name | password_hashed | email | phone | date_of_birth | gender | membership_id | last_played
     //
     // __________________
     // Tested: NO
@@ -43,6 +43,9 @@ public class Member {
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
+
+    @Column(name = "password_hashed", nullable = false)
+    private String passwordHashed;
 
     @Column(name = "phone")
     private String phone;
@@ -70,6 +73,7 @@ public class Member {
         public static final String FIRST_NAME = "firstName";
         public static final String LAST_NAME = "lastName";
         public static final String EMAIL = "email";
+        public static final String PASSWORD_HASHED = "passwordHashed";
         public static final String PHONE = "phone";
         public static final String DATE_OF_BIRTH = "dateOfBirth";
         public static final String GENDER = "gender";
