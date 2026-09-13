@@ -1,5 +1,9 @@
 package alpha.route;
 
+import alpha.route.health.HealthRouting;
+import alpha.route.impl.MemberRouting;
+import alpha.route.impl.MembershipRouting;
+import alpha.route.status.StatusRouting;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -12,11 +16,17 @@ public class Routes {
     public static EndpointGroup registerRoutes(EntityManagerFactory entityManagerFactory) {
 
         // Routings
-        // AuthRouting authRouting = new AuthRouting(entityManagerFactory);
+        StatusRouting statusRouting = new StatusRouting(entityManagerFactory);
+        HealthRouting healthRouting = new HealthRouting(entityManagerFactory);
+        MemberRouting memberRouting = new MemberRouting(entityManagerFactory);
+        MembershipRouting membershipRouting = new MembershipRouting(entityManagerFactory);
 
         // EndpointGroup Return to server
         return () -> {
-            // authRouting.routes().addEndpoints();
+            statusRouting.routes().addEndpoints();
+            healthRouting.routes().addEndpoints();
+            memberRouting.routes().addEndpoints();
+            membershipRouting.routes().addEndpoints();
         };
 
     }
