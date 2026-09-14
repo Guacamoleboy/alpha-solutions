@@ -39,6 +39,8 @@ public class MemberResponseMapper {
         }
 
         dto.setLastPlayed(member.getLastPlayed());
+        dto.setCreatedAt(member.getCreatedAt());
+        dto.setLastLogin(member.getLastLogin());
 
         return dto;
     }

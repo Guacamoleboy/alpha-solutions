@@ -1,5 +1,6 @@
 package alpha.route;
 
+import alpha.route.auth.AuthRouting;
 import alpha.route.health.HealthRouting;
 import alpha.route.impl.MemberRouting;
 import alpha.route.impl.MembershipRouting;
@@ -20,6 +21,7 @@ public class Routes {
         HealthRouting healthRouting = new HealthRouting(entityManagerFactory);
         MemberRouting memberRouting = new MemberRouting(entityManagerFactory);
         MembershipRouting membershipRouting = new MembershipRouting(entityManagerFactory);
+        AuthRouting authRouting = new AuthRouting(entityManagerFactory);
 
         // EndpointGroup Return to server
         return () -> {
@@ -27,6 +29,7 @@ public class Routes {
             healthRouting.routes().addEndpoints();
             memberRouting.routes().addEndpoints();
             membershipRouting.routes().addEndpoints();
+            authRouting.routes().addEndpoints();
         };
 
     }
