@@ -5,20 +5,24 @@
 import styles from './Membership.module.css'
 import Submit from '@/shared/components/submit/Submit'
 import { updateMembership } from '@/api/endpoints/membership'
+import useMember from '@/shared/hooks/useMember'
 
 const Membership = () => {
+
+    const { member } = useMember()
 
     const handleMembershipClick = async (e) => {
         e.preventDefault()
         await updateMembership();
     }
 
-    const currentMembershipId = 2
+    // Users current membership
+    const currentMembershipId = member?.membership_id;
 
     // Placeholders for now. Changes to API data or /data/ later
     const membershipData = [
         {
-            id: 0,
+            id: 1,
             label: 'Free',
             path: '/membership/update',
             price: 0,
@@ -29,7 +33,7 @@ const Membership = () => {
             ]
         },
         {
-            id: 1,
+            id: 2,
             label: 'Basic',
             path: '/membership/update',
             price: 99,
@@ -41,7 +45,7 @@ const Membership = () => {
             ]
         },
         {
-            id: 2,
+            id: 3,
             label: 'Premium',
             path: '/membership/update',
             price: 199,
@@ -55,7 +59,7 @@ const Membership = () => {
             ]
         },
         {
-            id: 3,
+            id: 4,
             label: 'Super Premium',
             path: '/member/membership',
             price: 299,

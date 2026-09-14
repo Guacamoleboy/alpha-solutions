@@ -24,6 +24,7 @@ public class MemberResponseDTO {
     //          "date_of_birth": "1990-05-15",
     //          "gender": "gender",
     //          "membership_id": 1,
+    //          "membership_name": "basic",
     //          "last_played": "2026-09-11",
     //          "last_login": "2026-09-14T15:42:31",
     //          "created_at": "2026-09-14T15:42:31"
@@ -60,6 +61,9 @@ public class MemberResponseDTO {
 
     @JsonProperty("membership_id")
     private Integer membershipId;
+
+    @JsonProperty("membership_name")
+    private String membershipName;
 
     @JsonProperty("last_played")
     private LocalDate lastPlayed;

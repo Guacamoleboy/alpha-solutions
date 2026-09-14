@@ -5,43 +5,44 @@
 import InputText from '@/shared/components/input-text/InputText'
 import Submit from '@/shared/components/submit/Submit'
 import styles from './Update.module.css'
-import { updateMember } from '@/api/endpoints/member'
+import { useUpdate } from './Update.hooks'
 
 // Change with API data later
 const inputFields = [
     {
-        id: 'name',
+        id: 'first_name',
         label: 'Navn',
-        placeholder: 'Klaus',
+        type: 'text'
     },
     {
-        id: 'lastname',
+        id: 'last_name',
         label: 'Efternavn',
-        placeholder: 'Klausen',
+        type: 'text'
     },
     {
-        id: 'birthdate',
+        id: 'date_of_birth',
         label: 'Fødselsdato',
-        placeholder: '15 Juni 1998',
+        type: 'date'
     },
     {
         id: 'phone',
         label: 'Telefon',
-        placeholder: '+45 60 60 60 60',
+        type: 'text'
     },
     {
         id: 'email',
         label: 'Email',
-        placeholder: 'klaus@klaus.dk',
+        type: 'email'
     }
 ]
 
 const Update = ({ targetId }) => {
 
-    const handleUpdate = async (e) => {
-        e.preventDefault()
-        await updateMember();
-    }
+    const {
+        member,
+        registerField,
+        handleUpdate,
+    } = useUpdate()
 
     return (
         <section id={targetId} className={`settingsRow ${styles.updateRow}`} >
@@ -52,8 +53,10 @@ const Update = ({ targetId }) => {
                 {inputFields.map((field) => (
                     <InputText
                         key={field.id}
+                        {...registerField(field.id)}
                         label={field.label}
-                        placeholder={field.placeholder}
+                        placeholder={member?.[field.id] || ''}
+                        type={field.type}
                         size="l"
                     />
                 ))}

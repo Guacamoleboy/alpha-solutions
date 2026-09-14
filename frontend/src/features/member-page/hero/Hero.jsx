@@ -5,11 +5,14 @@
 import { useNavigate } from 'react-router-dom'
 import Submit from '@/shared/components/submit/Submit'
 import styles from './Hero.module.css'
+import useMember from '@/shared/hooks/useMember'
 
 const Hero = () => {
 
     const navigate = useNavigate()
+    const { member } = useMember()
 
+    // Hardcoded for now.
     const handleBookingClick = () => {
         navigate('/member/booking')
     }
@@ -20,14 +23,17 @@ const Hero = () => {
 
                 {/* MEMBER META */}
                 <h1 className={styles.heroTitle}>
-                    Velkommen tilbage, navn.
-                    <span className={styles.premiumBadge}>Premium medlem</span>
+                    Velkommen tilbage, {member?.first_name}.
+                    <span className={styles.premiumBadge}>{member?.membership_name} medlem</span>
                 </h1>
                 
                 {/* MEMBER DATA */}
                 <div className={styles.heroMeta}>
                     <p className={styles.metaText}>
-                        Sidst spillet Pickleball: <span className={styles.metaHighlight}>09-09/2026</span>
+                        Sidst spillet Pickleball:{' '}
+                        <span className={styles.metaHighlight}>
+                            {member?.last_played || 'Aldrig'}
+                        </span>
                     </p>
                 </div>
 

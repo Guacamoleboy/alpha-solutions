@@ -36,6 +36,7 @@ public class MemberResponseMapper {
 
         if (member.getMembership() != null) {
             dto.setMembershipId(member.getMembership().getId());
+            dto.setMembershipName(member.getMembership().getName());
         }
 
         dto.setLastPlayed(member.getLastPlayed());
