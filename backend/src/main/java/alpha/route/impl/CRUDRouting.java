@@ -40,7 +40,7 @@ public abstract class CRUDRouting<T> implements IRoute {
 
                 // -------------------------------------------------------------------
 
-                put("/{id}", this.controller::updateById);
+                put("/{id}", this.controller::update);
 
                 // -------------------------------------------------------------------
 
