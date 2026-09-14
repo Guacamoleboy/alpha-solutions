@@ -1,7 +1,7 @@
-# You're about to create a Pull Request to Alpha Solutions Scrum Project
+# This is a Pull Request template used for Alpha Solutions Scrum Project.
 
-Please make sure you follow the CONTRIBUTION.md or the pull request is invalid. It is up to the entire development team to make sure
-the contribution requirements are met.
+> [!NOTE]
+> Please make sure you follow the CONTRIBUTION.md or the pull request is invalid. It is up to the entire development team to make sure the contribution requirements are met.
 
 ---
 
@@ -13,9 +13,7 @@ the contribution requirements are met.
 
 ### Related Issue(s)
 
-<!-- You should post the issue # or the releated issues to the issue # -->
-
-Closes issue #
+Closes issue
 
 #
 #

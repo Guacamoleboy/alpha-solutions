@@ -39,7 +39,13 @@ backend/
         |
         ├── resources/
         |       |
+        |       ├── config.properties
+        |       ├── .env
+        |       ├── .env.development
+        |       ├── .env.test
+        |       ├── logback.xml
         |       └── http/
+        |
         └── java/
             |
             └── alpha/
@@ -47,10 +53,11 @@ backend/
                 ├── config/
                 ├── controller/
                 ├── dto/
-                ├── dao/
                 ├── entity/
                 ├── exception/
                 ├── route/
+                ├── dao/
+                ├── mapper/
                 ├── server/
                 ├── service/
                 ├── util/
@@ -63,6 +70,12 @@ backend/
 frontend/
 └── src/ 
     |
+    |
+    ├── api/
+    |   ├── endpoints/
+    |   ├── client.js
+    |   ├── crud.js
+    |
     ├── app/
     |   ├── pages/
     |   ├── routes/
@@ -70,16 +83,22 @@ frontend/
     |   ├── App.jsx
     |   └── main.jsx
     |
-    ├── feature/   
-    |       └── component/
-    |               ├── Component.jsx
-    |               ├── Component.hooks.js (If needed)
-    |               └── Component.module.css
+    ├── features/
+    |       └── home-page/
+    |               └── component-name/
+    |                       ├── ComponentName.jsx
+    |                       ├── ComponentName.hooks.js (If needed)
+    |                       └── ComponentName.module.css
+    |
     └── shared/
-            ├── style/
+            ├── styles/
             |   └── globals.css
             ├── data/
             └── components/
+                    └── component-name/
+                            ├── ComponentName.jsx
+                            ├── ComponentName.hooks.js (If needed)
+                            └── ComponentName.module.css
 ```
 
 ## 3. Branch rules
