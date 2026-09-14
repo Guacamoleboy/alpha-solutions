@@ -5,13 +5,13 @@
 import InputPassword from '@/shared/components/input-password/InputPassword'
 import Submit from '@/shared/components/submit/Submit'
 import styles from './Password.module.css'
-import { updateMemberPassword } from '@/api/endpoints/member'
+import { updateMember } from '@/api/endpoints/member'
 
 const Password = ({ targetId }) => {
 
     const handlePassword = async (e) => {
         e.preventDefault()
-        await updateMemberPassword();
+        await updateMember();
     }
 
     return (

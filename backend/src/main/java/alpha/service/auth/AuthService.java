@@ -1,12 +1,14 @@
 package alpha.service.auth;
 
 import alpha.dao.impl.MemberDAO;
+import alpha.dao.impl.MembershipDAO;
 import alpha.dto.request.LoginRequestDTO;
 import alpha.dto.request.MemberRequestDTO;
 import alpha.dto.request.RefreshTokenRequestDTO;
 import alpha.dto.response.AuthResponseDTO;
 import alpha.dto.response.MemberResponseDTO;
 import alpha.entity.Member;
+import alpha.entity.Membership;
 import alpha.exception.ApiException;
 import alpha.mapper.request.MemberRequestMapper;
 import alpha.mapper.response.MemberResponseMapper;
@@ -20,11 +22,13 @@ public class AuthService {
 
     // Attributes
     private final MemberDAO memberDAO;
+    private final MembershipDAO membershipDAO;
 
     // _________________________________________________________________________________________________________________
 
     public AuthService(EntityManager em) {
         this.memberDAO = new MemberDAO(em);
+        this.membershipDAO = new MembershipDAO(em);
     }
 
     // _________________________________________________________________________________________________________________
@@ -54,6 +58,14 @@ public class AuthService {
         }
         Member member = MemberRequestMapper.toEntity(memberRequestDTO);
         member.setPasswordHashed(BCryptHash.hash(memberRequestDTO.getPassword()));
+        Membership free = membershipDAO.findEntityByColumn(
+                "Free",
+                Membership.Fields.NAME
+        );
+        if (free == null) {
+            throw new ApiException(500, "Free membership not found");
+        }
+        member.setMembership(free);
         memberDAO.create(member);
         return MemberResponseMapper.toDTO(member);
     }
