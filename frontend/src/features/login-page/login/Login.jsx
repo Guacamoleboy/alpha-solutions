@@ -12,7 +12,6 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    // Empty for now. No logic just yet.
     const handleSubmit = (e) => {
         e.preventDefault()
         navigate('/member')
@@ -45,12 +44,26 @@ const Login = () => {
                         size="l"
                     />
 
-                    {/* SUBMIT */}
-                    <Submit
-                        label="Gå til portal" 
-                        size="l"
-                        className={styles.loginSubmitBtn}
-                    />
+                    <div className={styles.loginActions}>
+
+                        {/* REGISTER */}
+                        <Submit
+                            type="button"
+                            label="Opret bruger"
+                            size="l"
+                            className={styles.loginActionBtnRegister}
+                            onClick={() => navigate('/register')}
+                        />
+
+                        {/* REGISTER */}
+                        <Submit
+                            type="submit"
+                            label="Gå til portal"
+                            size="l"
+                            className={styles.loginActionBtn}
+                        />
+
+                    </div>
 
                 </form>
 

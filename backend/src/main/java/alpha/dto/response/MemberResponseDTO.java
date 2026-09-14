@@ -3,6 +3,7 @@ package alpha.dto.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Data
@@ -23,18 +24,18 @@ public class MemberResponseDTO {
     //          "date_of_birth": "1990-05-15",
     //          "gender": "gender",
     //          "membership_id": 1,
-    //          "last_played": "2026-09-11"
+    //          "last_played": "2026-09-11",
+    //          "last_login": "2026-09-14T15:42:31",
+    //          "created_at": "2026-09-14T15:42:31"
     //      }
     //
     // ____________________
     // Tested: YES
-    // Last Tested: 12/09-2026
+    // Last Tested: 14/09-2026
 
     // _________________________________________________________________________________________________________________
 
-
     // _________________________________________________________________________________________________________________
-    // JSON Fields
 
     @JsonProperty("id")
     private Integer id;
@@ -62,5 +63,11 @@ public class MemberResponseDTO {
 
     @JsonProperty("last_played")
     private LocalDate lastPlayed;
+
+    @JsonProperty("created_at")
+    private Timestamp createdAt;
+
+    @JsonProperty("last_login")
+    private Timestamp lastLogin;
 
 }

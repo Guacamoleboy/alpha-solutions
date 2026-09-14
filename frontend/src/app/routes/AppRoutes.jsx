@@ -7,7 +7,7 @@ import { Routes, Route } from 'react-router-dom'
 import MemberPage from '@/app/pages/MemberPage'
 import LoginPage from '@/app/pages/LoginPage'
 import MembershipPage from '@/app/pages/MembershipPage'
-import RegisterPage from '@/app/pages/LoginPage'
+import RegisterPage from '@/app/pages/RegisterPage'
 import MemberSettingsPage from '@/app/pages/MemberSettingsPage'
 
 import AppLayout from '@/app/layouts/AppLayout'

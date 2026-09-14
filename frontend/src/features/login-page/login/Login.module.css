@@ -31,3 +31,18 @@
     flex-direction: column;
     gap: 1rem;
 }
+
+.loginActions {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.loginActionBtn, .loginActionBtnRegister {
+    flex: 1;
+}
+
+.loginActionBtn {
+    background-color: #4c5f7c;
+}
