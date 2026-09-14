@@ -2,40 +2,22 @@
 // _______
 // src/features/register-page/register/Register.jsx
 
-import { useNavigate } from 'react-router-dom'
+import { useRegister } from './Register.hooks'
 import InputText from '@/shared/components/input-text/InputText'
 import InputPassword from '@/shared/components/input-password/InputPassword'
 import Submit from '@/shared/components/submit/Submit'
 import styles from './Register.module.css'
+import Select from '@/shared/components/select/Select'
 
 const Register = () => {
 
-    const navigate = useNavigate()
-
-    // No logic just yet.
-    const handleSubmit = (e) => {
-        e.preventDefault()
-    }
-
-    // To limit redundant code just now.
-    const inputRows = [
-        [
-            ['text', 'Fornavn', 'Indtast fornavn...'],
-            ['text', 'Efternavn', 'Indtast efternavn...'],
-        ],
-        [
-            ['password', 'Adgangskode', 'Indtast adgangskode...'],
-            ['password', 'Adgangskode igen', 'Indtast adgangskode igen...'],
-        ],
-        [
-            ['text', 'Telefon', 'Indtast telefonnummer...'],
-            ['text', 'Fødselsdato', 'MM-DD-YYYY'],
-        ],
-        [
-            ['text', 'E-mail', 'Indtast e-mail...'],
-            ['text', 'Køn', 'Indtast køn...'],
-        ],
-    ]
+    {/* REGISTER SETUP */}
+    const {
+        navigate,
+        registerField,
+        handleSubmit,
+        inputRows,
+    } = useRegister()
 
     return (
         <>
@@ -43,38 +25,64 @@ const Register = () => {
 
                 {/* META */}
                 <h1 className={styles.registerTitle}>Opret bruger</h1>
-                <p className={styles.registerText}>Indtast venligst dine informationer for at oprette en bruger.</p>
+                <p className={styles.registerText}>
+                    Indtast venligst dine informationer for at oprette en bruger.
+                </p>
 
                 {/* LINE */}
                 <hr />
 
+                {/* FORM */}
                 <form onSubmit={handleSubmit} className={styles.registerForm}>
 
+                    {/* MAP OF INPUTS */}
                     {inputRows.map((row, rowIndex) => (
                         <div className={styles.registerRow} key={rowIndex}>
-
-                            {row.map(([type, label, placeholder], inputIndex) => {
+                            
+                            {/* SPECIFICATIONS OF EACH INPUT */}
+                            {row.map(([type, name, label, placeholder]) => {
+                                if (type === 'select') {
+                                    return (
+                                        <Select
+                                            key={name}
+                                            {...registerField(name)}
+                                            label={label}
+                                            options={[
+                                                { value: 'male', label: 'Mand' },
+                                                { value: 'female', label: 'Kvinde' },
+                                                { value: 'none', label: 'Ønsker ikke at oplyse' },
+                                            ]}
+                                            required
+                                            size="l"
+                                        />
+                                    )
+                                }
+                                
+                                {/* ARTINARY CHECK */}
                                 const Input = type === 'password'
                                     ? InputPassword
                                     : InputText
-
+                                
+                                {/* FINAL */}
                                 return (
                                     <Input
-                                        key={inputIndex}
+                                        key={name}
+                                        type={type}
+                                        {...registerField(name)}
                                         label={label}
                                         placeholder={placeholder}
+                                        required
                                         size="l"
                                     />
                                 )
                             })}
-
                         </div>
                     ))}
 
-                    {/* ACTIONS */}
+                    {/* SUBMIT ROW */}
                     <div className={styles.registerActions}>
 
-                        {/* LOGIN */}
+                        {/* TO LOGIN */}
                         <Submit
                             type="button"
                             label="Gå tilbage"
@@ -83,7 +91,7 @@ const Register = () => {
                             onClick={() => navigate('/')}
                         />
 
-                        {/* REGISTER */}
+                        {/* CREATE ACCOUNT */}
                         <Submit
                             label="Opret bruger"
                             size="l"
@@ -91,9 +99,7 @@ const Register = () => {
                         />
 
                     </div>
-
                 </form>
-
             </div>
         </>
     )

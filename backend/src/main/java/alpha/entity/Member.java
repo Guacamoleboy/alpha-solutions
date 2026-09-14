@@ -48,7 +48,7 @@ public class Member {
     @Column(name = "password_hashed", nullable = false)
     private String passwordHashed;
 
-    @Column(name = "phone")
+    @Column(name = "phone", unique = true)
     private String phone;
 
     @Column(name = "date_of_birth")

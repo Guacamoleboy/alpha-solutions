@@ -2,7 +2,7 @@
 // _______
 // src/features/login-page/login/Login.jsx
 
-import { useNavigate } from 'react-router-dom'
+import { useLogin } from './Login.hooks'
 import InputText from '@/shared/components/input-text/InputText'
 import InputPassword from '@/shared/components/input-password/InputPassword'
 import Submit from '@/shared/components/submit/Submit'
@@ -10,12 +10,11 @@ import styles from './Login.module.css'
 
 const Login = () => {
 
-    const navigate = useNavigate()
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        navigate('/member')
-    }
+    const {
+        navigate,
+        registerField,
+        handleSubmit,
+    } = useLogin()
 
     return (
         <>
@@ -32,15 +31,20 @@ const Login = () => {
 
                     {/* TEXT INPUT */}
                     <InputText
-                        label="Brugernavn / E-mail"
-                        placeholder="Indtast brugernavn eller e-mail..." 
+                        {...registerField('email')}
+                        label="E-mail"
+                        placeholder="Indtast e-mail..."
+                        type="email"
+                        required
                         size="l"
                     />
                 
                     {/* PASSWORD INPUT */}
                     <InputPassword
+                        {...registerField('password')}
                         label="Adgangskode"
-                        placeholder="Indtast adgangskode..." 
+                        placeholder="Indtast adgangskode..."
+                        required
                         size="l"
                     />
 
@@ -55,7 +59,7 @@ const Login = () => {
                             onClick={() => navigate('/register')}
                         />
 
-                        {/* REGISTER */}
+                        {/* LOGIN */}
                         <Submit
                             type="submit"
                             label="Gå til portal"

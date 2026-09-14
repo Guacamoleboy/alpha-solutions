@@ -5,14 +5,14 @@
 import InputText from '@/shared/components/input-text/InputText'
 import Submit from '@/shared/components/submit/Submit'
 import styles from './Delete.module.css'
-import { deleteMember } from '@/api/endpoints/member'
+import { useDelete } from './Delete.hooks'
 
 const Delete = ({ targetId }) => {
 
-    const handleDelete = async (e) => {
-        e.preventDefault()
-        await deleteMember();
-    }
+    const {
+        registerField,
+        handleDelete,
+    } = useDelete()
 
     return (
         <section id={targetId} className={`settingsRow ${styles.deleteRow}`}>
@@ -21,10 +21,12 @@ const Delete = ({ targetId }) => {
 
                 {/* TEXT INPUT */}
                 <InputText
+                    {...registerField('confirmation')}
                     label="Slet din bruger"
-                    placeholder="Skriv &quot;JEG ER SIKKER&quot; for at slette din bruger"
+                    placeholder='Skriv "JEG ER SIKKER" for at slette din bruger'
                     size="l"
                     className={styles.deleteInput}
+                    required
                 />
 
                 {/* SUBMIT */}
