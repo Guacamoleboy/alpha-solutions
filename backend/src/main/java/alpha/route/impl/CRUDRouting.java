@@ -44,7 +44,7 @@ public abstract class CRUDRouting<T> implements IRoute {
 
                 // -------------------------------------------------------------------
 
-                delete("/{id}", this.controller::deleteById);
+                delete("/all/safe", this.controller::deleteAllSafe);
 
                 // -------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ public abstract class CRUDRouting<T> implements IRoute {
 
                 // -------------------------------------------------------------------
 
-                delete("/all/safe", this.controller::deleteAllSafe);
+                delete("/{id}", this.controller::deleteById);
 
             });
 
