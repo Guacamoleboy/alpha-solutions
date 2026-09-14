@@ -1,0 +1,18 @@
+.deleteSubmit:hover {
+    background-color: #7b7b7b;
+    color: #FFF;
+}
+
+.deleteSubmit {
+    background-color: #FFF;
+    color: #1f1e1e;
+}
+
+.deleteRow {
+    background-color: #9a1f1f;
+    color: #FFF;
+}
+
+.deleteInput:focus {
+   border-color: #f7f7f7;
+}

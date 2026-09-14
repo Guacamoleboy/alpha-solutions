@@ -3,7 +3,6 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-    padding: 2rem;
 }
 
 .membershipCard {
@@ -12,7 +11,7 @@
     border: 2px solid #ddd;
     border-radius: var(--alpha-component-border-radius);
     background: rgba(232, 232, 232, 0.5);
-    box-shadow: 0 4px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--alpha-component-box-shadow);
     display: flex;
     flex-direction: column;
     transition: all 0.2s;
@@ -51,5 +50,6 @@
 }
 
 .current {
-    border-color: #575a5f;
+    border: 2px solid #86898d;
+    box-shadow: 0 5px 1px rgba(0,0,0,0.5) !important;
 }

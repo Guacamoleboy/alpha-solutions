@@ -2,10 +2,15 @@
 // _______
 // src/app/pages/RegisterPage.jsx
 
-const RegisterPage = () => (
-    <main className="registerPage">
+import { RegisterBackground, RegisterCard } from '@/features/register-page'
 
-    </main>
+const RegisterPage = () => (
+    <div className="registerPage">
+
+        <RegisterBackground />
+        <RegisterCard />
+
+    </div>
 )
 
 export default RegisterPage

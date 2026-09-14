@@ -2,7 +2,7 @@
 // _______
 // src/features/login-page/login/Login.jsx
 
-import { useNavigate } from 'react-router-dom'
+import { useLogin } from './Login.hooks'
 import InputText from '@/shared/components/input-text/InputText'
 import InputPassword from '@/shared/components/input-password/InputPassword'
 import Submit from '@/shared/components/submit/Submit'
@@ -10,13 +10,11 @@ import styles from './Login.module.css'
 
 const Login = () => {
 
-    const navigate = useNavigate()
-
-    // Empty for now. No logic just yet.
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        navigate('/member')
-    }
+    const {
+        navigate,
+        registerField,
+        handleSubmit,
+    } = useLogin()
 
     return (
         <>
@@ -33,24 +31,43 @@ const Login = () => {
 
                     {/* TEXT INPUT */}
                     <InputText
-                        label="Brugernavn / E-mail"
-                        placeholder="Indtast brugernavn eller e-mail..." 
+                        {...registerField('email')}
+                        label="E-mail"
+                        placeholder="Indtast e-mail..."
+                        type="email"
+                        required
                         size="l"
                     />
                 
                     {/* PASSWORD INPUT */}
                     <InputPassword
+                        {...registerField('password')}
                         label="Adgangskode"
-                        placeholder="Indtast adgangskode..." 
+                        placeholder="Indtast adgangskode..."
+                        required
                         size="l"
                     />
 
-                    {/* SUBMIT */}
-                    <Submit
-                        label="Log ind på portalen" 
-                        size="l"
-                        className={styles.loginSubmitBtn}
-                    />
+                    <div className={styles.loginActions}>
+
+                        {/* REGISTER */}
+                        <Submit
+                            type="button"
+                            label="Opret bruger"
+                            size="l"
+                            className={styles.loginActionBtnRegister}
+                            onClick={() => navigate('/register')}
+                        />
+
+                        {/* LOGIN */}
+                        <Submit
+                            type="submit"
+                            label="Gå til portal"
+                            size="l"
+                            className={styles.loginActionBtn}
+                        />
+
+                    </div>
 
                 </form>
 
