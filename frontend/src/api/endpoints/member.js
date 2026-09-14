@@ -2,40 +2,61 @@
 // _______
 // src/api/endpoints/member.js
 
-import { client } from '@/api/client'
+// Explained:
+//
+// This file serves as a facade. Instead of using crud.js this acts as the facade that tells how we want an entity to use the crud.js file.
+//      - crud.js - "How do I make CRUD HTTP Requests?"
+//      - client.js - "How do I make & setup HTTP connectivity?"
+//      - endpoints/<name>.js - "How do I work with a specific entity?"
 
-// ------------------------------------------------------------------------------------------------------
-// PUT
+import {
+    getAll,
+    getById,
+    create,
+    update,
+    deleteById,
+    deleteAll,
+    deleteAllSafe,
+} from '@/api/crud'
 
-export const updateMember = (data) => (
-    client('/member/update', {
-        method: 'PUT',
-        body: JSON.stringify(data),
-    })
-)
-
-export const updateMemberPassword = (data) => (
-    client('/member/update-password', {
-        method: 'PUT',
-        body: JSON.stringify(data),
-    })
-)
+const pathing = 'member'
 
 // ------------------------------------------------------------------------------------------------------
 // GET
 
+export const getMembers = () => (
+    getAll(pathing)
+)
+
 export const getMember = (id) => (
-    client(`/member/${id}`, {
-        method: 'GET',
-    })
+    getById(pathing, id)
+)
+
+// ------------------------------------------------------------------------------------------------------
+// POST
+
+export const createMember = (data) => (
+    create(pathing, data)
+)
+
+// ------------------------------------------------------------------------------------------------------
+// PUT
+
+export const updateMember = (id, data) => (
+    update(pathing, id, data)
 )
 
 // ------------------------------------------------------------------------------------------------------
 // DELETE
 
-export const deleteMember = () => (
-    client('/member/delete', {
-        method: 'DELETE',
-    })
+export const deleteMember = (id) => (
+    deleteById(pathing, id)
 )
 
+export const deleteMembers = () => (
+    deleteAll(pathing)
+)
+
+export const deleteMembersSafe = () => (
+    deleteAllSafe(pathing)
+)

@@ -2,6 +2,7 @@ package alpha.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
@@ -59,12 +60,24 @@ public class Member {
     @Column(name = "last_played")
     private LocalDate lastPlayed;
 
+    @Column(name = "created_at", updatable = false)
+    private Timestamp createdAt;
+
+    @Column(name = "last_login")
+    private Timestamp lastLogin;
 
     // ______ | RELATIONS | ____________________________________________________________________________________________
 
     @ManyToOne
     @JoinColumn(name = "membership_id")
     private Membership membership;
+
+    // ______ | PERSIST | ______________________________________________________________________________________________
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Timestamp(System.currentTimeMillis());
+    }
 
     // ______ | NESTED FIELDS | ________________________________________________________________________________________
 
@@ -79,6 +92,8 @@ public class Member {
         public static final String GENDER = "gender";
         public static final String MEMBERSHIP = "membership";
         public static final String LAST_PLAYED = "lastPlayed";
+        public static final String LAST_LOGIN = "lastLogin";
+        public static final String CREATED_AT = "createdAt";
     }
 
 }
