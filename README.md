@@ -1,21 +1,21 @@
 # Alpha Solution Scrum Project
 
-Project created by Khuong & Jonas for the 4th Term of AP Computer Science Denmark.
+Project created by Jonas for the 4th Term of AP Computer Science Denmark.
 
 [![Visit](https://img.shields.io/badge/Visit-ffffff?style=for-the-badge&color=f99e00)](http://alpha.guacamoleboy.dk)
 
 ---
 
 > [!NOTE]  
-> All files in the **[main]** branch are final and deployed
+> All files in the **[main]** branch are final
 
 ---
 
 ## Links
 
-REST API: N/A
-Website: N/A
-Github Projects: N/A
+REST API: N/A\
+Website: N/A\
+Github Projects: N/A\
 Docs: N/A
 
 ---
