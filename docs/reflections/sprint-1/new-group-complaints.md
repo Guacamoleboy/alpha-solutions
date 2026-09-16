@@ -31,6 +31,6 @@ Am I in the wrong?
 Apparently I am the issue and need to look at myself as per PO request. Not quite sure that's how it works. This document should clarify just that...
 
 ### The future
-All groups think I can't coorporate with other teammembers and that I am the issue causing a bad team environment.
+Some groups think I can't coorporate with other teammembers and that I am the issue causing a bad team environment.
 Teams and students probably wont work with me as they think I am causing trouble and or might just fear working with me in general.
 That's unprofessional and something I think is unacceptable for a 4th Term Class. We are all adults and should be able to handle conflicts with care and professional manner.
