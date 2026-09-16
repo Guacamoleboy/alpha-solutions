@@ -19,6 +19,8 @@ import {
     deleteAllSafe,
 } from '@/api/crud'
 
+import { client } from '@/api/client'
+
 const pathing = 'member'
 
 // ------------------------------------------------------------------------------------------------------
@@ -37,6 +39,13 @@ export const getMember = (id) => (
 
 export const createMember = (data) => (
     create(pathing, data)
+)
+
+export const updateMemberPassword = (data) => (
+    client(`/${pathing}/password`, { 
+            method: 'POST',
+            body: JSON.stringify(data),
+        })
 )
 
 // ------------------------------------------------------------------------------------------------------
