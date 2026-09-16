@@ -33,33 +33,41 @@ This document is made to establish and define code standards for the project. Al
 
 ```text
 backend/
-└── src/ 
+└── src/
     |
     └── main/
         |
         ├── resources/
-        |       |
-        |       ├── config.properties
-        |       ├── .env
-        |       ├── .env.development
-        |       ├── .env.test
-        |       ├── logback.xml
-        |       └── http/
+        |   |
+        |   ├── config.properties
+        |   ├── .env
+        |   ├── .env.development
+        |   ├── .env.test
+        |   ├── logback.xml
+        |   └── http/
         |
         └── java/
             |
             └── alpha/
                 |
+                ├── <domain>/
+                |   |
+                |   ├── controller/
+                |   ├── service/
+                |   ├── dao/
+                |   ├── entity/
+                |   ├── dto/
+                |   ├── mapper/
+                |   └── ...
+                |
                 ├── config/
-                ├── controller/
-                ├── dto/
-                ├── entity/
+                ├── crud/
                 ├── exception/
+                ├── server/
+                ├── security/
+                ├── service/
                 ├── route/
                 ├── dao/
-                ├── mapper/
-                ├── server/
-                ├── service/
                 ├── util/
                 └── Main.java
 ```
