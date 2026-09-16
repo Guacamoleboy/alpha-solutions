@@ -1,7 +1,7 @@
 package alpha.security.jwt;
 
-import alpha.dao.impl.MemberDAO;
-import alpha.entity.Member;
+import alpha.domain.member.dao.MemberDAO;
+import alpha.domain.member.entity.Member;
 import alpha.exception.ApiException;
 import alpha.util.ContextHelper;
 import io.javalin.http.Context;

@@ -1,6 +1,6 @@
 package alpha.security.jwt;
 
-import alpha.entity.Member;
+import alpha.domain.member.entity.Member;
 import io.jsonwebtoken.Jwts;
 import java.util.Date;
 
