@@ -5,14 +5,15 @@
 import InputPassword from '@/shared/components/input-password/InputPassword'
 import Submit from '@/shared/components/submit/Submit'
 import styles from './Password.module.css'
-import { updateMember } from '@/api/endpoints/member'
+import { usePassword } from './Password.hooks'
 
 const Password = ({ targetId }) => {
 
-    const handlePassword = async (e) => {
-        e.preventDefault()
-        await updateMember();
-    }
+    // usePassword setup
+    const {
+        registerField,
+        handlePassword
+    } = usePassword()
 
     return (
         <section id={targetId} className={`settingsRow ${styles.passwordRow}`}>
@@ -21,26 +22,32 @@ const Password = ({ targetId }) => {
 
                 {/* TEXT INPUT */}
                 <InputPassword
+                    {...registerField('currentPassword')}
                     label="Nuværende password"
                     placeholder="Nuværende password"
                     size="l"
                     className={styles.passwordInput}
+                    required
                 />
 
                 {/* TEXT INPUT */}
                 <InputPassword
+                    {...registerField('newPassword')}
                     label="Nyt password"
                     placeholder="Nye password"
                     size="l"
                     className={styles.passwordInput}
+                    required
                 />
 
                 {/* TEXT INPUT */}
                 <InputPassword
+                    {...registerField('confirmPassword')}
                     label="Bekræftelse"
                     placeholder="Nye password igen"
                     size="l"
                     className={styles.passwordInput}
+                    required
                 />
 
                 {/* SUBMIT */}

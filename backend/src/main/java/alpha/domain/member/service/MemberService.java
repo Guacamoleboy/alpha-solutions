@@ -121,7 +121,7 @@ public class MemberService extends EntityManagerService<Member> {
         validateNotEmpty(dto.getConfirmPassword(), "confirm_password");
 
         // Current password hash match validation
-        if (!BCrypt.checkpw(dto.getCurrentPassword(), member.getPasswordHashed())) {
+        if (!BCryptHash.check(dto.getCurrentPassword(), member.getPasswordHashed())) {
             throw new ApiException(401, "Current password is incorrect");
         }
 
@@ -151,10 +151,13 @@ public class MemberService extends EntityManagerService<Member> {
         }
 
         // Final hash of new password
-        String hashedPassword = BCrypt.hashpw(dto.getNewPassword(), BCrypt.gensalt());
+        String hashedPassword = BCryptHash.hash(dto.getNewPassword());
+
+        // Member final adjustments prior to DB
+        member.setPasswordHashed(hashedPassword);
 
         // DB update on memberId
-        memberDAO.updateColumnById(memberId, Member.Fields.PASSWORD_HASHED, hashedPassword);
+        memberDAO.update(member);
 
     }
 
