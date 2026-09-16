@@ -45,7 +45,7 @@ export const updateMemberPassword = (data) => (
     client(`/${pathing}/password`, { 
             method: 'POST',
             body: JSON.stringify(data),
-        })
+    })
 )
 
 // ------------------------------------------------------------------------------------------------------
