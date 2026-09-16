@@ -1,0 +1,79 @@
+.notification {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border: 3px solid #d8d8d8;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    min-width: 280px;
+    max-width: 420px;
+    color: var(--alpha-white);
+    font-weight: 600;
+    animation: slideInRight 0.3s ease forwards;
+}
+
+.success {
+    background-color: var(--alpha-green);
+}
+
+.error {
+    background-color: var(--alpha-red);
+}
+
+.warning {
+    background-color: var(--alpha-orange);
+}
+
+.info {
+    background-color: var(--alpha-blue);
+}
+
+.message {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.dismiss {
+    flex-shrink: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--alpha-white);
+    cursor: pointer;
+    font-size: 1rem;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.dismiss:hover {
+    opacity: 1;
+}
+
+/* TODO: Move this to animations.css file at some point */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}

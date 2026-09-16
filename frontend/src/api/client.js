@@ -12,6 +12,7 @@ export async function client(endpoint, options = {}) {
     const url = `${BASE_URL}${endpoint}`
     const token = localStorage.getItem('access_token')
 
+    // DEBUG FOR NOW
     console.log('[API REQUEST]')
     console.log('URL:', url)
     console.log('METHOD:', options.method || 'GET')
@@ -41,12 +42,6 @@ export async function client(endpoint, options = {}) {
     // ---- ERROR HANDLE --------------------------------------------------------------------------------------------------
 
     if (!response.ok) {
-
-        if (response.status === 401) {
-            localStorage.removeItem('access_token')
-            localStorage.removeItem('refresh_token')
-            window.location.href = '/'
-        }
 
         const error = new Error(
             data?.message || 'API request failed'
