@@ -8,6 +8,9 @@ import alpha.crud.CRUDController;
 import alpha.service.EntityManagerService;
 import alpha.util.TryCatchHelper;
 import io.javalin.http.Context;
+import alpha.domain.member.dto.request.MemberPasswordRequestDTO;
+import alpha.security.jwt.JwtService;
+import alpha.util.ContextHelper;
 
 public class MemberController extends CRUDController<Member> {
 
@@ -39,6 +42,17 @@ public class MemberController extends CRUDController<Member> {
             MemberRequestDTO dto = ctx.bodyAsClass(MemberRequestDTO.class);
             return ((MemberService) classService).update(id, dto);
         }, "Member updated");
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void updatePassword(Context ctx) {
+        TryCatchHelper.tryCatchHelperVoid(ctx, () -> {
+            String token = ContextHelper.extractBearerToken(ctx);
+            Integer memberId = JwtService.getClaimMemberId(token);
+            MemberPasswordRequestDTO dto = ctx.bodyAsClass(MemberPasswordRequestDTO.class);
+            ((MemberService) classService).updatePassword(memberId, dto);
+        }, "Password updated");
     }
 
 }

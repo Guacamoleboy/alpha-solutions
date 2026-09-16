@@ -8,8 +8,10 @@ import useForm from '@/shared/hooks/useForm'
 
 export const useUpdate = () => {
 
+    // Member state
     const { member, updateMemberState } = useMember()
 
+    // Form hook setup
     const {
         values,
         registerField,
@@ -18,13 +20,13 @@ export const useUpdate = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault()
-
         try {
             await updateMember(member.id, values)
             updateMemberState(values)
-            reset()
         } catch (error) {
             console.error('Failed to update member:', error)
+        } finally {
+            reset() // Resets values no matter the result
         }
     }
 
@@ -33,4 +35,5 @@ export const useUpdate = () => {
         registerField,
         handleUpdate,
     }
+    
 }
