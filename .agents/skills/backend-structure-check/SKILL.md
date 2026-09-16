@@ -1,3 +1,8 @@
+---
+name: backend-structure-check
+description: Check the Java backend against the project's domain-based package structure.
+---
+
 # Custom Architecture Checkup Skill created by Guacamoleboy
 
 Once a domain-layer architecture has been added this skill provides LLM checks in case classes implemented later on doesn't follow the structure.

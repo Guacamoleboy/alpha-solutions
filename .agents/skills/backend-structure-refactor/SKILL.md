@@ -1,3 +1,8 @@
+---
+name: backend-structure-refactor
+description: Refactor the Java backend from a layer-based package structure to a domain-based package structure.
+---
+
 # Custom Refactor Skill created by Guacamoleboy
 
 This skill was created by Guacamoleboy / Jonas / CPH-JL325 for the Alpha Solution Scrum Project to adjust folder structure after PO meeting in Sprint 0 reflection feedback.

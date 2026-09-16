@@ -1,6 +1,7 @@
 package alpha.config;
 
-import alpha.entity.*;
+import alpha.domain.member.entity.Member;
+import alpha.domain.membership.entity.Membership;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateAnnotation {
