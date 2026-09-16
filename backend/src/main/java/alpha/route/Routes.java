@@ -1,11 +1,11 @@
 package alpha.route;
 
-import alpha.route.auth.AuthRouting;
-import alpha.route.health.HealthRouting;
-import alpha.route.impl.MemberRouting;
-import alpha.route.impl.MembershipRouting;
-import alpha.route.populate.PopulateRouting;
-import alpha.route.status.StatusRouting;
+import alpha.domain.auth.route.AuthRouting;
+import alpha.domain.health.route.HealthRouting;
+import alpha.domain.member.route.MemberRouting;
+import alpha.domain.membership.route.MembershipRouting;
+import alpha.domain.populate.route.PopulateRouting;
+import alpha.domain.status.route.StatusRouting;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
 
