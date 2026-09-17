@@ -5,5 +5,10 @@ public enum CourtSurface {
     ASPHALT,
     SYNTHETIC,
     INDOOR,
+    ACRYLIC,
+    CLAY,
+    CARPET,
+    GRASS,
+    TURF,
     OTHER
 }
