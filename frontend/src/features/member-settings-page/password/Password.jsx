@@ -18,13 +18,7 @@ const Password = ({ targetId }) => {
     return (
         <section id={targetId} className={`settingsRow ${styles.passwordRow}`}>
 
-            <form
-    onSubmit={(e) => {
-        console.log('FORM SUBMIT')
-        handlePassword(e)
-    }}
-    className="settingsForm"
->
+            <form onSubmit={ (e) => {handlePassword(e) }} className="settingsForm">
 
                 {/* TEXT INPUT */}
                 <InputPassword

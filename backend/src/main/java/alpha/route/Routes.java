@@ -1,10 +1,13 @@
 package alpha.route;
 
 import alpha.domain.auth.route.AuthRouting;
+import alpha.domain.booking.route.BookingRouting;
+import alpha.domain.court.route.CourtRouting;
 import alpha.domain.health.route.HealthRouting;
 import alpha.domain.member.route.MemberRouting;
 import alpha.domain.membership.route.MembershipRouting;
 import alpha.domain.populate.route.PopulateRouting;
+import alpha.domain.settings.operatinghour.route.OperatingHourRouting;
 import alpha.domain.status.route.StatusRouting;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
@@ -24,6 +27,9 @@ public class Routes {
         MembershipRouting membershipRouting = new MembershipRouting(entityManagerFactory);
         AuthRouting authRouting = new AuthRouting(entityManagerFactory);
         PopulateRouting populateRouting = new PopulateRouting(entityManagerFactory);
+        BookingRouting bookingRouting = new BookingRouting(entityManagerFactory);
+        CourtRouting courtRouting = new CourtRouting(entityManagerFactory);
+        OperatingHourRouting operatingHoursRouting = new OperatingHourRouting(entityManagerFactory);
 
         // EndpointGroup Return to server
         return () -> {
@@ -33,6 +39,9 @@ public class Routes {
             membershipRouting.routes().addEndpoints();
             authRouting.routes().addEndpoints();
             populateRouting.routes().addEndpoints();
+            bookingRouting.routes().addEndpoints();
+            courtRouting.routes().addEndpoints();
+            operatingHoursRouting.routes().addEndpoints();
         };
 
     }
