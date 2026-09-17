@@ -9,6 +9,7 @@ import LoginPage from '@/app/pages/LoginPage'
 import MembershipPage from '@/app/pages/MembershipPage'
 import RegisterPage from '@/app/pages/RegisterPage'
 import MemberSettingsPage from '@/app/pages/MemberSettingsPage'
+import MemberBookingPage from '@/app/pages/MemberBookingPage'
 
 import AppLayout from '@/app/layouts/AppLayout'
 import AuthLayout from '@/app/layouts/AuthLayout'
@@ -27,6 +28,7 @@ const AppRoutes = () => (
             <Route path="/member" element={<MemberPage />} />
             <Route path="/membership" element={<MembershipPage />} />
             <Route path="/member/settings" element={<MemberSettingsPage />} />
+            <Route path="/member/booking" element={<MemberBookingPage />} />
         </Route>
 
     </Routes>

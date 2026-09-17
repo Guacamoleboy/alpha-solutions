@@ -40,4 +40,28 @@ public class BookingDAO extends EntityManagerDAO<Booking> {
         });
     }
 
+    // _________________________________________________________________________________________________________________
+
+    public boolean existsBookingForMemberOnDate(Integer memberId, LocalDateTime startTime) {
+        return executeQuery(() -> {
+            String JPQL = """
+            SELECT COUNT(b)
+            FROM Booking b
+            WHERE b.member.id = :memberId
+            AND b.status <> :cancelled
+            AND b.startTime >= :startOfDay
+            AND b.startTime < :startOfNextDay
+        """;
+
+            Long count = em.createQuery(JPQL, Long.class)
+                    .setParameter("memberId", memberId)
+                    .setParameter("cancelled", BookingStatus.CANCELLED)
+                    .setParameter("startOfDay", startTime.toLocalDate().atStartOfDay())
+                    .setParameter("startOfNextDay", startTime.toLocalDate().plusDays(1).atStartOfDay())
+                    .getSingleResult();
+
+            return count > 0;
+        });
+    }
+
 }

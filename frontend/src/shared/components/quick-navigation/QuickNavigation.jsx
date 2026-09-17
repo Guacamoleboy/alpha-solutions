@@ -2,10 +2,11 @@
 // _______
 // src/shared/components/quick-navigation/QuickNavigation.jsx
 
-const QuickNavigation = ({ items = [] }) => {
+const QuickNavigation = ({ items = [], onNavigate }) => {
 
     // Click Handle
     const handleNavigation = (targetId) => {
+        onNavigate?.(targetId) // Allows targetId to swap components instead of SPA reload
         document.getElementById(targetId)?.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
@@ -20,7 +21,7 @@ const QuickNavigation = ({ items = [] }) => {
                     type="button"
                     onClick={() => handleNavigation(item.targetId)}
                 >
-                    {item.label}
+                {item.label}
                 </button>
             ))}
         </div>
