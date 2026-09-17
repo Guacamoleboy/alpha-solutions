@@ -13,6 +13,8 @@ import io.javalin.http.HttpStatus;
 import io.javalin.validation.ValidationException;
 import jakarta.persistence.EntityManagerFactory;
 import java.util.Map;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import io.javalin.json.JavalinJackson;
 
 // _____________________________________________________________________________________________________________________
 
@@ -54,6 +56,7 @@ public class Server {
             configureRouting(config);
             configurePlugins(config);
             configureExceptionHandling(config);
+            configureJson(config);
         }).start(port);
 
     }
@@ -80,6 +83,18 @@ public class Server {
 
     private void configurePlugins(JavalinConfig javalinConfig) {
         javalinConfig.bundledPlugins.enableRouteOverview(DotEnv.getRouteOverviewPath());
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void configureJson(JavalinConfig javalinConfig) {
+        javalinConfig.jsonMapper(
+                new JavalinJackson().updateMapper(mapper -> {
+                    mapper.disable(
+                            SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
+                    );
+                })
+        );
     }
 
     // _________________________________________________________________________________________________________________

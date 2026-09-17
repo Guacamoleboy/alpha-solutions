@@ -7,7 +7,7 @@ import NotificationContext from './NotificationContext'
 import Notification from './Notification'
 
 // Visual Render Time
-const DEFAULT_DURATION = 4000
+const DEFAULT_DURATION = 5000
 
 export const NotificationProvider = ({ children }) => {
 

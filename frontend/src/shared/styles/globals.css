@@ -278,11 +278,32 @@ hr {
 
 /* ----- SHARED SELECT | #4.3 ----------------------------------------------------------------------------- */
 
+.sharedSelectWrapper {
+    position: relative;
+    width: 100%;
+    line-height: 1.6rem !important;
+}
+
 .sharedSelect {
     font-size: 1rem !important;
     align-items: center;
     padding: 0 !important;
     padding-left: 1rem !important;
+    padding-right: 2.5rem !important;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.sharedSelectIcon {
+    position: absolute;
+    top: 45%;
+    right: 1rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    height: 20px;
+    width: 20px;
+    opacity: 0.7;
 }
 
 /* ----- QUICK NAVIGATION | #5.0 -------------------------------------------------------------------------- */

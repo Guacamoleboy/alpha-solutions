@@ -10,6 +10,8 @@ import alpha.domain.settings.operatinghour.service.OperatingHourService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
+import static io.javalin.apibuilder.ApiBuilder.get;
+
 public class BookingRouting extends CRUDRouting<Booking> {
 
     // Attributes
@@ -25,8 +27,7 @@ public class BookingRouting extends CRUDRouting<Booking> {
     @Override
     protected void customRoutes() {
         BookingController bookingController = (BookingController) controller;
-        // Custom endpoints here
-        // Example: post("/path", controller::method);
+        get("/mine", bookingController::getMemberBookings);
     }
 
     // _________________________________________________________________________________________________________________

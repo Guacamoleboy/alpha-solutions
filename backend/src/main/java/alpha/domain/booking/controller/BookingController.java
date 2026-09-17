@@ -34,4 +34,18 @@ public class BookingController extends CRUDController<Booking> {
         }, "Booking created");
     }
 
+    // _________________________________________________________________________________________________________________
+
+    public void getMemberBookings(Context ctx) {
+        TryCatchHelper.tryCatchHelper(ctx, () -> {
+            String token = ContextHelper.extractBearerToken(ctx);
+            Integer memberId = JwtService.getClaimMemberId(token);
+            return ((BookingService) classService)
+                    .getMemberBookings(memberId)
+                    .stream()
+                    .map(BookingResponseMapper::toDTO)
+                    .toList();
+        }, "Member bookings retrieved");
+    }
+
 }

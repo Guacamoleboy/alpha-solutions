@@ -1,0 +1,42 @@
+.previousBookings {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bookingList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.booking {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #cdcccc;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.column:nth-child(2) {
+    justify-self: center;
+}
+
+.column:nth-child(3) {
+    justify-self: end;
+}
+
+.label {
+    font-size: 1rem;
+    font-weight: 600 !important;
+    border-bottom: 2px dashed #cac8c8;
+    width: fit-content;
+}

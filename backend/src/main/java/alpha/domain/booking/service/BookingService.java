@@ -13,6 +13,8 @@ import alpha.exception.ApiException;
 import alpha.service.EntityManagerService;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 
 public class BookingService extends EntityManagerService<Booking> {
 
@@ -37,6 +39,10 @@ public class BookingService extends EntityManagerService<Booking> {
     public Booking createBooking(Integer memberId, BookingRequestDTO dto) {
         validateBookingTime(dto.getStartTime(), dto.getEndTime());
         Member member = validateMember(memberId);
+
+        // Validate daily
+        validateMemberDailyBooking(memberId, dto.getStartTime());
+
         Court court = validateCourt(dto.getCourtId());
         validateMembership(member, court);
 
@@ -59,6 +65,17 @@ public class BookingService extends EntityManagerService<Booking> {
                 .build();
 
         return create(booking);
+    }
+
+    // _________________________________________________________________________________________________________________
+    // TODO: Implement premium + super premium to allow multiple bookings
+
+    private void validateMemberDailyBooking(Integer memberId, LocalDateTime startTime) {
+        if (bookingDAO.existsBookingForMemberOnDate(memberId, startTime)) {
+            throw new ApiException(
+                    409, "Du har allerede én booking på denne dag. Fjern venligst en."
+            );
+        }
     }
 
     // _________________________________________________________________________________________________________________
@@ -99,12 +116,12 @@ public class BookingService extends EntityManagerService<Booking> {
         Court court = courtService.getById(courtId);
         if (court == null) {
             throw new ApiException(
-                    404, "Court not found"
+                    404, "Banen findes ikke"
             );
         }
         if (!Boolean.TRUE.equals(court.getActive())) {
             throw new ApiException(
-                    400, "Court is not active"
+                    400, "Banen er lukket lige pt"
             );
         }
         return court;
@@ -118,7 +135,7 @@ public class BookingService extends EntityManagerService<Booking> {
         }
         if (member.getMembership() == null || !court.getRequiredMembership().getId().equals(member.getMembership().getId())) {
             throw new ApiException(
-                    403, "Member does not have the required membership"
+                    403, "Du har ikke adgang til denne funktion. Opgradér venligst medlemsskab"
             );
         }
     }
@@ -149,9 +166,19 @@ public class BookingService extends EntityManagerService<Booking> {
     private void validateBookingAvailability(Integer courtId, LocalDateTime startTime, LocalDateTime endTime) {
         if (bookingDAO.existsOverlappingBooking(courtId, startTime, endTime)) {
             throw new ApiException(
-                    409, "Court is already booked for this time"
+                    409, "Du har allerede en booking på denne dag og tidspunkt."
             );
         }
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public List<Booking> getMemberBookings(Integer memberId) {
+        validateMember(memberId);
+        return getAll().stream()
+                .filter(booking -> booking.getMember().getId().equals(memberId))
+                .sorted(Comparator.comparing(Booking::getStartTime).reversed())
+                .toList();
     }
 
 }
