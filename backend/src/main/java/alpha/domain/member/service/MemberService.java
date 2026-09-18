@@ -5,6 +5,9 @@ import alpha.domain.member.dto.request.MemberPasswordRequestDTO;
 import alpha.domain.member.dto.request.MemberRequestDTO;
 import alpha.domain.member.dto.response.MemberResponseDTO;
 import alpha.domain.member.entity.Member;
+import alpha.domain.role.entity.Role;
+import alpha.domain.role.enums.RoleName;
+import alpha.domain.role.service.RoleService;
 import alpha.exception.ApiException;
 import alpha.domain.member.mapper.response.MemberResponseMapper;
 import alpha.service.EntityManagerService;
@@ -16,12 +19,14 @@ public class MemberService extends EntityManagerService<Member> {
 
     // Attributes
     private final MemberDAO memberDAO;
+    private final RoleService roleService;
 
     // _________________________________________________________________________________________________________________
 
     public MemberService(EntityManager em){
         super(new MemberDAO(em), Member.class);
         this.memberDAO = (MemberDAO) this.entityManagerDAO;
+        this.roleService = new RoleService(em);
     }
 
     // _________________________________________________________________________________________________________________
@@ -33,8 +38,17 @@ public class MemberService extends EntityManagerService<Member> {
         validateNotEmpty(member.getEmail(), "Member.email");
         validateNotEmpty(member.getPasswordHashed(), "Member.password");
 
+        // Role + Validation
+        Role role = roleService.getByName(RoleName.MEMBER);
+        if (role == null) {
+            throw new ApiException(
+                    500, "Default member role not found"
+            );
+        }
+
         // Password hashing
         member.setPasswordHashed(BCrypt.hashpw(member.getPasswordHashed(), BCrypt.gensalt()));
+        member.setRole(role);
 
         return super.create(member);
     }

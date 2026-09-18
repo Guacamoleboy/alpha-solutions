@@ -1,4 +1,7 @@
 package alpha.domain.role.enums;
 
-public class RoleName {
+public enum RoleName {
+    OWNER,
+    STAFF,
+    MEMBER
 }

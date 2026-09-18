@@ -9,6 +9,7 @@ public class JwtService extends JwtUtil {
     // Attributes
     protected static final String CLAIM_FIRST_NAME = "first_name";
     protected static final String CLAIM_TYPE = "type";
+    protected static final String CLAIM_ROLE = "role";
 
     // _________________________________________________________________________________________________________________
 
@@ -17,6 +18,7 @@ public class JwtService extends JwtUtil {
                 .setSubject(member.getId().toString())
                 .claim(CLAIM_FIRST_NAME, member.getFirstName())
                 .claim(CLAIM_TYPE, "access")
+                .claim(CLAIM_ROLE, member.getRole().getName().name())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_EXPIRATION))
                 .signWith(KEY)
@@ -45,6 +47,12 @@ public class JwtService extends JwtUtil {
 
     public static String getClaimFirstName(String token) {
         return getClaims(token).get(CLAIM_FIRST_NAME, String.class);
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public static String getClaimRole(String token) {
+        return getClaims(token).get(CLAIM_ROLE, String.class);
     }
 
     // _________________________________________________________________________________________________________________
