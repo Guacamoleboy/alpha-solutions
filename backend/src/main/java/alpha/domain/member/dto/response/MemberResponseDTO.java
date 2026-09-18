@@ -1,5 +1,6 @@
 package alpha.domain.member.dto.response;
 
+import alpha.domain.role.enums.RoleName;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -25,16 +26,15 @@ public class MemberResponseDTO {
     //          "gender": "gender",
     //          "membership_id": 1,
     //          "membership_name": "basic",
+    //          "role": "MEMBER",
     //          "last_played": "2026-09-11",
     //          "last_login": "2026-09-14T15:42:31",
     //          "created_at": "2026-09-14T15:42:31"
     //      }
     //
     // ____________________
-    // Tested: YES
-    // Last Tested: 14/09-2026
-
-    // _________________________________________________________________________________________________________________
+    // Tested: NO
+    // Last Tested: N/A
 
     // _________________________________________________________________________________________________________________
 
@@ -64,6 +64,9 @@ public class MemberResponseDTO {
 
     @JsonProperty("membership_name")
     private String membershipName;
+
+    @JsonProperty("role")
+    private RoleName role;
 
     @JsonProperty("last_played")
     private LocalDate lastPlayed;

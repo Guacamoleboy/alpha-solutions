@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import alpha.domain.role.entity.Role;
 
 @Entity
 @NoArgsConstructor
@@ -22,7 +23,7 @@ public class Member {
     //
     //     PgAdmin
     //     _______
-    //     id | first_name | last_name | password_hashed | email | phone | date_of_birth | gender | membership_id | last_played
+    //     id | first_name | last_name | password_hashed | email | phone | date_of_birth | role_id | gender | membership_id | last_played
     //
     // __________________
     // Tested: NO
@@ -73,6 +74,10 @@ public class Member {
     @JoinColumn(name = "membership_id")
     private Membership membership;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
     // ______ | PERSIST | ______________________________________________________________________________________________
 
     @PrePersist
@@ -92,6 +97,7 @@ public class Member {
         public static final String DATE_OF_BIRTH = "dateOfBirth";
         public static final String GENDER = "gender";
         public static final String MEMBERSHIP = "membership";
+        public static final String ROLE = "role";
         public static final String LAST_PLAYED = "lastPlayed";
         public static final String LAST_LOGIN = "lastLogin";
         public static final String CREATED_AT = "createdAt";

@@ -30,4 +30,14 @@ public class JwtValidator {
         return member;
     }
 
+    // _________________________________________________________________________________________________________________
+
+    public static boolean hasRole(Context ctx, String role) {
+        String token = ContextHelper.extractBearerToken(ctx);
+        if (!JwtUtil.isAccessTokenValid(token)) {
+            throw new ApiException(401, "Invalid access token");
+        }
+        return role.equals(JwtService.getClaimRole(token));
+    }
+
 }
