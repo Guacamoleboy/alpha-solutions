@@ -10,6 +10,10 @@ import MembershipPage from '@/app/pages/MembershipPage'
 import RegisterPage from '@/app/pages/RegisterPage'
 import MemberSettingsPage from '@/app/pages/MemberSettingsPage'
 import MemberBookingPage from '@/app/pages/MemberBookingPage'
+import {OwnerDashboard} from '@/features/owner-dashboard'
+import OwnerResourcesPage from '@/app/pages/OwnerResourcesPage'
+import OwnerEmployeesPage from '@/app/pages/OwnerEmployeesPage'
+import OwnerCourtsPage from '@/app/pages/OwnerCourtsPage'
 
 import AppLayout from '@/app/layouts/AppLayout'
 import AuthLayout from '@/app/layouts/AuthLayout'
@@ -35,13 +39,14 @@ const AppRoutes = () => (
         </Route>
 
         {/* Owner Portal */}
-        {/*
         <Route element={<ProtectedRoutes allowedRoles={["OWNER"]} />}>
             <Route element={<AppLayout />}>
-                <Route path="/dashboard" element={<OwnerDashboardPage />} />
+                <Route path="/dashboard" element={<OwnerDashboard />} />
+                <Route path="/dashboard/resources" element={<OwnerResourcesPage />} />
+                <Route path="/dashboard/employees" element={<OwnerEmployeesPage />} />
+                <Route path="/dashboard/courts" element={<OwnerCourtsPage />} />
             </Route>
         </Route>
-        */}
         
     </Routes>
 )

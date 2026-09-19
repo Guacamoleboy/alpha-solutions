@@ -7,6 +7,7 @@ import alpha.domain.health.route.HealthRouting;
 import alpha.domain.member.route.MemberRouting;
 import alpha.domain.membership.route.MembershipRouting;
 import alpha.domain.populate.route.PopulateRouting;
+import alpha.domain.role.route.RoleRouting;
 import alpha.domain.settings.operatinghour.route.OperatingHourRouting;
 import alpha.domain.status.route.StatusRouting;
 import io.javalin.apibuilder.EndpointGroup;
@@ -30,6 +31,7 @@ public class Routes {
         BookingRouting bookingRouting = new BookingRouting(entityManagerFactory);
         CourtRouting courtRouting = new CourtRouting(entityManagerFactory);
         OperatingHourRouting operatingHoursRouting = new OperatingHourRouting(entityManagerFactory);
+        RoleRouting roleRouting = new RoleRouting(entityManagerFactory);
 
         // EndpointGroup Return to server
         return () -> {
@@ -42,6 +44,7 @@ public class Routes {
             bookingRouting.routes().addEndpoints();
             courtRouting.routes().addEndpoints();
             operatingHoursRouting.routes().addEndpoints();
+            roleRouting.routes().addEndpoints();
         };
 
     }

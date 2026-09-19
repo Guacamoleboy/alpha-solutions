@@ -84,3 +84,18 @@
 .navLink.active .navIcon {
     color: #FFF;
 }
+
+.logoutButton {
+    border: 0;
+    cursor: pointer;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100%;
+    font-family: inherit;
+    background-color: inherit;
+    gap: 0.25rem !important;
+}
+
+.logoutButton:hover {
+    background-color: var(--alpha-red);
+}

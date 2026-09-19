@@ -14,4 +14,11 @@ public class MemberDAO extends EntityManagerDAO<Member> {
         super(em, Member.class);
     }
 
+    public Member refresh(Member member) {
+        return executeQuery(() -> {
+            em.refresh(member);
+            return member;
+        });
+    }
+
 }
