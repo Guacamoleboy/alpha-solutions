@@ -16,9 +16,14 @@
 
 import {useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom"
-import {authContext} from "./authContext"
-import {login} from "@api/endpoints/login"
-import {decodeToken} from "@shared/utils/token"
+import {AuthContext} from "./authContext"
+import {login} from "@/api/endpoints/login"
+import {decodeToken} from "@/shared/utils/token"
+
+const normalizeUser = (decodedUser, member) => ({
+    ...decodedUser,
+    role: String(decodedUser.role ?? member?.role ?? '').toUpperCase(),
+})
 
 // ---- PROVIDER --------------------------------------------------------------
 
@@ -47,7 +52,7 @@ export function AuthProvider({children}) {
                 if (!decodedUser || decodedUser.type !== "access") {
                     throw new Error("Invalid access token")
                 }
-                setUser(decodedUser)
+                setUser(normalizeUser(decodedUser))
             } catch {
                 localStorage.removeItem("access_token")
                 localStorage.removeItem("refresh_token")
@@ -75,13 +80,14 @@ export function AuthProvider({children}) {
                 throw new Error("Invalid access token")
             }
 
-            setUser(decodedUser)
+            const authenticatedUser = normalizeUser(decodedUser, response.data.member)
+            setUser(authenticatedUser)
 
             // Navigate according to role
-            if (decodedUser.role === "MEMBER") {
+            if (authenticatedUser.role === "MEMBER") {
                 navigate("/member")
             }
-            if (decodedUser.role === "OWNER") {
+            if (authenticatedUser.role === "OWNER") {
                 navigate("/dashboard")
             }
             
@@ -117,9 +123,9 @@ export function AuthProvider({children}) {
     }
 
     return (
-        <authContext.Provider value={value}>
+        <AuthContext.Provider value={value}>
             {children}
-        </authContext.Provider>
+        </AuthContext.Provider>
     )
 
 }

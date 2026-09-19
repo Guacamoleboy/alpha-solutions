@@ -64,7 +64,8 @@ export const useCourtBooking = () => {
         const dayOfWeek = getDayOfWeek(date)
 
         // Find operating hours for the selected day
-        const operatingHour = operatingHours.find((hour) => hour.day_of_week === dayOfWeek)
+        const operatingHour = (operatingHours ?? [])
+            .find((hour) => hour.day_of_week === dayOfWeek)
 
         if (!operatingHour || operatingHour.closed) {
             setIsClosed(true)
