@@ -14,8 +14,14 @@
 // ------------------------------------------------------------------------------------------------
 
 import {useContext} from "react"
-import {authContext} from "@shared/context/authContext"
+import {AuthContext} from "@/shared/context/authContext"
 
 export function useAuth() {
-    return useContext(authContext)
+    const context = useContext(AuthContext)
+
+    if (!context) {
+        throw new Error("useAuth must be used within an AuthProvider")
+    }
+
+    return context
 }

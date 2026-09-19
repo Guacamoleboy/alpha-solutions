@@ -3,13 +3,16 @@
 // src/features/login-page/login/Login.hooks.js
 
 import { useNavigate } from 'react-router-dom'
-import { login } from '@/api/endpoints/login'
 import useForm from '@/shared/hooks/useForm'
+import { useAuth } from '@/shared/hooks/useAuth'
+import useNotification from '@/shared/hooks/useNotification'
 
 export const useLogin = () => {
 
     // Navigation
     const navigate = useNavigate()
+    const { login: loginUser } = useAuth()
+    const { notify } = useNotification()
 
     // useForm
     const {
@@ -22,14 +25,10 @@ export const useLogin = () => {
         e.preventDefault()
 
         try {
-            const response = await login(values)
-
-            localStorage.setItem('access_token', response.data.access_token)
-            localStorage.setItem('refresh_token', response.data.refresh_token)
-
-            navigate('/member')
+            await loginUser(values)
         } catch (error) {
             console.error('Login failed:', error)
+            notify(error.message || 'Login kunne ikke gennemføres', 'error')
         }
     }
 

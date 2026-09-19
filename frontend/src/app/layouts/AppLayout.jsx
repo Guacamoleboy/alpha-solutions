@@ -3,14 +3,14 @@
 // src/app/layouts/AppLayout.jsx
 
 import { Outlet } from 'react-router-dom'
-import { MemberNavbar } from '@/features/member-page'
+import Navbar from '@/shared/components/navbar/Navbar'
 
 function AppLayout() {
     return (
         <div className="appLayout">
 
             {/* Navbar*/}
-            <MemberNavbar />
+            <Navbar />
 
             {/* Page Specific */}
             <main>

@@ -5,11 +5,13 @@
 import { useNavigate } from 'react-router-dom'
 import { register } from '@/api/endpoints/register'
 import useForm from '@/shared/hooks/useForm'
+import useNotification from '@/shared/hooks/useNotification'
 
 export const useRegister = () => {
 
     // Navigation
     const navigate = useNavigate()
+    const { notify } = useNotification()
 
     // Form setup using shared hook
     const {
@@ -25,6 +27,7 @@ export const useRegister = () => {
         // TODO: Move console output to UI element.
         if (values.password !== values.password_again) {
             console.error('Passwords do not match')
+            notify('Adgangskoderne matcher ikke', 'error')
             return
         }
 
@@ -40,6 +43,7 @@ export const useRegister = () => {
             navigate('/')
         } catch (error) {
             console.error('Registration failed:', error)
+            notify(error.message || 'Brugeren kunne ikke oprettes', 'error')
         }
     }
 

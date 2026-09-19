@@ -55,19 +55,39 @@ export const getBookingEndTime = (date, time) => {
 
 // ------------------------------------------------------------------------------------------------------
 
+const getTimeInMinutes = (time) => {
+    if (!time) {
+        return null
+    }
+
+    const parts = Array.isArray(time)
+        ? time
+        : String(time).split(':')
+
+    const hours = Number(parts[0])
+    const minutes = Number(parts[1])
+
+    if (!Number.isFinite(hours) || !Number.isFinite(minutes)) {
+        return null
+    }
+
+    return hours * 60 + minutes
+}
+
+// ------------------------------------------------------------------------------------------------------
+
 export const getAvailableTimes = (date, operatingHour) => {
 
     if (!operatingHour || operatingHour.closed) {
         return []
     }
 
-    const openMinutes =
-        operatingHour.open_time[0] * 60 +
-        operatingHour.open_time[1]
+    const openMinutes = getTimeInMinutes(operatingHour.open_time)
+    const closeMinutes = getTimeInMinutes(operatingHour.close_time)
 
-    const closeMinutes =
-        operatingHour.close_time[0] * 60 +
-        operatingHour.close_time[1]
+    if (openMinutes === null || closeMinutes === null || openMinutes >= closeMinutes) {
+        return []
+    }
 
     // Get current time in minutes
     const now = new Date()

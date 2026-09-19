@@ -13,6 +13,8 @@ import alpha.domain.member.mapper.request.MemberRequestMapper;
 import alpha.domain.member.mapper.response.MemberResponseMapper;
 import alpha.domain.membership.dao.MembershipDAO;
 import alpha.domain.membership.entity.Membership;
+import alpha.domain.role.dao.RoleDAO;
+import alpha.domain.role.enums.RoleName;
 import alpha.exception.ApiException;
 import alpha.util.BCryptHash;
 import jakarta.persistence.EntityManager;
@@ -23,12 +25,14 @@ public class AuthService {
     // Attributes
     private final MemberDAO memberDAO;
     private final MembershipDAO membershipDAO;
+    private final RoleDAO roleDAO;
 
     // _________________________________________________________________________________________________________________
 
     public AuthService(EntityManager em) {
         this.memberDAO = new MemberDAO(em);
         this.membershipDAO = new MembershipDAO(em);
+        this.roleDAO = new RoleDAO(em);
     }
 
     // _________________________________________________________________________________________________________________
@@ -41,8 +45,12 @@ public class AuthService {
         if (member == null || !BCryptHash.check(loginRequestDTO.getPassword(), member.getPasswordHashed())) {
             throw new ApiException(401, "Invalid credentials");
         }
-        member.setLastLogin(new Timestamp(System.currentTimeMillis()));
-        memberDAO.update(member);
+        memberDAO.refresh(member);
+        memberDAO.updateColumnById(
+                member.getId(),
+                Member.Fields.LAST_LOGIN,
+                new Timestamp(System.currentTimeMillis())
+        );
         AuthResponseDTO response = new AuthResponseDTO();
         response.setAccessToken(JwtService.generateAccessToken(member));
         response.setRefreshToken(JwtService.generateRefreshToken(member));
@@ -66,6 +74,10 @@ public class AuthService {
             throw new ApiException(500, "Free membership not found");
         }
         member.setMembership(free);
+        member.setRole(roleDAO.getByName(RoleName.MEMBER));
+        if (member.getRole() == null) {
+            throw new ApiException(500, "Member role not found");
+        }
         memberDAO.create(member);
         return MemberResponseMapper.toDTO(member);
     }
