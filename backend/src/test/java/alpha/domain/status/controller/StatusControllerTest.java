@@ -33,5 +33,4 @@ class StatusControllerTest extends ATest {
                 .body("message.environment", equalTo("test"));
     }
 
-
 }

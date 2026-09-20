@@ -6,6 +6,7 @@ import alpha.domain.member.entity.Member;
 import alpha.domain.membership.entity.Membership;
 import alpha.domain.role.entity.Role;
 import alpha.domain.settings.operatinghour.entity.OperatingHour;
+import alpha.domain.resources.staff.entity.Staff;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateAnnotation {
@@ -21,6 +22,7 @@ public class HibernateAnnotation {
         configuration.addAnnotatedClass(Court.class);
         configuration.addAnnotatedClass(OperatingHour.class);
         configuration.addAnnotatedClass(Role.class);
+        configuration.addAnnotatedClass(Staff.class);
     }
 
 }
