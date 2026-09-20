@@ -1,0 +1,49 @@
+.resourceEditor {
+    width: var(--alpha-component-width-100);
+}
+
+.resourceEditor h1 {
+    margin: 0 0 1.5rem;
+}
+
+.resourceRow {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.inputRow {
+    width: 100%;
+    padding: 2rem;
+    background-color: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--alpha-component-border-radius);
+    box-shadow: var(--alpha-component-box-shadow);
+    min-width: 0;
+}
+
+.fields {
+    display: grid;
+    grid-template-columns: repeat(var(--field-count), minmax(0, 1fr));
+    gap: 1rem;
+    min-width: 0;
+}
+
+@media (max-width: 1100px) {
+    .fields {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .resourceRow {
+        grid-template-columns: 1fr;
+    }
+
+    .fields {
+        grid-template-columns: 1fr;
+    }
+}

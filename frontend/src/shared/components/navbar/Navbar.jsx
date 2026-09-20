@@ -14,8 +14,9 @@ const Navbar = () => {
         ? [
             {id: 1, label: 'Dashboard', icon: 'fa-dashboard', path: '/dashboard'},
             {id: 2, label: 'Ressourcer', icon: 'fa-line-chart', path: '/dashboard/resources'},
-            {id: 3, label: 'Ansatte', icon: 'fa-users', path: '/dashboard/employees'},
-            {id: 4, label: 'Baner', icon: 'fa-th-large', path: '/dashboard/courts'},
+            {id: 3, label: 'Ansatte', icon: 'fa-users', path: '/dashboard/staff'},
+            {id: 4, label: 'Åbningstider', icon: 'fa-clock-o', path: '/dashboard/operating-hours'},
+            {id: 5, label: 'Baner', icon: 'fa-th-large', path: '/dashboard/courts'},
         ]
         : [
             {id: 1, label: 'Forside', icon: 'fa-home', path: '/member'},

@@ -45,7 +45,7 @@
     --alpha-white: #FFF;
 
     /* Application Specifics here */
-    --alpha-background: #fff;
+    --alpha-background: #5793ca;
     --alpha-font: system-ui, sans-serif;
     --alpha-component-box-radius: 0.25rem;
     
@@ -106,7 +106,6 @@ hr {
     opacity: 1;
 }
 
-
 /* ----- LAYOUT SPECIFIC | #2.0 --------------------------------------------------------------------------- */
 
 .authLayout, .appLayout {
@@ -129,6 +128,12 @@ hr {
     min-height: 100dvh;
     overflow: hidden;
     flex-direction: row;
+}
+
+.appLayout > main {
+    width: calc(100% - var(--alpha-navbar-width));
+    min-width: 0;
+    margin-left: var(--alpha-navbar-width);
 }
 
 /* ----- PAGE SPECIFIC | #3.0 ----------------------------------------------------------------------------- */
