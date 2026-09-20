@@ -14,6 +14,7 @@ import {OwnerDashboard} from '@/features/owner-dashboard'
 import OwnerResourcesPage from '@/app/pages/OwnerResourcesPage'
 import OwnerEmployeesPage from '@/app/pages/OwnerEmployeesPage'
 import OwnerCourtsPage from '@/app/pages/OwnerCourtsPage'
+import OwnerOperatingHoursPage from '@/app/pages/OwnerOperatingHoursPage'
 
 import AppLayout from '@/app/layouts/AppLayout'
 import AuthLayout from '@/app/layouts/AuthLayout'
@@ -43,7 +44,8 @@ const AppRoutes = () => (
             <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<OwnerDashboard />} />
                 <Route path="/dashboard/resources" element={<OwnerResourcesPage />} />
-                <Route path="/dashboard/employees" element={<OwnerEmployeesPage />} />
+                <Route path="/dashboard/staff" element={<OwnerEmployeesPage />} />
+                <Route path="/dashboard/operating-hours" element={<OwnerOperatingHoursPage />} />
                 <Route path="/dashboard/courts" element={<OwnerCourtsPage />} />
             </Route>
         </Route>
