@@ -32,6 +32,14 @@ This should showcase the Product Owners resources at any given time of the day a
 
 ---
 
+## MVP
+
+The system should be a **resource planner** for the Pickelball Facility Owner to track his facility by moving, adding and deleting resources such as **Staff**, **Courts**, **Operating Hours** & **Assignments** to track and plan ahead of schedule.
+By allowing the Owner to implement the system he should be able to see **when his resources are spent up** and need to add additional staff **to handle demand**.
+As a **member** I should be able to **book a court from my selected membership in any available time during the Operating Hours** of the Facility.
+
+---
+
 ## Folder Structure
 
 This section is to showcase our folder structure. We are using a shared / feature architecture for out frontend application and a normal CRUD REST API Setup for our Java backend.
