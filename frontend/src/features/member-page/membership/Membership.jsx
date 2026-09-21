@@ -4,16 +4,15 @@
 
 import styles from './Membership.module.css'
 import Submit from '@/shared/components/submit/Submit'
-import { updateMembership } from '@/api/endpoints/membership'
-import useMember from '@/shared/hooks/useMember'
+import { useMembership } from './Membership.hooks'
 
 const Membership = () => {
 
-    const { member } = useMember()
+    const { member, handleMembershipChange } = useMembership()
 
-    const handleMembershipClick = async (e) => {
+    const handleMembershipClick = async (e, membershipId) => {
         e.preventDefault()
-        await updateMembership();
+        await handleMembershipChange(membershipId)
     }
 
     // Users current membership
@@ -106,7 +105,7 @@ const Membership = () => {
                                 label={isCurrent ? 'Nuværende' : 'Vælg'}
                                 size="m"
                                 className={styles.heroSubmitBtn}
-                                onClick={isCurrent ? undefined : handleMembershipClick}
+                                onClick={isCurrent ? undefined : (e) => handleMembershipClick(e, membership.id)}
                             />
                         </div>
 

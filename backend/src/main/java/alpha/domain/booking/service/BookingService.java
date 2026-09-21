@@ -41,7 +41,7 @@ public class BookingService extends EntityManagerService<Booking> {
         Member member = validateMember(memberId);
 
         // Validate daily
-        validateMemberDailyBooking(memberId, dto.getStartTime());
+        validateMemberDailyBooking(member, dto.getStartTime());
 
         Court court = validateCourt(dto.getCourtId());
         validateMembership(member, court);
@@ -70,7 +70,12 @@ public class BookingService extends EntityManagerService<Booking> {
     // _________________________________________________________________________________________________________________
     // TODO: Implement premium + super premium to allow multiple bookings
 
-    private void validateMemberDailyBooking(Integer memberId, LocalDateTime startTime) {
+    private void validateMemberDailyBooking(Member member, LocalDateTime startTime) {
+        if (member.getMembership() != null && member.getMembership().getId() >= 4) {
+            return;
+        }
+
+        Integer memberId = member.getId();
         if (bookingDAO.existsBookingForMemberOnDate(memberId, startTime)) {
             throw new ApiException(
                     409, "Du har allerede én booking på denne dag. Fjern venligst en."
@@ -133,7 +138,8 @@ public class BookingService extends EntityManagerService<Booking> {
         if (court.getRequiredMembership() == null) {
             return;
         }
-        if (member.getMembership() == null || !court.getRequiredMembership().getId().equals(member.getMembership().getId())) {
+        if (member.getMembership() == null
+                || member.getMembership().getId() < court.getRequiredMembership().getId()) {
             throw new ApiException(
                     403, "Du har ikke adgang til denne funktion. Opgradér venligst medlemsskab"
             );

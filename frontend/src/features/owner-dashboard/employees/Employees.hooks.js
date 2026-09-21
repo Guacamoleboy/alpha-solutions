@@ -7,13 +7,15 @@ import {createStaff, deleteStaff, getStaff, updateStaff} from '@/api/endpoints/s
 import useNotification from '@/shared/hooks/useNotification'
 
 const fields = [
-    {key: 'first_name', itemKey: 'first_name', label: 'Fornavn', required: true},
-    {key: 'last_name', itemKey: 'last_name', label: 'Efternavn', required: true},
-    {key: 'email', itemKey: 'email', label: 'Email', type: 'email', required: true},
+    {key: 'first_name', itemKey: 'first_name', label: 'Fornavn', required: true, updateRequired: false},
+    {key: 'last_name', itemKey: 'last_name', label: 'Efternavn', required: true, updateRequired: false},
+    {key: 'email', itemKey: 'email', label: 'Email', type: 'email', required: true, updateRequired: false},
     {key: 'phone', itemKey: 'phone', label: 'Telefon'},
     {key: 'salary', itemKey: 'salary', label: 'Løn', type: 'number'},
     {key: 'working_hours_weekly', itemKey: 'working_hours_weekly', label: 'Timer pr. uge', type: 'number'},
 ]
+
+// ------------------------------------------------------------------------------------------------------
 
 export const useEmployees = () => {
     const [staff, setStaff] = useState([])
@@ -62,4 +64,5 @@ export const useEmployees = () => {
         staff,
         view,
     }
+
 }

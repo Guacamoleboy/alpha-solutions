@@ -20,7 +20,8 @@ const ResourceEditorItem = ({item, fields, busy, onDelete, onSubmit}) => {
                         const fieldProps = {
                             ...registerField(field.key),
                             placeholder: String(getFieldValue(field)),
-                            required: field.required,
+                            required: field.updateRequired ?? field.required,
+                            disabled: field.updateDisabled,
                             size: 'l',
                         }
 
@@ -51,7 +52,9 @@ const ResourceEditorItem = ({item, fields, busy, onDelete, onSubmit}) => {
                 inline={singleRow}
                 actions={[
                     {label: 'Opdatér', type: 'submit', disabled: busy},
-                    {label: 'Slet', danger: true, disabled: busy, onClick: () => onDelete(item)},
+                    ...(onDelete
+                        ? [{label: 'Slet', danger: true, disabled: busy, onClick: () => onDelete(item)}]
+                        : []),
                 ]}
             />
         </form>
