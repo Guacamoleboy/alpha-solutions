@@ -6,13 +6,15 @@ import {useEffect, useState} from 'react'
 import {createCourt, deleteCourt, getCourts, updateCourt} from '@/api/endpoints/court'
 import useNotification from '@/shared/hooks/useNotification'
 
+// TODO: Need to find a better way to do this. Probably a JSON map using data/ instead.
 const fields = [
-    {key: 'name', itemKey: 'name', label: 'Navn', required: true},
+    {key: 'name', itemKey: 'name', label: 'Navn', required: true, updateRequired: false},
     {
         key: 'active',
         itemKey: 'active',
         label: 'Aktiv',
         required: true,
+        updateRequired: false,
         options: [
             {value: '', label: 'Vælg status'},
             {value: 'true', label: 'Ja'},
@@ -21,6 +23,7 @@ const fields = [
     },
     {
         key: 'surface',
+        updateRequired: false,
         itemKey: 'surface',
         label: 'Underlag',
         options: [
@@ -29,12 +32,28 @@ const fields = [
                 .map((surface) => ({value: surface, label: surface})),
         ],
     },
-    {key: 'latitude', itemKey: 'latitude', label: 'Breddegrad', type: 'number'},
-    {key: 'longitude', itemKey: 'longitude', label: 'Længdegrad', type: 'number'},
-    {key: 'orientation_degrees', itemKey: 'orientation_degrees', label: 'Orientering', type: 'number'},
-    {key: 'elevation', itemKey: 'elevation', label: 'Højde', type: 'number'},
+    {
+        key: 'required_membership_id',
+        updateRequired: false,
+        itemKey: 'required_membership_id',
+        label: 'Påkrævet medlemskab',
+        options: [
+            {value: '', label: 'Ingen krav'},
+            {value: '1', label: 'Free'},
+            {value: '2', label: 'Basic'},
+            {value: '3', label: 'Premium'},
+            {value: '4', label: 'Super Premium'},
+        ],
+    },
+    {key: 'latitude', itemKey: 'latitude', label: 'Breddegrad', type: 'number', updateRequired: false},
+    {key: 'longitude', itemKey: 'longitude', label: 'Længdegrad', type: 'number', updateRequired: false},
+    {key: 'orientation_degrees', itemKey: 'orientation_degrees', label: 'Orientering', type: 'number', updateRequired: false},
+    {key: 'elevation', itemKey: 'elevation', label: 'Højde', type: 'number', updateRequired: false},
 ]
 
+// ------------------------------------------------------------------------------------------------------
+
+// TODO: Need to find a better way to do this.
 const toPayload = (item, values) => ({
     id: item?.id,
     name: values.name ?? item?.name,
@@ -44,9 +63,14 @@ const toPayload = (item, values) => ({
     surface: values.surface || item?.surface,
     latitude: values.latitude ?? item?.latitude,
     longitude: values.longitude ?? item?.longitude,
-    orientationDegrees: values.orientation_degrees ?? item?.orientation_degrees,
+    orientation_degrees: values.orientation_degrees ?? item?.orientation_degrees,
     elevation: values.elevation ?? item?.elevation,
+    required_membership_id: values.required_membership_id !== undefined
+        ? (values.required_membership_id === '' ? null : Number(values.required_membership_id))
+        : item?.required_membership_id ?? null,
 })
+
+// ------------------------------------------------------------------------------------------------------
 
 export const useCourts = () => {
     const [courts, setCourts] = useState([])
@@ -96,4 +120,5 @@ export const useCourts = () => {
         toPayload,
         view,
     }
+
 }

@@ -2,6 +2,9 @@ package alpha.dao;
 
 import alpha.ATest;
 import alpha.domain.member.entity.Member;
+import alpha.domain.role.dao.RoleDAO;
+import alpha.domain.role.entity.Role;
+import alpha.domain.role.enums.RoleName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -14,21 +17,36 @@ public class EntityManagerDAOTest extends ATest {
 
     // Attributes
     private EntityManagerDAO<Member> entityManagerDAO;
+    private Role memberRole;
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @BeforeEach
     public void setupDAO() {
         this.entityManagerDAO = new EntityManagerDAO<>(em, Member.class);
         entityManagerDAO.deleteAll();
+
+        RoleDAO roleDAO = new RoleDAO(em);
+        memberRole = roleDAO.getByName(RoleName.MEMBER);
+        if (memberRole == null) {
+            memberRole = roleDAO.create(Role.builder().name(RoleName.MEMBER).build());
+        }
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
+
+    private Member newMember() {
+        return Member.builder()
+                .role(memberRole)
+                .build();
+    }
+
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldCreateMember() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("John");
         member.setLastName("Doe");
         member.setEmail("john@example.com");
@@ -50,12 +68,12 @@ public class EntityManagerDAOTest extends ATest {
         assertEquals("hashedPassword", createdMember.getPasswordHashed());
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldGetById() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Jane");
         member.setLastName("Doe");
         member.setEmail("jane@example.com");
@@ -77,12 +95,12 @@ public class EntityManagerDAOTest extends ATest {
         assertEquals("jane@example.com", retrievedMember.getEmail());
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldUpdateMember() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Michael");
         member.setLastName("Smith");
         member.setEmail("michael@example.com");
@@ -104,12 +122,12 @@ public class EntityManagerDAOTest extends ATest {
         assertEquals("Male", updatedMember.getGender());
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldDeleteMember() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Guest");
         member.setLastName("User");
         member.setEmail("guest@example.com");
@@ -126,18 +144,18 @@ public class EntityManagerDAOTest extends ATest {
         assertNull(retrievedAfterDelete);
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldGetAllMembers() {
         // Arrange
-        Member member1 = new Member();
+        Member member1 = newMember();
         member1.setFirstName("John");
         member1.setLastName("Doe");
         member1.setEmail("john@example.com");
         member1.setPasswordHashed("password1");
 
-        Member member2 = new Member();
+        Member member2 = newMember();
         member2.setFirstName("Jane");
         member2.setLastName("Doe");
         member2.setEmail("jane@example.com");
@@ -155,12 +173,12 @@ public class EntityManagerDAOTest extends ATest {
         assertTrue(allMembers.stream().anyMatch(m -> m.getFirstName().equals("Jane")));
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldGetColumnById() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Column");
         member.setLastName("Test");
         member.setEmail("column@example.com");
@@ -179,12 +197,12 @@ public class EntityManagerDAOTest extends ATest {
         assertEquals("column@example.com", retrievedEmail);
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldDeleteById() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Temp");
         member.setLastName("Member");
         member.setEmail("temp@example.com");
@@ -201,12 +219,12 @@ public class EntityManagerDAOTest extends ATest {
         assertNull(retrievedAfterDelete);
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldUpdateColumnById() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Initial");
         member.setLastName("Member");
         member.setEmail("initial@example.com");
@@ -228,12 +246,12 @@ public class EntityManagerDAOTest extends ATest {
         assertEquals("Updated", updatedFirstName);
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldFindEntityByColumn() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("FindMe");
         member.setLastName("Member");
         member.setEmail("findme@example.com");
@@ -252,12 +270,12 @@ public class EntityManagerDAOTest extends ATest {
         assertEquals("findme@example.com", foundMember.getEmail());
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldReturnTrueIfColumnExists() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Exists");
         member.setLastName("Member");
         member.setEmail("exists@example.com");
@@ -274,12 +292,12 @@ public class EntityManagerDAOTest extends ATest {
         assertFalse(notExists);
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldExecuteQuerySupplier() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Tester");
         member.setLastName("Member");
         member.setEmail("tester@example.com");
@@ -298,12 +316,12 @@ public class EntityManagerDAOTest extends ATest {
         assertEquals("Tester", result.getFirstName());
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldExecuteQueryRunnable() {
         // Arrange
-        Member member = new Member();
+        Member member = newMember();
         member.setFirstName("Runnable");
         member.setLastName("Member");
         member.setEmail("runnable@example.com");
@@ -322,18 +340,18 @@ public class EntityManagerDAOTest extends ATest {
         assertEquals("Runnable", retrievedMember.getFirstName());
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldDeleteAllMembers_bulk() {
         // Arrange
-        Member member1 = new Member();
+        Member member1 = newMember();
         member1.setFirstName("Bulk1");
         member1.setLastName("Member");
         member1.setEmail("bulk1@example.com");
         member1.setPasswordHashed("password1");
 
-        Member member2 = new Member();
+        Member member2 = newMember();
         member2.setFirstName("Bulk2");
         member2.setLastName("Member");
         member2.setEmail("bulk2@example.com");
@@ -351,18 +369,18 @@ public class EntityManagerDAOTest extends ATest {
         assertTrue(remainingMembers.isEmpty());
     }
 
-    // ____________________________________________________
+    // _________________________________________________________________________________________________________________
 
     @Test
     public void shouldDeleteAllMembers_safe() {
         // Arrange
-        Member member1 = new Member();
+        Member member1 = newMember();
         member1.setFirstName("Safe1");
         member1.setLastName("Member");
         member1.setEmail("safe1@example.com");
         member1.setPasswordHashed("password1");
 
-        Member member2 = new Member();
+        Member member2 = newMember();
         member2.setFirstName("Safe2");
         member2.setLastName("Member");
         member2.setEmail("safe2@example.com");

@@ -10,6 +10,8 @@ import alpha.domain.role.enums.RoleName;
 import alpha.domain.role.service.RoleService;
 import alpha.exception.ApiException;
 import alpha.domain.member.mapper.response.MemberResponseMapper;
+import alpha.domain.membership.entity.Membership;
+import alpha.domain.membership.service.MembershipService;
 import alpha.service.EntityManagerService;
 import alpha.util.BCryptHash;
 import jakarta.persistence.EntityManager;
@@ -20,6 +22,7 @@ public class MemberService extends EntityManagerService<Member> {
     // Attributes
     private final MemberDAO memberDAO;
     private final RoleService roleService;
+    private final MembershipService membershipService;
 
     // _________________________________________________________________________________________________________________
 
@@ -27,6 +30,7 @@ public class MemberService extends EntityManagerService<Member> {
         super(new MemberDAO(em), Member.class);
         this.memberDAO = (MemberDAO) this.entityManagerDAO;
         this.roleService = new RoleService(em);
+        this.membershipService = new MembershipService(em);
     }
 
     // _________________________________________________________________________________________________________________
@@ -115,8 +119,20 @@ public class MemberService extends EntityManagerService<Member> {
                     dto.getGender()
             );
         }
+        if (dto.getMembershipId() != null) {
+            Membership membership = membershipService.getById(dto.getMembershipId());
+            if (membership == null) {
+                throw new ApiException(404, "Membership not found");
+            }
+            memberDAO.updateColumnById(
+                    id,
+                    Member.Fields.MEMBERSHIP,
+                    membership
+            );
+        }
 
-        return MemberResponseMapper.toDTO(memberDAO.getById(id));
+        memberDAO.refresh(member);
+        return MemberResponseMapper.toDTO(member);
     }
 
     // _________________________________________________________________________________________________________________

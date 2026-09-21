@@ -11,6 +11,7 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
+import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,11 +27,31 @@ class StaffControllerTest extends ATest {
     void setupStaffController() {
         staffDAO = new StaffDAO(em);
         staffDAO.deleteAll();
+        startServer();
+
+        List<String> serverRoles = RestAssured
+                .given()
+                .get("/role/all")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("data.name");
+
+        if (serverRoles == null || !serverRoles.contains(RoleName.STAFF.name())) {
+            RestAssured
+                    .given()
+                    .contentType("application/json")
+                    .body("{\"name\":\"STAFF\"}")
+                    .when()
+                    .post("/role/")
+                    .then()
+                    .statusCode(200);
+        }
 
         RoleDAO roleDAO = new RoleDAO(em);
         Role staffRole = roleDAO.getByName(RoleName.STAFF);
         if (staffRole == null) {
-            roleDAO.create(Role.builder().name(RoleName.STAFF).build());
+            staffRole = roleDAO.create(Role.builder().name(RoleName.STAFF).build());
         }
     }
 
@@ -38,8 +59,6 @@ class StaffControllerTest extends ATest {
 
     @Test
     void shouldCreateStaffWithDefaultPasswordAndStaffRole() {
-        startServer();
-
         Integer staffId = RestAssured
                 .given()
                 .contentType("application/json")
@@ -75,8 +94,6 @@ class StaffControllerTest extends ATest {
 
     @Test
     void shouldUpdateStaffDetailsWithoutReplacingPasswordOrRole() {
-        startServer();
-
         Integer staffId = RestAssured
                 .given()
                 .contentType("application/json")
@@ -118,6 +135,7 @@ class StaffControllerTest extends ATest {
                 .body("data.working_hours_weekly", equalTo(37.0F))
                 .body("data.role", equalTo("STAFF"));
 
+        em.clear();
         Staff updatedStaff = staffDAO.getById(staffId);
 
         assertTrue(originalPasswordHash.equals(updatedStaff.getPasswordHashed()));

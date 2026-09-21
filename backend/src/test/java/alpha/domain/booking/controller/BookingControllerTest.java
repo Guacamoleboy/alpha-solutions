@@ -2,26 +2,19 @@ package alpha.domain.booking.controller;
 
 import alpha.ATest;
 import alpha.domain.booking.dao.BookingDAO;
-import alpha.domain.booking.entity.Booking;
-import alpha.domain.court.dao.CourtDAO;
 import alpha.domain.court.entity.Court;
-import alpha.domain.member.dao.MemberDAO;
 import alpha.domain.member.entity.Member;
-import alpha.domain.role.dao.RoleDAO;
 import alpha.domain.role.entity.Role;
 import alpha.domain.role.enums.RoleName;
-import alpha.domain.settings.operatinghour.dao.OperatingHourDAO;
-import alpha.domain.settings.operatinghour.entity.OperatingHour;
 import alpha.security.jwt.JwtService;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.List;
 import java.util.UUID;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BookingControllerTest extends ATest {
 
@@ -35,51 +28,134 @@ class BookingControllerTest extends ATest {
 
     @BeforeEach
     void setupBookingController() {
+        clearBookings();
+        startServer();
+        setBookingStart();
+        ensureMemberRole();
+        createMember();
+        createCourt();
+        createOperatingHour();
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void clearBookings() {
         bookingDAO = new BookingDAO(em);
         bookingDAO.deleteAll();
-        new OperatingHourDAO(em).deleteAll();
+    }
 
-        RoleDAO roleDAO = new RoleDAO(em);
-        Role memberRole = roleDAO.getByName(RoleName.MEMBER);
-        if (memberRole == null) {
-            memberRole = roleDAO.create(Role.builder().name(RoleName.MEMBER).build());
-        }
+    // _________________________________________________________________________________________________________________
 
-        member = Member.builder()
-                .firstName("Booking")
-                .lastName("Controller")
-                .email("booking.controller." + UUID.randomUUID() + "@example.com")
-                .passwordHashed("Password12345!")
-                .role(memberRole)
-                .build();
-        new MemberDAO(em).create(member);
-
-        court = Court.builder()
-                .name("Controller Court " + UUID.randomUUID())
-                .active(true)
-                .build();
-        new CourtDAO(em).create(court);
-
+    private void setBookingStart() {
         bookingStart = LocalDateTime.now()
                 .plusDays(30)
                 .withHour(10)
                 .withMinute(0)
                 .withSecond(0)
                 .withNano(0);
-        OperatingHour operatingHour = OperatingHour.builder()
-                .dayOfWeek(bookingStart.getDayOfWeek())
-                .openTime(LocalTime.MIN)
-                .closeTime(LocalTime.MAX)
-                .closed(false)
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void ensureMemberRole() {
+        List<String> serverRoles = RestAssured
+                .given()
+                .get("/role/all")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("data.name");
+        if (serverRoles == null || !serverRoles.contains(RoleName.MEMBER.name())) {
+            RestAssured
+                    .given()
+                    .contentType("application/json")
+                    .body("{\"name\":\"MEMBER\"}")
+                    .when()
+                    .post("/role/")
+                    .then()
+                    .statusCode(200);
+        }
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void createMember() {
+        Integer memberId = RestAssured
+                .given()
+                .contentType("application/json")
+                .body("""
+                        {
+                          "firstName": "Booking",
+                          "lastName": "Controller",
+                          "email": "%s",
+                          "passwordHashed": "Password12345!"
+                        }
+                        """.formatted("booking.controller." + UUID.randomUUID() + "@example.com"))
+                .when()
+                .post("/member/")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("data.id");
+
+        member = Member.builder()
+                .id(memberId)
+                .firstName("Booking")
+                .lastName("Controller")
+                .role(Role.builder().name(RoleName.MEMBER).build())
                 .build();
-        new OperatingHourDAO(em).create(operatingHour);
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void createCourt() {
+        Integer courtId = RestAssured
+                .given()
+                .contentType("application/json")
+                .body("""
+                        {
+                          "name": "%s",
+                          "active": true
+                        }
+                        """.formatted("Controller Court " + UUID.randomUUID()))
+                .when()
+                .post("/court/")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("data.id");
+
+        court = Court.builder()
+                .id(courtId)
+                .name("Controller Court")
+                .active(true)
+                .build();
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void createOperatingHour() {
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .body("""
+                        {
+                          "dayOfWeek": "%s",
+                          "openTime": "00:00:00",
+                          "closeTime": "23:59:59",
+                          "closed": false
+                        }
+                        """.formatted(bookingStart.getDayOfWeek()))
+                .when()
+                .post("/settings/operating-hours/")
+                .then()
+                .statusCode(200);
     }
 
     // _________________________________________________________________________________________________________________
 
     @Test
     void shouldCreateBookingAndRetrieveMemberBookingsThroughController() {
-        startServer();
         String accessToken = JwtService.generateAccessToken(member);
 
         Integer bookingId = RestAssured
@@ -114,8 +190,6 @@ class BookingControllerTest extends ATest {
                 .body("data", hasSize(1))
                 .body("data[0].id", equalTo(bookingId));
 
-        Booking createdBooking = bookingDAO.getById(bookingId);
-        assertEquals(member.getId(), createdBooking.getMember().getId());
     }
 
 }

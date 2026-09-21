@@ -8,6 +8,7 @@ import useForm from '@/shared/hooks/useForm'
 import useNotification from '@/shared/hooks/useNotification'
 import { useOperatingHours } from '@/shared/hooks/useOperatingHours'
 import { useCourt } from '@/shared/hooks/useCourt'
+import useMember from '@/shared/hooks/useMember'
 import { getDayOfWeek, getAvailableTimes,getBookingEndTime } from './bookingTime'
 
 export const useCourtBooking = () => {
@@ -30,6 +31,7 @@ export const useCourtBooking = () => {
 
     // Court setup
     const { courts } = useCourt()
+    const { member } = useMember()
 
     // Notification setup
     const { notify } = useNotification()
@@ -86,7 +88,13 @@ export const useCourtBooking = () => {
         }))
         setAvailableCourts(
             courts.filter(
-                (court) => court.active
+                (court) => court.active && (
+                    (court.required_membership_id === null
+                    || court.required_membership_id === undefined)
+                    || (member?.membership_id !== null
+                    && member?.membership_id !== undefined
+                    && member.membership_id >= court.required_membership_id)
+                )
             )
         )
     }

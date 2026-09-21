@@ -11,6 +11,7 @@ import alpha.util.BCryptHash;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 import java.util.UUID;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,6 +28,27 @@ class MemberControllerTest extends ATest {
     @BeforeEach
     void setupMemberController() {
         memberDAO = new MemberDAO(em);
+        startServer();
+
+        List<String> serverRoles = RestAssured
+                .given()
+                .get("/role/all")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("data.name");
+
+        if (serverRoles == null || !serverRoles.contains(RoleName.MEMBER.name())) {
+            RestAssured
+                    .given()
+                    .contentType("application/json")
+                    .body("{\"name\":\"MEMBER\"}")
+                    .when()
+                    .post("/role/")
+                    .then()
+                    .statusCode(200);
+        }
+
         RoleDAO roleDAO = new RoleDAO(em);
         memberRole = roleDAO.getByName(RoleName.MEMBER);
         if (memberRole == null) {
@@ -38,7 +60,6 @@ class MemberControllerTest extends ATest {
 
     @Test
     void shouldCreateAndUpdateMemberThroughController() {
-        startServer();
         String email = "controller.member." + UUID.randomUUID() + "@example.com";
 
         Integer memberId = RestAssured
@@ -73,14 +94,16 @@ class MemberControllerTest extends ATest {
                 .body("status", equalTo("success"))
                 .body("data.first_name", equalTo("Updated Controller"));
 
+        em.clear();
         Member updatedMember = memberDAO.getById(memberId);
         assertEquals("Updated Controller", updatedMember.getFirstName());
 
     }
 
+    // _________________________________________________________________________________________________________________
+
     @Test
     void shouldUpdateMemberPasswordThroughController() {
-        startServer();
         Member member = Member.builder()
                 .firstName("Password")
                 .lastName("Member")
@@ -107,6 +130,7 @@ class MemberControllerTest extends ATest {
                 .statusCode(200)
                 .body("status", equalTo("success"));
 
+        em.clear();
         Member updatedMember = memberDAO.getById(member.getId());
         assertTrue(BCryptHash.check("NewPassword123!", updatedMember.getPasswordHashed()));
     }

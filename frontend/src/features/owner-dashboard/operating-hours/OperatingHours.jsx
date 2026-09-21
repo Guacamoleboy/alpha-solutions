@@ -13,7 +13,6 @@ const OperatingHours = () => {
         error,
         fields,
         handleCreate,
-        handleDelete,
         handleUpdate,
         loading,
         operatingHours,
@@ -30,7 +29,7 @@ const OperatingHours = () => {
             <QuickNavigation
                 items={[
                     {label: 'Forside', targetId: 'operating-hours-home'},
-                    {label: 'Opret ny', targetId: 'operating-hours-create'},
+                    // {label: 'Opret ny', targetId: 'operating-hours-create'},
                 ]}
                 scrollToTop
                 onNavigate={(targetId) => setView(targetId === 'operating-hours-create' ? 'create' : 'home')}
@@ -47,7 +46,6 @@ const OperatingHours = () => {
                         fields={fields}
                         toPayload={toPayload}
                         onUpdate={handleUpdate}
-                        onDelete={handleDelete}
                     />
                 </div>
             )}
