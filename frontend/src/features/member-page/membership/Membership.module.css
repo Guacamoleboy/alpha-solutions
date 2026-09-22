@@ -18,7 +18,7 @@
 }
 
 .membershipCard:hover {
-    background: #4771b5;
+    background: var(--alpha-accent);
     color: #FFF !important;
 }
 

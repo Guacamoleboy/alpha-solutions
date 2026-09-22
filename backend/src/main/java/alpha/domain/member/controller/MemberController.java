@@ -9,6 +9,7 @@ import alpha.service.EntityManagerService;
 import alpha.util.TryCatchHelper;
 import io.javalin.http.Context;
 import alpha.domain.member.dto.request.MemberPasswordRequestDTO;
+import alpha.domain.member.dto.request.ForgotPasswordVerifyRequestDTO;
 import alpha.security.jwt.JwtService;
 import alpha.util.ContextHelper;
 
@@ -53,6 +54,24 @@ public class MemberController extends CRUDController<Member> {
             MemberPasswordRequestDTO dto = ctx.bodyAsClass(MemberPasswordRequestDTO.class);
             ((MemberService) classService).updatePassword(memberId, dto);
         }, "Password updated");
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void verifyForgottenPassword(Context ctx) {
+        TryCatchHelper.tryCatchHelperVoid(ctx, () -> {
+            ForgotPasswordVerifyRequestDTO dto = ctx.bodyAsClass(ForgotPasswordVerifyRequestDTO.class);
+            ((MemberService) classService).verifyForgottenPassword(dto);
+        }, "Account verified");
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void resetForgottenPassword(Context ctx) {
+        TryCatchHelper.tryCatchHelperVoid(ctx, () -> {
+            MemberRequestDTO dto = ctx.bodyAsClass(MemberRequestDTO.class);
+            ((MemberService) classService).resetForgottenPassword(dto);
+        }, "Password reset");
     }
 
 }

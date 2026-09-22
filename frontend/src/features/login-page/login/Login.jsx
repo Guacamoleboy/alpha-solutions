@@ -59,6 +59,15 @@ const Login = () => {
                             onClick={() => navigate('/register')}
                         />
 
+                        {/* FORGOT PASSWORD */}
+                        <Submit
+                            type="button"
+                            label="Glemt password"
+                            size="l"
+                            className={styles.loginActionBtnForgot}
+                            onClick={() => navigate('/forgot-password')}
+                        />
+
                         {/* LOGIN */}
                         <Submit
                             type="submit"
