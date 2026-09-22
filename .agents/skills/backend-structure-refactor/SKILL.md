@@ -1,6 +1,6 @@
 ---
 name: backend-structure-refactor
-description: Refactor the Java backend from a layer-based package structure to a domain-based package structure.
+description: Refactor the Java backend from a layer-based package structure to a domain-based package structure. Created by Guacamoleboy.
 ---
 
 # Custom Refactor Skill created by Guacamoleboy

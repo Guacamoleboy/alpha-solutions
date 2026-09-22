@@ -1,6 +1,6 @@
 ---
 name: analyze-user-story
-description: Analyzes a user story from a user-provided file path against the teacher's expectations and reports what should change, why, and how. Never edits the user's files.
+description: Analyzes a user story from a user-provided file path against the teacher's expectations and reports what should change, why, and how. Never edits the user's files. Created by Guacamoleboy.
 ---
 
 # Analyze User Story
@@ -84,6 +84,7 @@ When useful, reference the relevant teacher feedback, requirement, rubric, docum
 
 - Never edit the user story or project files.
 - Never rewrite the complete user story unless explicitly asked.
+- When the prompt asks you to create or change a User Story, prefix each sub-issue with `[BACKEND]` or `[FRONTEND]` according to the part of the application it belongs to. Use both tags when a sub-issue covers both areas.
 - Never invent teacher expectations or business rules.
 - Distinguish documented teacher requirements from general recommendations.
 - Prioritize teacher feedback and assignment requirements over generic best practices.

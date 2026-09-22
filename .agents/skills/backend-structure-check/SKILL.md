@@ -1,6 +1,6 @@
 ---
 name: backend-structure-check
-description: Check the Java backend against the project's domain-based package structure.
+description: Check the Java backend against the project's domain-based package structure. Created by Guacamoleboy.
 ---
 
 # Custom Architecture Checkup Skill created by Guacamoleboy

@@ -1,6 +1,6 @@
 ---
 name: create-new-entity
-description: Creates a complete generic Java domain to improve efficiency as I often waste time on it.
+description: Creates a complete generic Java domain to improve efficiency as I often waste time on it. Created by Guacamoleboy.
 ---
 
 # Create New Entity
