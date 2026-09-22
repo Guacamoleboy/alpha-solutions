@@ -5,7 +5,7 @@
     z-index: 10;
     width: 256px;
     height: 100dvh;
-    background-color: #5475ab;
+    background-color: #1E201F;
     padding: 2rem 1.25rem;
     display: flex;
     flex-direction: column;
@@ -31,12 +31,20 @@
     color: #e2e2e2;
 }
 
+.logoIcon {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+}
+
 .logoBadge {
     font-size: 0.75rem;
-    background-color: #334155;
+    background-color: #3A3D38;
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    color: #94a3b8;
+    color: #B8B6AA;
     font-weight: 600;
 }
 
@@ -62,7 +70,7 @@
 
 .navLink:hover {
     box-shadow: 0 4px 1px rgba(0,0,0,0.4);
-    background-color: #405169;
+    background-color: #4A4D46;
     color: #FFF;
 }
 
@@ -80,7 +88,7 @@
 }
 
 .navLink.active {
-    background-color: #405169;
+    background-color: #4A4D46;
     color: #FFF;
     box-shadow: 0 4px 1px rgba(0,0,0,0.4);
 }
@@ -92,8 +100,6 @@
 .logoutButton {
     border: 0;
     cursor: pointer;
-    align-items: center !important;
-    justify-content: center !important;
     width: 100%;
     font-family: inherit;
     background-color: inherit;

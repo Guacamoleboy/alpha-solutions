@@ -38,14 +38,19 @@
 
     /* Colors Defined here */
     --alpha-red: #ab1313;
-    --alpha-blue: #1524ad;
+    --alpha-blue: #6b6a61;
     --alpha-orange: #c78c1f;
     --alpha-green: #28a239;
     --alpha-black: #000;
     --alpha-white: #FFF;
 
     /* Application Specifics here */
-    --alpha-background: #5793ca;
+    --alpha-background: #1E201F;
+    --alpha-surface: #E4DFD3;
+    --alpha-surface-raised: #F7F4EE;
+    --alpha-accent: #8A6A3D;
+    --alpha-accent-dark: #5C452A;
+    --alpha-muted: #6C6A62;
     --alpha-font: system-ui, sans-serif;
     --alpha-component-box-radius: 0.25rem;
     
@@ -60,12 +65,13 @@
 
     /* Component Specific */
     --alpha-component-box-shadow: 0 5px 1px rgba(0,0,0,0.25);
-    --alpha-component-border-radius: 0.5rem;
+    --alpha-component-border-radius: 1rem;
 
     /* LAYOUT CALCULATIONS */
     --alpha-navbar-width: 256px;
     --alpha-page-padding: 2rem;
-    --alpha-portal-content-width: calc(100vw - var(--alpha-navbar-width) - (var(--alpha-page-padding) * 2));
+    --alpha-frame-margin: 1%;
+    --alpha-portal-content-width: calc(100vw - var(--alpha-navbar-width) - (var(--alpha-page-padding) * 2) - 2%);
     --alpha-component-width-100: var(--alpha-portal-content-width);
     --alpha-component-width-75: calc(var(--alpha-portal-content-width) * 0.75);
     --alpha-component-width-50: calc(var(--alpha-portal-content-width) * 0.5 - 1rem);
@@ -126,8 +132,10 @@ hr {
 
 .appLayout {
     min-height: 100dvh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     flex-direction: row;
+    background-color: #1E201F;
 }
 
 .appLayout > main {
@@ -159,11 +167,16 @@ hr {
 /* ----- MEMBER PAGE | #3.3 ------------------------------------------------------------------------------- */
 
 .memberPage {
-    width: 100%;
+    position: relative;
+    width: auto;
+    min-height: calc(100dvh - 2vh);
+    margin: 1vh var(--alpha-frame-margin);
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    background-color: var(--alpha-surface);
+    border-radius: 1rem;
 }
 
 /* ----- INPUT SPECIFIC | #4.0 ---------------------------------------------------------------------------- */
@@ -228,7 +241,7 @@ hr {
     height: 3rem;
     width: 100%;
     border: none;
-    border-radius: 0.25rem;
+    border-radius: 1rem;
     background-color: #787878;
     color: #ffffff;
     font-family: inherit;
@@ -315,8 +328,8 @@ hr {
 
 .quickNavigationWrapper {
     width: var(--alpha-component-width-100);
-    background-color: #d3dfeb;
-    border: 2px solid #e2e8f0;
+    background-color: var(--alpha-surface-raised);
+    border: 2px solid #d6d0c4;
     border-radius: var(--alpha-component-border-radius);
     padding: 1rem;
     display: flex;
@@ -330,9 +343,9 @@ hr {
     width: auto;
     padding: 0.75rem 1.25rem;
     border: 0;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     background-color: transparent;
-    color: #536174;
+    color: var(--alpha-muted);
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
@@ -341,17 +354,17 @@ hr {
 
 .quickNavigationWrapper button:hover {
     box-shadow: 0 4px 1px rgba(0,0,0,0.5);
-    background-color: #89a7c8;
+    background-color: var(--alpha-accent);
     color: #FFF;
 }
 
 .quickNavigationWrapper button:focus-visible {
-    outline: 2px solid #8baee2;
+    outline: 2px solid var(--alpha-accent);
     outline-offset: 2px;
 }
 
 .quickNavigationWrapper button:active {
-    background-color: #89a7c8;
+    background-color: var(--alpha-accent);
     box-shadow: 0 4px 1px rgba(0,0,0,0.5);
     color: #FFF;
 }
@@ -367,8 +380,14 @@ hr {
 }
 
 .dashboardContent {
-    width: 100%;
+    position: relative;
+    width: auto;
+    min-height: calc(100dvh - 2vh);
+    margin: 1vh var(--alpha-frame-margin);
     padding: var(--alpha-page-padding);
+    background-color: var(--alpha-surface);
+    border-radius: 1rem;
+    color: #1E201F;
 }
 
 /* ----- DASHBOARD GRID SYSTEM | #6.1 --------------------------------------------------------------------- */
@@ -385,8 +404,8 @@ hr {
 
 .settingsRow {
     width: 100%;
-    background-color: #f8fafc;
-    border: 2px solid #e2e8f0;
+    background-color: var(--alpha-surface-raised);
+    border: 2px solid #d6d0c4;
     border-radius: var(--alpha-component-border-radius);
     padding: 2rem;
     box-shadow: var(--alpha-component-box-shadow);

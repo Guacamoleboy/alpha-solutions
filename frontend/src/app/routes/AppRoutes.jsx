@@ -8,6 +8,7 @@ import MemberPage from '@/app/pages/MemberPage'
 import LoginPage from '@/app/pages/LoginPage'
 import MembershipPage from '@/app/pages/MembershipPage'
 import RegisterPage from '@/app/pages/RegisterPage'
+import ForgotPasswordPage from '@/app/pages/ForgotPasswordPage'
 import MemberSettingsPage from '@/app/pages/MemberSettingsPage'
 import MemberBookingPage from '@/app/pages/MemberBookingPage'
 import {OwnerDashboard} from '@/features/owner-dashboard'
@@ -27,6 +28,7 @@ const AppRoutes = () => (
         <Route element={<AuthLayout />}>
             <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
 
         {/* Member Portal */}

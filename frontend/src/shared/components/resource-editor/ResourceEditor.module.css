@@ -18,8 +18,8 @@
 .inputRow {
     width: 100%;
     padding: 2rem;
-    background-color: #f8fafc;
-    border: 2px solid #e2e8f0;
+    background-color: var(--alpha-surface-raised);
+    border: 2px solid #d6d0c4;
     border-radius: var(--alpha-component-border-radius);
     box-shadow: var(--alpha-component-box-shadow);
     min-width: 0;

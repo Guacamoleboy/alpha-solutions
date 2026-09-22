@@ -39,10 +39,14 @@
     margin-top: 0.5rem;
 }
 
-.loginActionBtn, .loginActionBtnRegister {
+.loginActionBtn, .loginActionBtnRegister, .loginActionBtnForgot {
     flex: 1;
 }
 
 .loginActionBtn {
-    background-color: #4c5f7c;
+    background-color: var(--alpha-accent);
+}
+
+.loginActionBtnForgot:hover {
+    background-color: var(--alpha-red);
 }
