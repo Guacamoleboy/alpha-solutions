@@ -48,6 +48,20 @@ export const updateMemberPassword = (data) => (
     })
 )
 
+export const verifyForgottenPassword = (data) => (
+    client(`/${pathing}/password/forgot/verify`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+    })
+)
+
+export const resetForgottenPassword = (data) => (
+    client(`/${pathing}/password/forgot/reset`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+    })
+)
+
 // ------------------------------------------------------------------------------------------------------
 // PUT
 

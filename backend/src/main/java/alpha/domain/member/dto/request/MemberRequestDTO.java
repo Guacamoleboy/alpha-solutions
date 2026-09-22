@@ -19,6 +19,7 @@ public class MemberRequestDTO {
     //          "last_name": "Lastname",
     //          "email": "mail@mail.dk",
     //          "password": "password",
+    //          "password_again": "passwordAgain",
     //          "phone": "+4560606060",
     //          "date_of_birth": "1990-05-15",
     //          "gender": "gender",
@@ -42,6 +43,9 @@ public class MemberRequestDTO {
 
     @JsonProperty("password")
     private String password;
+
+    @JsonProperty("password_again")
+    private String passwordAgain;
 
     @JsonProperty("phone")
     private String phone;

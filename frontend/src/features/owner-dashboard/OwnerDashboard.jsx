@@ -3,7 +3,7 @@
 // src/features/owner-dashboard/OwnerDashboard.jsx
 
 const OwnerDashboard = () => (
-    <section>
+    <section className="dashboardContent">
         <h1>Owner Dashboard</h1>
         <p>Dashboard content kommer senere.</p>
     </section>

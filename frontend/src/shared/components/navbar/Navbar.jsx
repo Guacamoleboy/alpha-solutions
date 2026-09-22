@@ -30,6 +30,12 @@ const Navbar = () => {
 
             {/* META */}
             <div className={styles.logoSection}>
+                <img
+                    src="/icons/pickelball-ball.png"
+                    alt=""
+                    className={styles.logoIcon}
+                    aria-hidden="true"
+                />
                 <h1 className={styles.logoTitle}>Alpha Pickleball</h1>
             </div>
 

@@ -25,6 +25,8 @@ public class MemberRouting extends CRUDRouting<Member> {
     protected void customRoutes() {
         MemberController memberController = (MemberController) controller;
         post("/password", memberController::updatePassword);
+        post("/password/forgot/verify", memberController::verifyForgottenPassword);
+        post("/password/forgot/reset", memberController::resetForgottenPassword);
     }
 
     // _________________________________________________________________________________________________________________

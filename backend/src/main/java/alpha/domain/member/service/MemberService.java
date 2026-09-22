@@ -2,6 +2,7 @@ package alpha.domain.member.service;
 
 import alpha.domain.member.dao.MemberDAO;
 import alpha.domain.member.dto.request.MemberPasswordRequestDTO;
+import alpha.domain.member.dto.request.ForgotPasswordVerifyRequestDTO;
 import alpha.domain.member.dto.request.MemberRequestDTO;
 import alpha.domain.member.dto.response.MemberResponseDTO;
 import alpha.domain.member.entity.Member;
@@ -130,6 +131,14 @@ public class MemberService extends EntityManagerService<Member> {
                     membership
             );
         }
+        if (dto.getPassword() != null) {
+            validateNewPassword(dto.getPassword(), dto.getPasswordAgain());
+            memberDAO.updateColumnById(
+                    id,
+                    Member.Fields.PASSWORD_HASHED,
+                    BCryptHash.hash(dto.getPassword())
+            );
+        }
 
         memberDAO.refresh(member);
         return MemberResponseMapper.toDTO(member);
@@ -160,25 +169,7 @@ public class MemberService extends EntityManagerService<Member> {
             throw new ApiException(400, "This was your previous password");
         }
 
-        // New password match validation
-        if (!dto.getNewPassword().equals(dto.getConfirmPassword())) {
-            throw new ApiException(400, "New passwords do not match");
-        }
-
-        // Password length validation
-        if (dto.getNewPassword().length() < 8) {
-            throw new ApiException(400, "Password must contain at least 8 characters");
-        }
-
-        // Uppercase validation
-        if (!dto.getNewPassword().matches(".*[A-Z].*")) {
-            throw new ApiException(400, "Password must contain at least one uppercase letter");
-        }
-
-        // Special character validation
-        if (!dto.getNewPassword().matches(".*[^a-zA-Z0-9].*")) {
-            throw new ApiException(400, "Password must contain at least one special character");
-        }
+        validateNewPassword(dto.getNewPassword(), dto.getConfirmPassword());
 
         // Final hash of new password
         String hashedPassword = BCryptHash.hash(dto.getNewPassword());
@@ -189,6 +180,49 @@ public class MemberService extends EntityManagerService<Member> {
         // DB update on memberId
         memberDAO.update(member);
 
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void verifyForgottenPassword(ForgotPasswordVerifyRequestDTO dto) {
+        validateNotEmpty(dto.getEmail(), "email");
+        validateNotEmpty(dto.getDateOfBirth(), "date_of_birth");
+
+        Member member = memberDAO.findEntityByColumn(dto.getEmail(), Member.Fields.EMAIL);
+        if (member == null || !dto.getDateOfBirth().equals(member.getDateOfBirth())) {
+            throw new ApiException(401, "E-mail and date of birth do not match");
+        }
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void resetForgottenPassword(MemberRequestDTO dto) {
+        ForgotPasswordVerifyRequestDTO verification = new ForgotPasswordVerifyRequestDTO();
+        verification.setEmail(dto.getEmail());
+        verification.setDateOfBirth(dto.getDateOfBirth());
+        verifyForgottenPassword(verification);
+
+        Member member = memberDAO.findEntityByColumn(dto.getEmail(), Member.Fields.EMAIL);
+        update(member.getId(), dto);
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void validateNewPassword(String password, String passwordAgain) {
+        validateNotEmpty(password, "password");
+        validateNotEmpty(passwordAgain, "password_again");
+        if (!password.equals(passwordAgain)) {
+            throw new ApiException(400, "New passwords do not match");
+        }
+        if (password.length() < 8) {
+            throw new ApiException(400, "Password must contain at least 8 characters");
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            throw new ApiException(400, "Password must contain at least one uppercase letter");
+        }
+        if (!password.matches(".*[^a-zA-Z0-9].*")) {
+            throw new ApiException(400, "Password must contain at least one special character");
+        }
     }
 
 }
