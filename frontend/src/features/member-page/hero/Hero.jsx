@@ -6,11 +6,14 @@ import { useNavigate } from 'react-router-dom'
 import Submit from '@/shared/components/submit/Submit'
 import styles from './Hero.module.css'
 import useMember from '@/shared/hooks/useMember'
+import { formatDate } from '@/shared/utils/dateTime'
+import { useLatestBooking } from './Hero.hooks'
 
 const Hero = () => {
 
     const navigate = useNavigate()
     const { member } = useMember()
+    const { latestBookingDate, bookingsLoaded } = useLatestBooking()
 
     // Hardcoded for now.
     const handleBookingClick = () => {
@@ -32,7 +35,11 @@ const Hero = () => {
                     <p className={styles.metaText}>
                         Sidst spillet Pickleball:{' '}
                         <span className={styles.metaHighlight}>
-                            {member?.last_played || 'Aldrig'}
+                            {bookingsLoaded
+                                ? latestBookingDate
+                                    ? formatDate(latestBookingDate)
+                                    : 'Aldrig'
+                                : 'Indlæser...'}
                         </span>
                     </p>
                 </div>
