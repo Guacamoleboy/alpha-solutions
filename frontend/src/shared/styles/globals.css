@@ -169,14 +169,24 @@ hr {
 .memberPage {
     position: relative;
     width: auto;
+    height: calc(100dvh - 2vh);
     min-height: calc(100dvh - 2vh);
     margin: 1vh var(--alpha-frame-margin);
     padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
     background-color: var(--alpha-surface);
     border-radius: 1rem;
+}
+
+@media (max-width: 600px) {
+    .memberPage {
+        height: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
 }
 
 /* ----- INPUT SPECIFIC | #4.0 ---------------------------------------------------------------------------- */
@@ -241,7 +251,7 @@ hr {
     height: 3rem;
     width: 100%;
     border: none;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     background-color: #787878;
     color: #ffffff;
     font-family: inherit;

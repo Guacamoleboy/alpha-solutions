@@ -1,0 +1,106 @@
+.playedCourts {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	min-height: 24rem;
+	padding: 0;
+	border: 2px solid #d6d0c4;
+	border-radius: var(--alpha-component-border-radius);
+	overflow: hidden;
+	background-color: var(--alpha-surface-raised);
+	box-shadow: var(--alpha-component-box-shadow);
+	cursor: pointer;
+	text-align: left;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.playedCourts:hover {
+	transform: translateY(-0.15rem);
+	box-shadow: 0 7px 1px rgba(0, 0, 0, 0.7);
+}
+
+.playedCourts:focus-visible {
+	outline: 3px solid var(--alpha-accent);
+	outline-offset: 3px;
+}
+
+.image,
+.overlay {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.image {
+	display: block;
+	object-fit: fill;
+	object-position: center;
+	background-color: var(--alpha-surface-raised);
+}
+
+.overlay {
+	background: linear-gradient(180deg, rgba(30, 32, 31, 0.05) 20%, rgba(30, 32, 31, 0.85) 100%);
+}
+
+.content {
+	position: absolute;
+	left: 2rem;
+	bottom: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	color: #fff;
+}
+
+.actionIcon {
+	position: absolute;
+	top: 1.5rem;
+	right: 1.5rem;
+	display: grid;
+	place-items: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 50%;
+	background-color: rgba(255, 255, 255, 0.25);
+	backdrop-filter: blur(4px);
+	color: rgba(0, 0, 0, 0.7);
+	opacity: 0.65;
+	font-size: 1.125rem;
+	transform: rotate(45deg);
+}
+
+.label {
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+
+.count {
+	font-size: clamp(4rem, 10vw, 4rem);
+	font-weight: 800;
+	line-height: 0.95;
+}
+
+.link {
+	margin-top: 1rem;
+	font-size: 1rem;
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 0.2rem;
+}
+
+@media (max-width: 600px) {
+	.playedCourts {
+		width: 100%;
+	}
+
+	.playedCourts {
+		height: 32rem;
+	}
+
+	.content {
+		left: 1.5rem;
+		bottom: 1.5rem;
+	}
+}
