@@ -2,15 +2,33 @@
 // _______
 // src/app/pages/MemberPage.jsx
 
-import { MemberHero } from '@/features/member-page'
+import {
+    FavoriteCourt,
+    HoursToday,
+    MemberHero,
+    MembershipAdditions,
+    MembershipStatus,
+    PlayedCourts,
+    UpcomingBookings,
+} from '@/features/member-page'
+import { useMemberBookingStats } from './MemberPage.hooks'
+import styles from './MemberPage.module.css'
 
-const MemberPage = () => (
-    
-    <div className="memberPage">
+const MemberPage = () => {
 
-        <MemberHero />
+    const { upcomingBookings, favoriteCourt, playedCourts } = useMemberBookingStats()
 
-    </div>
-)
+    return (
+        <div className="memberPage">
+        <MemberHero className={styles.hero} />
+        <HoursToday className={styles.hoursToday} />
+        <PlayedCourts className={styles.playedCourts} count={playedCourts} />
+        <MembershipStatus className={styles.membershipStatus} />
+        <UpcomingBookings className={styles.upcomingBookings} count={upcomingBookings} />
+        <FavoriteCourt className={styles.favoriteCourt} name={favoriteCourt} />
+        <MembershipAdditions className={styles.membershipAdditions} />
+        </div>
+    )
+}
 
 export default MemberPage

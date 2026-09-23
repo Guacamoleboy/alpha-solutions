@@ -1,0 +1,47 @@
+.hero {
+	grid-column: 1 / span 3;
+	grid-row: 1;
+}
+
+.hoursToday {
+	grid-column: 4;
+	grid-row: 1;
+}
+
+.playedCourts {
+	grid-column: 1;
+	grid-row: 2 / span 2;
+}
+
+.upcomingBookings {
+	grid-column: 2;
+	grid-row: 2;
+}
+
+.membershipStatus {
+	grid-column: 3;
+	grid-row: 2;
+}
+
+.favoriteCourt {
+	grid-column: 2 / span 2;
+	grid-row: 3;
+}
+
+.membershipAdditions {
+	grid-column: 4;
+	grid-row: 2 / span 2;
+}
+
+@media (max-width: 600px) {
+	.hero,
+	.hoursToday,
+	.playedCourts,
+	.upcomingBookings,
+	.membershipStatus,
+	.favoriteCourt,
+	.membershipAdditions {
+		grid-column: 1;
+		grid-row: auto;
+	}
+}

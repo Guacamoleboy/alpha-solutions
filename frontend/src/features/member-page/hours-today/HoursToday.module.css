@@ -1,0 +1,81 @@
+.hoursToday {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	
+	background-color: var(--alpha-surface-raised);
+	border: 2px solid #d6d0c4;
+	border-radius: var(--alpha-component-border-radius);
+	box-shadow: var(--alpha-component-box-shadow);
+	color: #1e201f;
+	text-decoration: none;
+	text-align: center !important;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hoursToday:hover {
+	transform: translateY(-0.15rem);
+	box-shadow: 0 7px 1px rgba(0, 0, 0, 0.7);
+}
+
+.title,
+.date,
+.linkText {
+	font-weight: 700;
+	opacity: 0.75;
+}
+
+.title {
+	font-size: 1.5rem;
+	text-transform: uppercase;
+}
+
+.time {
+	width: 100%;
+	font-size: clamp(2rem, 3vw, 5rem);
+	font-weight: 800;
+}
+
+.footer {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	width: 100%;
+}
+
+.date {
+	font-size: 1rem;
+	text-transform: capitalize;
+}
+
+.linkText {
+	font-size: 0.9rem;
+	color: var(--alpha-muted);
+}
+
+.actionIcon {
+	position: absolute;
+	top: 1.5rem;
+	right: 1.5rem;
+	display: grid;
+	place-items: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 50%;
+	background-color: rgba(255, 255, 255, 0.25);
+	backdrop-filter: blur(4px);
+	color: rgba(0, 0, 0, 0.7);
+	opacity: 0.65;
+	font-size: 1.125rem;
+	transform: rotate(45deg);
+}
+
+@media (max-width: 600px) {
+	.hoursToday {
+		height: 16rem;
+	}
+}

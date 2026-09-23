@@ -31,7 +31,7 @@ const Navbar = () => {
             {/* META */}
             <div className={styles.logoSection}>
                 <img
-                    src="/icons/pickelball-ball.png"
+                    src="/icons/pickleball-icon.png"
                     alt=""
                     className={styles.logoIcon}
                     aria-hidden="true"

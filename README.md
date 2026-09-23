@@ -11,6 +11,14 @@ Project created by Jonas for the 4th Term of AP Computer Science Denmark.
 
 ---
 
+## Visual Presentation
+
+Member & Owner Dashboard for a Pickleball Facility
+
+![Member Display](docs/display/display-1.png)
+
+---
+
 ## Links
 
 REST API: N/A\
