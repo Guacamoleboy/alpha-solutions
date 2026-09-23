@@ -8,6 +8,7 @@ export const usePreviousBookings = (bookings) => {
     const previousBookings = bookings
         .filter((booking) =>
                 new Date(booking.end_time) < new Date()
+                && booking.status !== 'CANCELLED'
         )
         .sort((a, b) =>
                 new Date(b.start_time) - new Date(a.start_time)
