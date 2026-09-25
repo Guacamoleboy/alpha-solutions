@@ -1,5 +1,6 @@
 package alpha.util;
 
+import alpha.exception.ApiException;
 import io.javalin.http.Context;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -38,12 +39,15 @@ public class TryCatchHelper {
 
         } catch (Exception e) {
             e.printStackTrace();
-            ctx.status(500).json(Map.of(
+            int statusCode = e instanceof ApiException apiException
+                    ? apiException.getCode()
+                    : 500;
+            ctx.status(statusCode).json(Map.of(
                     "status", "error",
                     "message", e.getMessage() != null
                             ? e.getMessage()
                             : "Internal Server Error",
-                    "code", 500
+                    "code", statusCode
             ));
         }
 

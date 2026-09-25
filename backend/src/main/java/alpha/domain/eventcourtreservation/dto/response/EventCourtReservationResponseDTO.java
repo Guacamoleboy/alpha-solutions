@@ -1,0 +1,42 @@
+package alpha.domain.eventcourtreservation.dto.response;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Data
+@JsonIgnoreProperties
+public class EventCourtReservationResponseDTO {
+
+    // _________________________________________________________________________________________________________________
+
+    // Expected JSON Output
+    // ____________________
+    //
+    //      {
+    //          "id": 1,
+    //          "event_request_id": 1,
+    //          "court_id": 4,
+    //          "created_at": "2026-09-25T12:30:00"
+    //      }
+    //
+    // ____________________
+    // Tested: NO
+    // Last Tested: N/A
+
+    // _________________________________________________________________________________________________________________
+
+    @JsonProperty("id")
+    private Integer id;
+
+    @JsonProperty("event_request_id")
+    private Integer eventRequestId;
+
+    @JsonProperty("court_id")
+    private Integer courtId;
+
+    @JsonProperty("created_at")
+    private LocalDateTime createdAt;
+
+}

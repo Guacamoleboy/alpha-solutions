@@ -28,7 +28,11 @@ public class PopulateRouting {
 
                 // -------------------------------------------------------------------
 
-                post("", populateController::populate);
+                post("/restart", populateController::restart);
+                post("/membership", populateController::populateMembership);
+                post("/members", populateController::populateMembers);
+                post("/courts", populateController::populateCourts);
+                post("/bookings", populateController::populateBookings);
 
             });
 

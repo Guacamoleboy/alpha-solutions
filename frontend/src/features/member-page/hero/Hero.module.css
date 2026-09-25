@@ -17,19 +17,6 @@
     gap: 0.5rem;
 }
 
-.heroTitle {
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    color: #1E201F;
-    opacity: 0.8;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-}
-
 .heroMeta {
     display: flex;
     flex-direction: column;

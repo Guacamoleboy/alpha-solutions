@@ -43,6 +43,7 @@
     --alpha-green: #28a239;
     --alpha-black: #000;
     --alpha-white: #FFF;
+    --alpha-logo-color: #51e60c;
 
     /* Application Specifics here */
     --alpha-background: #1E201F;
@@ -77,6 +78,22 @@
     --alpha-component-width-50: calc(var(--alpha-portal-content-width) * 0.5 - 1rem);
     --alpha-component-width-25: calc(var(--alpha-portal-content-width) * 0.25);
 
+}
+
+button {
+    transition: all 0.2s ease-in-out;
+}
+
+.heroTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #1E201F;
+    opacity: 0.8;
+    margin: 0 0 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 /* ----- APPLICATION SPECIFIC | #1.0 ---------------------------------------------------------------------- */
@@ -340,7 +357,7 @@ hr {
     width: var(--alpha-component-width-100);
     background-color: var(--alpha-surface-raised);
     border: 2px solid #d6d0c4;
-    border-radius: var(--alpha-component-border-radius);
+    border-radius: 0.5rem;
     padding: 1rem;
     display: flex;
     align-items: center;
@@ -353,7 +370,7 @@ hr {
     width: auto;
     padding: 0.75rem 1.25rem;
     border: 0;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     background-color: transparent;
     color: var(--alpha-muted);
     font-size: 0.875rem;
@@ -364,7 +381,7 @@ hr {
 
 .quickNavigationWrapper button:hover {
     box-shadow: 0 4px 1px rgba(0,0,0,0.5);
-    background-color: var(--alpha-accent);
+    background-color: #787878;
     color: #FFF;
 }
 
@@ -374,7 +391,7 @@ hr {
 }
 
 .quickNavigationWrapper button:active {
-    background-color: var(--alpha-accent);
+    background-color: #787878;
     box-shadow: 0 4px 1px rgba(0,0,0,0.5);
     color: #FFF;
 }

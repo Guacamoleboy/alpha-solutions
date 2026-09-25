@@ -71,6 +71,7 @@ const Register = () => {
                                         {...registerField(name)}
                                         label={label}
                                         placeholder={placeholder}
+                                        max={name === 'date_of_birth' ? new Date().toISOString().split('T')[0] : undefined}
                                         required
                                         size="l"
                                     />

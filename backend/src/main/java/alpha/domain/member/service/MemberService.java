@@ -37,25 +37,58 @@ public class MemberService extends EntityManagerService<Member> {
     // _________________________________________________________________________________________________________________
 
     public Member createMember(Member member) {
+        return createMember(member, RoleName.MEMBER);
+    }
 
-        validateNotEmpty(member.getFirstName(), "Member.firstName");
-        validateNotEmpty(member.getLastName(), "Member.lastName");
-        validateNotEmpty(member.getEmail(), "Member.email");
-        validateNotEmpty(member.getPasswordHashed(), "Member.password");
+    // _________________________________________________________________________________________________________________
 
-        // Role + Validation
-        Role role = roleService.getByName(RoleName.MEMBER);
-        if (role == null) {
-            throw new ApiException(
-                    500, "Default member role not found"
-            );
-        }
+    public Member createOwnerMember(Member member) {
+        return createMember(member, RoleName.OWNER);
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public Member createMemberWithPasswordHash(Member member) {
+        validateMember(member);
+        Role role = getRequiredRole(RoleName.MEMBER);
+        member.setRole(role);
+        return super.create(member);
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private Member createMember(Member member, RoleName roleName) {
+
+        validateMember(member);
+        Role role = getRequiredRole(roleName);
 
         // Password hashing
         member.setPasswordHashed(BCrypt.hashpw(member.getPasswordHashed(), BCrypt.gensalt()));
         member.setRole(role);
 
         return super.create(member);
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void validateMember(Member member) {
+
+        validateNotEmpty(member.getFirstName(), "Member.firstName");
+        validateNotEmpty(member.getLastName(), "Member.lastName");
+        validateNotEmpty(member.getEmail(), "Member.email");
+        validateNotEmpty(member.getPasswordHashed(), "Member.password");
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private Role getRequiredRole(RoleName roleName) {
+        Role role = roleService.getByName(roleName);
+        if (role == null) {
+            throw new ApiException(
+                    500, "Default " + roleName.name().toLowerCase() + " role not found"
+            );
+        }
+        return role;
     }
 
     // _________________________________________________________________________________________________________________
