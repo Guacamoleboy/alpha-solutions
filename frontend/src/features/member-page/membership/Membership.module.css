@@ -8,18 +8,21 @@
 .membershipCard {
     opacity: 0.8;
     padding: 2rem;
-    border: 4px solid #ddd;
+    border: 3px solid #cecdcd;
     border-radius: var(--alpha-component-border-radius);
     background: #FFF;
     box-shadow: var(--alpha-component-box-shadow);
     display: flex;
     flex-direction: column;
-    transition: all 0.2s;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    color: inherit;
+    text-decoration: none;
 }
 
-.membershipCard:hover {
-    background: var(--alpha-accent);
-    color: #FFF !important;
+.membershipCard:not(.current):hover {
+    background: #e7e7e7;
+    color: #1e201f;
 }
 
 .membershipCard h2 {
@@ -44,12 +47,7 @@
     margin-bottom: 0.25rem;
 }
 
-.heroAction {
-    margin-top: auto;
-    padding-top: 2rem;
-}
-
 .current {
-    border: 4px solid #454545;
-    box-shadow: 0 5px 1px rgba(0,0,0,0.5) !important;
+    border: 3px solid #b8c0bd;
+    box-shadow: 0 5px 1px rgba(0, 0, 0, 0.2) !important;
 }

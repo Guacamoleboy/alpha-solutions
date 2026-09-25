@@ -16,6 +16,7 @@ Project created by Jonas for the 4th Term of AP Computer Science Denmark.
 Member & Owner Dashboard for a Pickleball Facility
 
 ![Member Display](docs/display/display-1.png)
+![Member Event Display](docs/display/display-2.png)
 
 ---
 

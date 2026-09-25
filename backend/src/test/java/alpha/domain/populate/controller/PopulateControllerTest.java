@@ -26,10 +26,18 @@ class PopulateControllerTest extends ATest {
         RestAssured
                 .given()
                 .when()
-                .post("/populate")
+                .post("/populate/membership")
                 .then()
                 .statusCode(200)
                 .body("status", equalTo("success"));
+
+        RestAssured
+                .given()
+                .when()
+                .post("/populate/membership")
+                .then()
+                .statusCode(200)
+                .body("data", equalTo("Already added"));
 
         List<Map<String, Object>> memberships = RestAssured
                 .given()

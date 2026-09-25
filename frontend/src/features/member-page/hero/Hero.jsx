@@ -21,7 +21,7 @@ const Hero = ({ className = '' }) => {
             <div className={styles.heroContent}>
 
                 {/* MEMBER META */}
-                <h1 className={styles.heroTitle}>
+                <h1 className="heroTitle">
                     Velkommen tilbage, {member?.first_name} {member?.last_name}.
                 </h1>
 

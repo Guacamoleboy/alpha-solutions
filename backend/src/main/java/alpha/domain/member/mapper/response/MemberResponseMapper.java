@@ -46,6 +46,20 @@ public class MemberResponseMapper {
         dto.setLastPlayed(member.getLastPlayed());
         dto.setCreatedAt(member.getCreatedAt());
         dto.setLastLogin(member.getLastLogin());
+        
+        if (member.getEventRequests() != null) {
+            dto.setEventRequestIds(member.getEventRequests()
+            .stream()
+            .map(event -> event.getId())
+            .toList());
+        }
+
+        if (member.getEventOrganizers() != null) {
+            dto.setEventOrganizerIds(member.getEventOrganizers()
+            .stream()
+            .map(organizer -> organizer.getId())
+            .toList());
+        }
 
         return dto;
     }

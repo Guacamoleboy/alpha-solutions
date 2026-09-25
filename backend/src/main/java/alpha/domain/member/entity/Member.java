@@ -6,6 +6,9 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import alpha.domain.role.entity.Role;
+import alpha.domain.eventrequest.entity.EventRequest;
+import alpha.domain.eventorganizer.entity.EventOrganizer;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -78,6 +81,12 @@ public class Member {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "requester")
+    private List<EventRequest> eventRequests;
+
+    @OneToMany(mappedBy = "member")
+    private List<EventOrganizer> eventOrganizers;
+
     // ______ | PERSIST | ______________________________________________________________________________________________
 
     @PrePersist
@@ -101,6 +110,8 @@ public class Member {
         public static final String LAST_PLAYED = "lastPlayed";
         public static final String LAST_LOGIN = "lastLogin";
         public static final String CREATED_AT = "createdAt";
+        public static final String EVENT_REQUESTS = "eventRequests";
+        public static final String EVENT_ORGANIZERS = "eventOrganizers";
     }
 
 }

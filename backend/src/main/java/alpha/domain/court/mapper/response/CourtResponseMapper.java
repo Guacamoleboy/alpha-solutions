@@ -46,6 +46,12 @@ public class CourtResponseMapper {
         }
 
         dto.setCreatedAt(court.getCreatedAt());
+        if (court.getEventCourtReservations() != null) {
+            dto.setEventCourtReservationIds(court.getEventCourtReservations()
+            .stream()
+            .map(reservation -> reservation.getId())
+            .toList());
+        }
 
         return dto;
 

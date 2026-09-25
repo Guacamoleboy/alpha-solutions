@@ -1,0 +1,132 @@
+.history {
+    grid-column: 1 / span 3;
+    grid-row: 2 / span 2;
+    grid-template-rows: auto 1fr;
+    align-content: stretch;
+    overflow: hidden;
+}
+
+.toolbar {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tab,
+.createLink {
+    border: 2px solid #d6d0c4;
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.createLink {
+    border-radius: 0.5rem;
+    background-color: #787878;
+    border-color: #787878;
+    color: #fff;
+    box-shadow: 0 3px 1px rgba(0, 0, 0, 0.25);
+}
+
+.tab.active,
+.tab:hover {
+    background-color: #1e201f;
+    color: #fff;
+}
+
+.createLink:hover {
+    background-color: #383434;
+    border-color: #383434;
+    color: #fff;
+}
+
+.eventList {
+    grid-column: 1 / span 3;
+    grid-row: 2 / span 2;
+    overflow-y: auto;
+}
+
+.eventHeader,
+.eventItem {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: 1rem;
+}
+
+.eventHeader {
+    padding: 0 0 0.5rem;
+    color: var(--alpha-muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.emptyState {
+    color: var(--alpha-muted);
+}
+
+.eventList > hr {
+    margin-top: 1rem;
+}
+
+.eventItem {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid #d6d0c4;
+}
+
+.eventItem strong,
+.eventItem > span {
+    min-width: 0;
+}
+
+.status {
+    justify-self: start;
+    padding: 0.35rem 0.65rem;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.pending {
+    background-color: #c78c1f;
+}
+
+.active {
+    background-color: #28a239;
+}
+
+.held {
+    background-color: #5b7fa3;
+}
+
+.cancelled {
+    background-color: #ab1313;
+}
+
+@media (max-width: 600px) {
+    .eventHeader,
+    .eventItem {
+        grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(4rem, 1fr));
+        gap: 0.5rem;
+        font-size: 0.75rem;
+    }
+}
