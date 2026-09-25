@@ -11,6 +11,9 @@ import alpha.domain.role.route.RoleRouting;
 import alpha.domain.settings.operatinghour.route.OperatingHourRouting;
 import alpha.domain.status.route.StatusRouting;
 import alpha.domain.resources.staff.route.StaffRouting;
+import alpha.domain.eventrequest.route.EventRequestRouting;
+import alpha.domain.eventorganizer.route.EventOrganizerRouting;
+import alpha.domain.eventcourtreservation.route.EventCourtReservationRouting;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -34,6 +37,9 @@ public class Routes {
         OperatingHourRouting operatingHoursRouting = new OperatingHourRouting(entityManagerFactory);
         RoleRouting roleRouting = new RoleRouting(entityManagerFactory);
         StaffRouting staffRouting = new StaffRouting(entityManagerFactory);
+        EventRequestRouting eventRequestRouting = new EventRequestRouting(entityManagerFactory);
+        EventOrganizerRouting eventOrganizerRouting = new EventOrganizerRouting(entityManagerFactory);
+        EventCourtReservationRouting eventCourtReservationRouting = new EventCourtReservationRouting(entityManagerFactory);
 
         // EndpointGroup Return to server
         return () -> {
@@ -48,6 +54,9 @@ public class Routes {
             operatingHoursRouting.routes().addEndpoints();
             roleRouting.routes().addEndpoints();
             staffRouting.routes().addEndpoints();
+            eventRequestRouting.routes().addEndpoints();
+            eventOrganizerRouting.routes().addEndpoints();
+            eventCourtReservationRouting.routes().addEndpoints();
         };
 
     }

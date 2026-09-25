@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @JsonIgnoreProperties
@@ -27,7 +28,10 @@ public class CourtResponseDTO {
     //          "elevation": 12.50,
     //          "required_membership_id": 2,
     //          "required_membership_name": "premium",
-    //          "created_at": "2026-09-17T15:42:31"
+    //          "created_at": "2026-09-17T15:42:31",
+    //          "event_court_reservation_ids": 
+    //              [
+    //              ]
     //      }
     //
     // ____________________
@@ -70,5 +74,8 @@ public class CourtResponseDTO {
 
     @JsonProperty("created_at")
     private Timestamp createdAt;
+
+    @JsonProperty("event_court_reservation_ids")
+    private List<Integer> eventCourtReservationIds;
 
 }

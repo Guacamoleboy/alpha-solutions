@@ -2,10 +2,12 @@ package alpha.domain.court.entity;
 
 import alpha.domain.court.enums.CourtSurface;
 import alpha.domain.membership.entity.Membership;
+import alpha.domain.eventcourtreservation.entity.EventCourtReservation;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -69,6 +71,9 @@ public class Court {
     @JoinColumn(name = "required_membership_id")
     private Membership requiredMembership;
 
+    @OneToMany(mappedBy = "court")
+    private List<EventCourtReservation> eventCourtReservations;
+
     // ______ | PERSIST | ______________________________________________________________________________________________
 
     @PrePersist
@@ -89,6 +94,7 @@ public class Court {
         public static final String ELEVATION = "elevation";
         public static final String CREATED_AT = "createdAt";
         public static final String REQUIRED_MEMBERSHIP = "requiredMembership";
+        public static final String EVENT_COURT_RESERVATIONS = "eventCourtReservations";
     }
 
 }

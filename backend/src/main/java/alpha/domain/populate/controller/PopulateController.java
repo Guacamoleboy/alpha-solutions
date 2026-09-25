@@ -18,10 +18,48 @@ public class PopulateController {
 
     // _________________________________________________________________________________________________________________
 
-    public void populate(Context ctx) {
+    public void populateMembership(Context ctx) {
+        TryCatchHelper.tryCatchHelper(
+                ctx,
+                () -> PopulateDB.populateMembership(em),
+                "Memberships checked"
+        );
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void restart(Context ctx) {
+        TryCatchHelper.tryCatchHelper(
+                ctx,
+                () -> PopulateDB.restart(em),
+                "Database restarted"
+        );
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void populateMembers(Context ctx) {
         TryCatchHelper.tryCatchHelperVoid(ctx, () -> {
-            PopulateDB.populate(em);
-        }, "Database populated");
+            PopulateDB.populateMembers(em);
+        }, "Members populated");
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void populateCourts(Context ctx) {
+        TryCatchHelper.tryCatchHelper(
+                ctx,
+                () -> PopulateDB.populateCourts(em),
+                "Courts checked"
+        );
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    public void populateBookings(Context ctx) {
+        TryCatchHelper.tryCatchHelperVoid(ctx, () -> {
+            PopulateDB.populateBookings(em);
+        }, "Bookings populated");
     }
 
 }

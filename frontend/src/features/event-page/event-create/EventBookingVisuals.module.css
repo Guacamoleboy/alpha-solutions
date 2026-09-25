@@ -1,0 +1,17 @@
+.visuals {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    place-items: center;
+}
+
+.comingSoon {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    opacity: 0.4;
+    font-weight: 700;
+}

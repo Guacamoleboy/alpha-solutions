@@ -4,11 +4,13 @@
 
 import {NavLink} from 'react-router-dom'
 import {useAuth} from '@/shared/hooks/useAuth'
+import useMember from '@/shared/hooks/useMember'
 import styles from './Navbar.module.css'
 
 const Navbar = () => {
 
     const {role, logout} = useAuth()
+    const {member} = useMember()
 
     const menuItems = role === 'OWNER'
         ? [
@@ -23,6 +25,9 @@ const Navbar = () => {
             {id: 2, label: 'Banereservation', icon: 'fa-bookmark', path: '/member/booking'},
             {id: 3, label: 'Mit Medlemskab', icon: 'fa-user', path: '/membership'},
             {id: 4, label: 'Indstillinger', icon: 'fa-cog', path: '/member/settings'},
+            ...(member?.membership_id >= 3
+                ? [{id: 5, label: 'Event', icon: 'fa-calendar', path: '/member/events'}]
+                : []),
         ]
 
     return (

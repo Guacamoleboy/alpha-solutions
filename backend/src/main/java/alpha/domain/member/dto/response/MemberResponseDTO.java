@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @JsonIgnoreProperties
@@ -76,5 +77,11 @@ public class MemberResponseDTO {
 
     @JsonProperty("last_login")
     private Timestamp lastLogin;
+
+    @JsonProperty("event_request_ids")
+    private List<Integer> eventRequestIds;
+
+    @JsonProperty("event_organizer_ids")
+    private List<Integer> eventOrganizerIds;
 
 }

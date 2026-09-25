@@ -11,6 +11,8 @@ import RegisterPage from '@/app/pages/RegisterPage'
 import ForgotPasswordPage from '@/app/pages/ForgotPasswordPage'
 import MemberSettingsPage from '@/app/pages/MemberSettingsPage'
 import MemberBookingPage from '@/app/pages/MemberBookingPage'
+import EventPage from '@/app/pages/EventPage'
+import EventCreatePage from '@/app/pages/EventCreatePage'
 import {OwnerDashboard} from '@/features/owner-dashboard'
 import OwnerResourcesPage from '@/app/pages/OwnerResourcesPage'
 import OwnerEmployeesPage from '@/app/pages/OwnerEmployeesPage'
@@ -20,6 +22,7 @@ import OwnerOperatingHoursPage from '@/app/pages/OwnerOperatingHoursPage'
 import AppLayout from '@/app/layouts/AppLayout'
 import AuthLayout from '@/app/layouts/AuthLayout'
 import ProtectedRoutes from '@/app/routes/ProtectedRoutes'
+import PremiumMemberRoute from '@/app/routes/PremiumMemberRoute'
 
 const AppRoutes = () => (
     <Routes>
@@ -38,6 +41,10 @@ const AppRoutes = () => (
                 <Route path="/membership" element={<MembershipPage />} />
                 <Route path="/member/settings" element={<MemberSettingsPage />} />
                 <Route path="/member/booking" element={<MemberBookingPage />} />
+                <Route element={<PremiumMemberRoute />}>
+                    <Route path="/member/events" element={<EventPage />} />
+                    <Route path="/member/events/opret" element={<EventCreatePage />} />
+                </Route>
             </Route>
         </Route>
 
