@@ -24,7 +24,7 @@ public class EventRequest {
     // Expected Column Layout in DB
     // __________________
     //
-    //     id | name | start_time | end_time | guest_count | requested_court_count | equipment_required | event_code | status | requester_id | created_at | updated_at
+    //     id | name | start_time | end_time | organizer_email | guest_count | requested_court_count | equipment_required | event_code | status | requester_id | created_at | updated_at
     //
     // __________________
     // Tested: NO
@@ -59,6 +59,9 @@ public class EventRequest {
 
     @Column(name = "event_code", length = 100)
     private String eventCode;
+
+    @Column(name = "organizer_email", length = 254)
+    private String organizerEmail;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -109,6 +112,7 @@ public class EventRequest {
         public static final String REQUESTED_COURT_COUNT = "requestedCourtCount";
         public static final String EQUIPMENT_REQUIRED = "equipmentRequired";
         public static final String EVENT_CODE = "eventCode";
+        public static final String ORGANIZER_EMAIL = "organizerEmail";
         public static final String STATUS = "status";
         public static final String REQUESTER = "requester";
         public static final String ORGANIZERS = "organizers";

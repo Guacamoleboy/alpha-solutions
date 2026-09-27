@@ -5,7 +5,10 @@ import alpha.domain.eventorganizer.service.EventOrganizerService;
 import alpha.domain.eventrequest.dto.request.EventRequestRequestDTO;
 import alpha.domain.eventrequest.dao.EventRequestDAO;
 import alpha.domain.eventrequest.entity.EventRequest;
+import alpha.domain.eventrequest.enums.EventRequestStatus;
 import alpha.domain.court.service.CourtService;
+import alpha.domain.booking.dao.BookingDAO;
+import alpha.domain.eventcourtreservation.dao.EventCourtReservationDAO;
 import alpha.domain.member.entity.Member;
 import alpha.domain.member.service.MemberService;
 import alpha.domain.settings.operatinghour.entity.OperatingHour;
@@ -25,6 +28,8 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
     private final OperatingHourService operatingHourService;
     private final EventRequestDAO eventRequestDAO;
     private final CourtService courtService;
+    private final BookingDAO bookingDAO;
+    private final EventCourtReservationDAO eventCourtReservationDAO;
 
     // _________________________________________________________________________________________________________________
 
@@ -35,6 +40,8 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
         this.eventOrganizerService = eventOrganizerService;
         this.operatingHourService = operatingHourService;
         this.courtService = courtService;
+        this.bookingDAO = new BookingDAO(em);
+        this.eventCourtReservationDAO = new EventCourtReservationDAO(em);
     }
 
     // _________________________________________________________________________________________________________________
@@ -46,7 +53,11 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
         validateRequest(dto);
 
         List<Member> coOrganizers = resolveCoOrganizers(dto.getOrganizerEmails(), requester);
-        validateMemberEventAvailability(requester, coOrganizers, dto.getStartTime().toLocalDate());
+        boolean isOwner = requester.getRole() != null && requester.getRole().getName() != null
+                && "OWNER".equals(requester.getRole().getName().name());
+        if (!isOwner) {
+            validateMemberEventAvailability(requester, coOrganizers, dto.getStartTime().toLocalDate());
+        }
 
         EventRequest eventRequest = EventRequest.builder()
                 .name(dto.getName().trim())
@@ -56,7 +67,11 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
                 .requestedCourtCount(dto.getRequestedCourtCount())
                 .equipmentRequired(Boolean.TRUE.equals(dto.getEquipmentRequired()))
                 .eventCode(blankToNull(dto.getEventCode()))
+                .organizerEmail(requester.getEmail())
                 .requester(requester)
+                .status(isOwner
+                        ? EventRequestStatus.ACCEPTED
+                        : EventRequestStatus.PENDING)
                 .build();
 
         EventRequest created = create(eventRequest);
@@ -82,11 +97,61 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
 
     // _________________________________________________________________________________________________________________
 
+    public EventRequest updateEventRequest(Integer id, EventRequest changes) {
+        EventRequest eventRequest = getById(id);
+        if (eventRequest == null) {
+            throw new ApiException(404, "Event request not found");
+        }
+        EventRequestRequestDTO validation = new EventRequestRequestDTO();
+        validation.setName(changes.getName());
+        validation.setStartTime(changes.getStartTime());
+        validation.setEndTime(changes.getEndTime());
+        validation.setGuestCount(changes.getGuestCount());
+        validation.setRequestedCourtCount(changes.getRequestedCourtCount());
+        validation.setEquipmentRequired(changes.getEquipmentRequired());
+        validation.setEventCode(changes.getEventCode());
+        boolean isExistingPastEvent = eventRequest.getStartTime().toLocalDate().isBefore(LocalDate.now())
+                && changes.getStartTime() != null
+                && changes.getStartTime().toLocalDate().equals(eventRequest.getStartTime().toLocalDate());
+        validateRequest(validation, isExistingPastEvent);
+        if (changes.getOrganizerEmail() == null || !changes.getOrganizerEmail().contains("@")
+                || changes.getOrganizerEmail().length() > 254) {
+            throw new ApiException(400, "A valid organizer email is required");
+        }
+
+        if (changes.getStatus() == EventRequestStatus.ACCEPTED && eventRequest.getCourtReservations() != null) {
+            eventRequest.getCourtReservations().forEach((reservation) -> {
+                Integer courtId = reservation.getCourt().getId();
+                if (bookingDAO.existsOverlappingBooking(courtId, changes.getStartTime(), changes.getEndTime())
+                        || eventCourtReservationDAO.existsOtherAcceptedEventOverlap(courtId, eventRequest.getId(), changes.getStartTime(), changes.getEndTime())) {
+                    throw new ApiException(409, "A selected court is unavailable during the updated event time");
+                }
+            });
+        }
+
+        eventRequest.setName(changes.getName().trim());
+        eventRequest.setStartTime(changes.getStartTime());
+        eventRequest.setEndTime(changes.getEndTime());
+        eventRequest.setGuestCount(changes.getGuestCount());
+        eventRequest.setRequestedCourtCount(changes.getRequestedCourtCount());
+        eventRequest.setEquipmentRequired(Boolean.TRUE.equals(changes.getEquipmentRequired()));
+        eventRequest.setEventCode(blankToNull(changes.getEventCode()));
+        eventRequest.setOrganizerEmail(changes.getOrganizerEmail().trim());
+        if (changes.getStatus() != null) {
+            eventRequest.setStatus(changes.getStatus());
+        }
+        return update(eventRequest);
+    }
+
+    // _________________________________________________________________________________________________________________
+
     private void validateRequester(Member requester) {
         if (requester == null) {
             throw new ApiException(404, "Member not found");
         }
-        if (requester.getMembership() == null || requester.getMembership().getId() < 3) {
+        boolean isOwner = requester.getRole() != null && requester.getRole().getName() != null
+                && "OWNER".equals(requester.getRole().getName().name());
+        if (!isOwner && (requester.getMembership() == null || requester.getMembership().getId() < 3)) {
             throw new ApiException(403, "Premium membership is required to request an event");
         }
     }
@@ -94,6 +159,10 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
     // _________________________________________________________________________________________________________________
 
     private void validateRequest(EventRequestRequestDTO dto) {
+        validateRequest(dto, false);
+    }
+
+    private void validateRequest(EventRequestRequestDTO dto, boolean allowPastEventDate) {
         if (dto == null || dto.getName() == null || dto.getName().isBlank()) {
             throw new ApiException(400, "Event name is required");
         }
@@ -109,7 +178,7 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
         if (!dto.getStartTime().toLocalDate().equals(dto.getEndTime().toLocalDate())) {
             throw new ApiException(400, "Event must start and end on the same day");
         }
-        if (dto.getStartTime().toLocalDate().isBefore(LocalDate.now())) {
+        if (!allowPastEventDate && dto.getStartTime().toLocalDate().isBefore(LocalDate.now())) {
             throw new ApiException(400, "Event date cannot be before today");
         }
         validateOperatingHours(dto.getStartTime(), dto.getEndTime());

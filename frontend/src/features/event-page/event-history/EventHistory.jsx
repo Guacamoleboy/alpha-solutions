@@ -3,6 +3,7 @@
 // src/features/event-page/event-history/EventHistory.jsx
 
 import {Link} from 'react-router-dom'
+import {useState} from 'react'
 import DashboardComponent from '@/shared/components/dashboard/DashboardComponent'
 import {useEventHistory} from './EventHistory.hooks'
 import styles from './EventHistory.module.css'
@@ -11,7 +12,7 @@ import styles from './EventHistory.module.css'
 
 const statusLabels = {
     PENDING: 'AFVENTER',
-    ACCEPTED: 'AKTIVE',
+    ACCEPTED: 'AKTIV',
     PASSED: 'HOLDT',
     DENIED: 'ANNULERET',
 }
@@ -30,6 +31,7 @@ const statusClasses = {
 const EventHistory = () => {
 
     const {activeTab, events, setActiveTab, tabs} = useEventHistory()
+    const [expandedEventId, setExpandedEventId] = useState(null)
 
     return (
 
@@ -66,17 +68,43 @@ const EventHistory = () => {
                             <span>Dato</span>
                             <span>Tid</span>
                             <span>Status</span>
+                            <span aria-hidden="true" />
                         </div>
                         {events.map((event) => {
                             const startTime = event.start_time ? new Date(event.start_time) : null
+                            const endTime = event.end_time ? new Date(event.end_time) : null
+                            const canExpand = event.status === 'ACCEPTED'
+                            const isExpanded = expandedEventId === event.id
+                            const eventContent = <>
+                                <strong>{event.name}</strong>
+                                <span>{startTime?.toLocaleDateString('da-DK') || ''}</span>
+                                <span>
+                                    {startTime?.toLocaleTimeString('da-DK', {hour: '2-digit', minute: '2-digit'}) || ''}
+                                    {endTime && ` – ${endTime.toLocaleTimeString('da-DK', {hour: '2-digit', minute: '2-digit'})}`}
+                                </span>
+                                <span className={`${styles.status} ${styles[statusClasses[event.status]]}`}>
+                                    {statusLabels[event.status] || event.status}
+                                </span>
+                                {canExpand && <i className={`fa ${isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'}`} aria-hidden="true" />}
+                            </>
                             return (
-                                <article key={event.id} className={styles.eventItem}>
-                                    <strong>{event.name}</strong>
-                                    <span>{startTime?.toLocaleDateString('da-DK') || ''}</span>
-                                    <span>{startTime?.toLocaleTimeString('da-DK', {hour: '2-digit', minute: '2-digit'}) || ''}</span>
-                                    <span className={`${styles.status} ${styles[statusClasses[event.status]]}`}>
-                                        {statusLabels[event.status] || event.status}
-                                    </span>
+                                <article key={event.id} className={styles.eventEntry}>
+                                    {canExpand ? (
+                                        <button
+                                            aria-expanded={isExpanded}
+                                            className={`${styles.eventItem} ${styles.eventButton}`}
+                                            onClick={() => setExpandedEventId(isExpanded ? null : event.id)}
+                                            type="button"
+                                        >{eventContent}</button>
+                                    ) : <div className={styles.eventItem}>{eventContent}</div>}
+                                    {canExpand && isExpanded && (
+                                        <div className={styles.courtDetails}>
+                                            <strong>Tildelte baner</strong>
+                                            {event.courts.length > 0
+                                                ? <span>{event.courts.join(', ')}</span>
+                                                : <span>Ingen baner er registreret endnu.</span>}
+                                        </div>
+                                    )}
                                 </article>
                             )
                         })}

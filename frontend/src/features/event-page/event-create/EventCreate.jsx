@@ -24,6 +24,7 @@ const EventCreate = () => {
         handleIntegerChange,
         handleStartTimeChange,
         handleSubmit,
+        isOwner,
         minDate,
         registerField,
         values,
@@ -35,7 +36,7 @@ const EventCreate = () => {
             {/* COMPONENT 1 TODO: Move out into its own component? */}
             <DashboardComponent className={styles.formBox} columns={3} rows={2}>
                 <form className={styles.formContent} onSubmit={handleSubmit}>
-                    <h1 className="heroTitle">Opret dit eget event</h1>
+                    <h1 className="heroTitle">{isOwner ? 'Opret event' : 'Opret dit eget event'}</h1>
 
                     <div className={styles.name}>
                         <InputText
@@ -54,7 +55,7 @@ const EventCreate = () => {
                             label="Antal gæster"
                             type="number"
                             min="1"
-                            max="40"
+                            max={isOwner ? undefined : 40}
                             step="1"
                             required
                         />
@@ -62,13 +63,13 @@ const EventCreate = () => {
 
                     <div className={styles.courts}>
                         <InputText
-                            {...registerField('courts')}
-                            onChange={handleIntegerChange}
-                            label="Antal baner (4 pr bane)"
+                            aria-readonly="true"
+                            className={styles.autoCourtsInput}
+                            disabled
+                            label="Antal baner (4 gæster pr. bane)"
+                            tabIndex={-1}
                             type="number"
-                            min="1"
-                            step="1"
-                            required
+                            value={values.courts}
                         />
                     </div>
 
@@ -148,8 +149,8 @@ const EventCreate = () => {
                     </label>
 
                     <div className={styles.formActions}>
-                        <Link className={styles.cancel} to="/member/events">Annuller</Link>
-                        <Submit label="Anmod om event" size="m" />
+                        <Link className={styles.cancel} to={isOwner ? '/dashboard/events' : '/member/events'}>Annuller</Link>
+                        <Submit label={isOwner ? 'Opret godkendt event' : 'Anmod om event'} size="m" />
                     </div>
                 </form>
             </DashboardComponent>

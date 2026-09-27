@@ -44,7 +44,8 @@
 }
 
 .loginActionBtn {
-    background-color: var(--alpha-accent);
+    background-color: var(--alpha-blue);
+    box-shadow: 0 4px 1px rgba(0, 0, 0, 0.4);
 }
 
 .loginActionBtnForgot:hover {

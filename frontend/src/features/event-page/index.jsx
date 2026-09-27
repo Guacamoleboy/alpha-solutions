@@ -3,6 +3,7 @@
 // src/features/event-page/index.jsx
 
 export {default as EventHero} from './event-hero/EventHero'
+export {default as EventHeroImage} from './event-hero/EventHeroImage'
 export {default as EventHistory} from './event-history/EventHistory'
 export {default as EventSidebar} from './event-sidebar/EventSidebar'
 export {default as EventCreate} from './event-create/EventCreate'

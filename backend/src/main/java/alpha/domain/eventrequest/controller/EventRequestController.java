@@ -5,6 +5,7 @@ import alpha.domain.eventrequest.entity.EventRequest;
 import alpha.domain.eventrequest.dto.request.EventRequestRequestDTO;
 import alpha.domain.eventrequest.mapper.response.EventRequestResponseMapper;
 import alpha.domain.eventrequest.service.EventRequestService;
+import alpha.exception.ApiException;
 import alpha.security.jwt.JwtService;
 import alpha.service.EntityManagerService;
 import alpha.util.ContextHelper;
@@ -45,6 +46,22 @@ public class EventRequestController extends CRUDController<EventRequest> {
                     .map(EventRequestResponseMapper::toDTO)
                     .toList();
         }, "Member event requests retrieved");
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    @Override
+    public void update(Context ctx) {
+        TryCatchHelper.tryCatchHelper(ctx, () -> {
+            String token = ContextHelper.extractBearerToken(ctx);
+            if (!"OWNER".equals(JwtService.getClaimRole(token))) {
+                throw new ApiException(403, "Only owners can update event requests");
+            }
+            Integer id = Integer.valueOf(ctx.pathParam("id"));
+            EventRequest changes = ctx.bodyAsClass(EventRequest.class);
+            EventRequest updated = ((EventRequestService) classService).updateEventRequest(id, changes);
+            return EventRequestResponseMapper.toDTO(updated);
+        }, "Event request updated");
     }
     
 }

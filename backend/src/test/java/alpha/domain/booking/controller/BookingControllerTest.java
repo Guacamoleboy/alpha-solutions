@@ -3,6 +3,10 @@ package alpha.domain.booking.controller;
 import alpha.ATest;
 import alpha.domain.booking.dao.BookingDAO;
 import alpha.domain.court.entity.Court;
+import alpha.domain.eventcourtreservation.dao.EventCourtReservationDAO;
+import alpha.domain.eventcourtreservation.entity.EventCourtReservation;
+import alpha.domain.eventrequest.EventTestData;
+import alpha.domain.eventrequest.enums.EventRequestStatus;
 import alpha.domain.member.entity.Member;
 import alpha.domain.role.entity.Role;
 import alpha.domain.role.enums.RoleName;
@@ -190,6 +194,42 @@ class BookingControllerTest extends ATest {
                 .body("data", hasSize(1))
                 .body("data[0].id", equalTo(bookingId));
 
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    @Test
+    void shouldRejectBookingOnCourtReservedForConfirmedEvent() {
+        EventTestData testData = new EventTestData(em);
+        Member owner = testData.createMember(RoleName.OWNER, false);
+        var eventRequest = testData.createEventRequest(
+                owner,
+                EventRequestStatus.ACCEPTED,
+                bookingStart,
+                bookingStart.plusHours(2)
+        );
+        new EventCourtReservationDAO(em).create(EventCourtReservation.builder()
+                .eventRequest(eventRequest)
+                .court(Court.builder().id(court.getId()).build())
+                .build());
+
+        String accessToken = JwtService.generateAccessToken(member);
+
+        RestAssured
+                .given()
+                .auth().oauth2(accessToken)
+                .contentType("application/json")
+                .body("""
+                        {
+                          "court_id": %d,
+                          "start_time": "%s",
+                          "end_time": "%s"
+                        }
+                        """.formatted(court.getId(), bookingStart, bookingStart.plusHours(1)))
+                .when()
+                .post("/booking/")
+                .then()
+                .statusCode(409);
     }
 
 }
