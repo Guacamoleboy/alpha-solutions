@@ -46,6 +46,13 @@
     grid-row: 3;
 }
 
+.autoCourtsInput:disabled {
+    opacity: 1;
+    background: #eee9df;
+    color: inherit;
+    cursor: not-allowed;
+}
+
 .date {
     grid-column: 1;
     grid-row: 4;

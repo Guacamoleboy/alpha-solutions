@@ -27,7 +27,8 @@ public class EventRequestResponseDTO {
     //          "status": "PENDING",
     //          "requester_id": 15,
     //          "created_at": "2026-09-25T12:30:00",
-    //          "updated_at": "2026-09-25T12:30:00"
+    //          "updated_at": "2026-09-25T12:30:00",
+    //          "organizer_email": "mail",
     //      }
     //
     // ____________________
@@ -59,6 +60,9 @@ public class EventRequestResponseDTO {
 
     @JsonProperty("event_code")
     private String eventCode;
+
+    @JsonProperty("organizer_email")
+    private String organizerEmail;
 
     @JsonProperty("status")
     private EventRequestStatus status;

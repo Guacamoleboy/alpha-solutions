@@ -36,7 +36,13 @@ public class EntityManagerDAO <T> implements IDAO <T> {
 
     @Override
     public T update(T t) {
-        return executeQuery(() -> em.merge(t));
+        return executeQuery(() -> {
+            if (em.contains(t)) {
+                em.flush();
+                return t;
+            }
+            return em.merge(t);
+        });
     }
 
     // _________________________________________________________________________________________________________________

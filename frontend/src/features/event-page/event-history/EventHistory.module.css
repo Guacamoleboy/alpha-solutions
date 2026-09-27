@@ -65,7 +65,7 @@
 .eventHeader,
 .eventItem {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)) auto;
     align-items: center;
     gap: 1rem;
 }
@@ -86,9 +86,42 @@
     margin-top: 1rem;
 }
 
-.eventItem {
-    padding: 0.85rem 0;
+.eventEntry {
     border-bottom: 1px solid #d6d0c4;
+}
+
+.eventItem {
+    width: 100%;
+    padding: 0.85rem 0;
+}
+
+.eventButton {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.eventButton:hover {
+    background: #eee9df;
+}
+
+.eventButton i {
+    justify-self: end;
+}
+
+.courtDetails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 0 0.85rem;
+    color: var(--alpha-muted);
+}
+
+.courtDetails strong {
+    color: inherit;
 }
 
 .eventItem strong,
@@ -125,7 +158,7 @@
 @media (max-width: 600px) {
     .eventHeader,
     .eventItem {
-        grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(4rem, 1fr));
+        grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(4rem, 1fr)) auto;
         gap: 0.5rem;
         font-size: 0.75rem;
     }

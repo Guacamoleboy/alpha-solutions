@@ -19,6 +19,9 @@ public class EventRequestResponseMapper {
         dto.setRequestedCourtCount(entity.getRequestedCourtCount());
         dto.setEquipmentRequired(entity.getEquipmentRequired());
         dto.setEventCode(entity.getEventCode());
+        dto.setOrganizerEmail(entity.getOrganizerEmail() != null
+                ? entity.getOrganizerEmail()
+                : entity.getRequester() != null ? entity.getRequester().getEmail() : null);
         dto.setStatus(entity.getStatus());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setUpdatedAt(entity.getUpdatedAt());

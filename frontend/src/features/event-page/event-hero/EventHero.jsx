@@ -8,12 +8,12 @@ import styles from './EventHero.module.css'
 
 const EventHero = () => {
     
-    const {columns, rows, upcomingEventText} = useEventHero()
+    const {upcomingEventText} = useEventHero()
 
     return (
 
         // COMPONENT 1
-        <DashboardComponent className={styles.hero} columns={columns} rows={rows}>
+        <DashboardComponent className={styles.hero} columns={2} rows={1}>
             <div className={styles.copy}>
                 <h1 className="heroTitle">Events hos Alpha Pickleball</h1>
                 <p className={styles.content}>Opret og deltag i events sammen med andre medlemmer.</p>
@@ -22,7 +22,6 @@ const EventHero = () => {
                     <span>{upcomingEventText}</span>
                 </p>
             </div>
-            <div className={styles.image} aria-hidden="true" />
         </DashboardComponent>
     )
 }
