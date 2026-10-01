@@ -30,14 +30,14 @@ public class BookingService extends EntityManagerService<Booking> {
 
     // _________________________________________________________________________________________________________________
 
-    public BookingService(EntityManager em, CourtService courtService, MemberService memberService, OperatingHourService operatingHourService) {
-        super(new BookingDAO(em), Booking.class);
-        this.bookingDAO = (BookingDAO) this.entityManagerDAO;
+    public BookingService(BookingDAO bookingDAO, EventCourtReservationDAO eventCourtReservationDAO, CourtClosureDAO courtClosureDAO, CourtService courtService, MemberService memberService, OperatingHourService operatingHourService) {
+        super(bookingDAO, Booking.class);
+        this.bookingDAO = bookingDAO;
         this.courtService = courtService;
         this.memberService = memberService;
         this.operatingHourService = operatingHourService;
-        this.eventCourtReservationDAO = new EventCourtReservationDAO(em);
-        this.courtClosureDAO = new CourtClosureDAO(em);
+        this.eventCourtReservationDAO = eventCourtReservationDAO;
+        this.courtClosureDAO = courtClosureDAO;
     }
 
     // _________________________________________________________________________________________________________________
