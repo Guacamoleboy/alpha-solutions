@@ -17,6 +17,7 @@ import {OwnerDashboard} from '@/features/owner-dashboard'
 import OwnerResourcesPage from '@/app/pages/OwnerResourcesPage'
 import OwnerEmployeesPage from '@/app/pages/OwnerEmployeesPage'
 import OwnerCourtsPage from '@/app/pages/OwnerCourtsPage'
+import OwnerCourtClosuresPage from '@/app/pages/OwnerCourtClosuresPage'
 import OwnerOperatingHoursPage from '@/app/pages/OwnerOperatingHoursPage'
 import OwnerEventsPage from '@/app/pages/OwnerEventsPage'
 
@@ -57,6 +58,7 @@ const AppRoutes = () => (
                 <Route path="/dashboard/staff" element={<OwnerEmployeesPage />} />
                 <Route path="/dashboard/operating-hours" element={<OwnerOperatingHoursPage />} />
                 <Route path="/dashboard/courts" element={<OwnerCourtsPage />} />
+                <Route path="/dashboard/court-closures" element={<OwnerCourtClosuresPage />} />
                 <Route path="/dashboard/events" element={<OwnerEventsPage />} />
                 <Route path="/dashboard/events/opret" element={<EventCreatePage />} />
             </Route>

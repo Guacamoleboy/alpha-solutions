@@ -1,0 +1,215 @@
+.info {
+    grid-column: 1;
+    grid-row: 1;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    padding: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+.infoContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    max-width: 34rem;
+}
+
+.infoContent h1,
+.infoContent p,
+.historyHeading h2,
+.historyHeading p {
+    margin: 0;
+}
+
+.infoContent h1 {
+    font-size: clamp(1.65rem, 2.5vw, 2.35rem);
+    line-height: 1.05;
+}
+
+.infoContent > p,
+.historyHeading p {
+    color: var(--alpha-muted);
+    line-height: 1.5;
+}
+
+.infoNote {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin-top: 0.35rem;
+    color: var(--alpha-muted);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.infoNote i {
+    margin-top: 0.1rem;
+    color: var(--alpha-blue);
+}
+
+.formCard {
+    grid-column: 2 / span 3;
+    grid-row: 1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    gap: 1rem;
+    padding: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+.form {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-content: stretch;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, auto);
+    align-items: end;
+    gap: 0.85rem;
+    min-width: 0;
+}
+
+.fields :global(.sharedInputWrapper) {
+    min-width: 0;
+}
+
+.fields :global(.sharedInput) {
+    width: 100%;
+    min-width: 0;
+}
+
+.formMessage {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--alpha-muted);
+    font-size: 0.85rem;
+}
+
+.history {
+    grid-column: 1 / span 4;
+    grid-row: 2 / span 2;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 1.15rem;
+    overflow: hidden;
+}
+
+.historyHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.historyHeading > div {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.count {
+    display: grid;
+    place-items: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: #eee9df;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.historyContent {
+    min-height: 0;
+    overflow: auto;
+    scrollbar-width: thin;
+}
+
+.closureList {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.closure {
+    display: grid;
+    grid-template-columns: minmax(8rem, 1.2fr) minmax(8rem, 1fr) minmax(8rem, 1fr) minmax(8rem, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    min-height: 3.5rem;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #d6d0c4;
+}
+
+.closure > span {
+    color: var(--alpha-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.closure button {
+    border: 0;
+    border-radius: 0.4rem;
+    padding: 0.45rem 0.7rem;
+    background: transparent;
+    color: var(--alpha-red);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.closure button:hover {
+    background: #f3e8e5;
+}
+
+.emptyState {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 0.6rem;
+    height: 100%;
+    color: var(--alpha-muted);
+    text-align: center;
+}
+
+.emptyState i {
+    font-size: 1.5rem;
+}
+
+.emptyState p {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .info { grid-column: 1; }
+    .formCard { grid-column: 2 / span 3; }
+    .history { grid-column: 1 / span 4; min-height: 24rem; }
+}
+
+@media (max-width: 600px) {
+    .info,
+    .formCard,
+    .history {
+        grid-column: 1;
+        grid-row: auto;
+        height: auto;
+    }
+
+    .history { min-height: 24rem; }
+    .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .closure { grid-template-columns: 1fr auto; gap: 0.25rem 0.75rem; }
+    .closure strong { grid-column: 1; }
+    .closure > span:nth-of-type(1) { grid-column: 1; }
+    .closure > span:nth-of-type(2) { grid-column: 1; }
+    .closure > span:nth-of-type(3) { grid-column: 1; }
+    .closure button { grid-column: 2; grid-row: 1 / span 4; }
+}
