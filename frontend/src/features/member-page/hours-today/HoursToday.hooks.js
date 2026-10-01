@@ -17,7 +17,6 @@ const dayNames = [
     'SATURDAY',
 ]
 
-
 // ------------------------------------------------------------------------------------------------------
 
 const getTimeRemaining = (closeTime) => {
@@ -26,9 +25,11 @@ const getTimeRemaining = (closeTime) => {
     close.setHours(hours, minutes, 0, 0)
     const difference = Math.max(0, close.getTime() - Date.now())
     const totalSeconds = Math.floor(difference / 1000)
-    return `${String(Math.floor(totalSeconds / 60)).padStart(2, '0')}:${String(totalSeconds % 60).padStart(2, '0')}`
+    const hh = Math.floor(totalSeconds / 3600)
+    const mm = Math.floor((totalSeconds % 3600) / 60)
+    const ss = totalSeconds % 60
+    return `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`
 }
-
 
 // ------------------------------------------------------------------------------------------------------
 
@@ -37,11 +38,9 @@ const getTimeInMinutes = (time) => {
     return hours * 60 + minutes
 }
 
-
 // ------------------------------------------------------------------------------------------------------
 
 const formatTime = (time) => time.slice(0, 5)
-
 
 // ------------------------------------------------------------------------------------------------------
 
