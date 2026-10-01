@@ -38,6 +38,16 @@ jobs:
 
       - name: Build and run tests
         run: mvn --batch-mode --no-transfer-progress verify
+        env:
+          URL_PATHING: http://localhost
+          SERVER_PORT: '7070'
+          API_BASE_PATH: /v1
+          ROUTE_ENDPOINT_FOLDER: /route
+          APP_VERSION: 1.0.0
+          APP_ENV: test
+          JWT_SECRET: ${{ secrets.TEST_JWT_SECRET }}
+          ACCESS_EXPIRATION: '600000'
+          REFRESH_EXPIRATION: '604800000'
 
       - name: Analyze with CodeQL
         uses: github/codeql-action/analyze@v4

@@ -17,6 +17,8 @@ Derfor behøvede CI ikke en separat PostgreSQL-service eller nye testafhængighe
 
 At køre fra `backend/` er vigtigt, fordi testopsætningen indlæser `.env.test` med en sti relativ til backend-mappen. Testene kræver Docker; GitHub-hosted Ubuntu runneren leverer Docker til Testcontainers.
 
+`.env.test` er ignoreret af Git og følger derfor ikke med i GitHub-checkout. CI-steppet får de nødvendige testværdier som environment variables. Kun `JWT_SECRET` hentes fra repository secret `TEST_JWT_SECRET`; værdien skal være en separat testnøgle og må aldrig genbruges i produktion. Databaseværdier skal ikke oprettes som secrets, fordi Testcontainers JDBC starter testdatabasen automatisk.
+
 CodeQL-upload kræver, at GitHub code scanning er tilgængelig for repository'et (for eksempel et offentligt repository eller Code Security på organisationens plan).
 
 ## Det, der mangler uden for kodebasen

@@ -56,4 +56,7 @@ public class MembershipRequestDTO {
     @JsonProperty("guest_pass")
     private Boolean guestPass;
 
+    @JsonProperty("active")
+    private Boolean active;
+
 }

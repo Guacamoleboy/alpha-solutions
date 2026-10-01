@@ -10,6 +10,7 @@ import alpha.domain.eventrequest.enums.EventRequestStatus;
 import alpha.domain.member.entity.Member;
 import alpha.domain.role.entity.Role;
 import alpha.domain.role.enums.RoleName;
+import alpha.domain.settings.operatinghour.dao.OperatingHourDAO;
 import alpha.security.jwt.JwtService;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,7 @@ class BookingControllerTest extends ATest {
 
     @BeforeEach
     void setupBookingController() {
-        clearBookings();
+        clearBookingFixtures();
         startServer();
         setBookingStart();
         ensureMemberRole();
@@ -43,9 +44,10 @@ class BookingControllerTest extends ATest {
 
     // _________________________________________________________________________________________________________________
 
-    private void clearBookings() {
+    private void clearBookingFixtures() {
         bookingDAO = new BookingDAO(em);
         bookingDAO.deleteAll();
+        new OperatingHourDAO(em).deleteAll();
     }
 
     // _________________________________________________________________________________________________________________
