@@ -73,7 +73,16 @@ const CourtClosures = () => {
                     <div className={styles.fields}>
                         <Select
                             label="Bane"
-                            onChange={(event) => setCourtId(event.target.value)}
+                            onChange={(event) => {
+                                const selectedCourtId = event.target.value
+                                setCourtId(selectedCourtId)
+                                if (!selectedCourtId) {
+                                    setDate('')
+                                    setStartTime('')
+                                    setEndTime('')
+                                    setReason('')
+                                }
+                            }}
                             options={courtOptions}
                             required
                             value={courtId}

@@ -3,7 +3,7 @@
     grid-row: 1;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    align-items: center;
+    align-items: start;
     padding: clamp(1.25rem, 2.5vw, 2.25rem);
 }
 
