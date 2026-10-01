@@ -9,6 +9,7 @@ import alpha.domain.eventrequest.enums.EventRequestStatus;
 import alpha.domain.court.service.CourtService;
 import alpha.domain.booking.dao.BookingDAO;
 import alpha.domain.eventcourtreservation.dao.EventCourtReservationDAO;
+import alpha.domain.courtclosure.dao.CourtClosureDAO;
 import alpha.domain.member.entity.Member;
 import alpha.domain.member.service.MemberService;
 import alpha.domain.settings.operatinghour.entity.OperatingHour;
@@ -30,6 +31,7 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
     private final CourtService courtService;
     private final BookingDAO bookingDAO;
     private final EventCourtReservationDAO eventCourtReservationDAO;
+    private final CourtClosureDAO courtClosureDAO;
 
     // _________________________________________________________________________________________________________________
 
@@ -42,6 +44,7 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
         this.courtService = courtService;
         this.bookingDAO = new BookingDAO(em);
         this.eventCourtReservationDAO = new EventCourtReservationDAO(em);
+        this.courtClosureDAO = new CourtClosureDAO(em);
     }
 
     // _________________________________________________________________________________________________________________
@@ -123,7 +126,8 @@ public class EventRequestService extends EntityManagerService<EventRequest> {
             eventRequest.getCourtReservations().forEach((reservation) -> {
                 Integer courtId = reservation.getCourt().getId();
                 if (bookingDAO.existsOverlappingBooking(courtId, changes.getStartTime(), changes.getEndTime())
-                        || eventCourtReservationDAO.existsOtherAcceptedEventOverlap(courtId, eventRequest.getId(), changes.getStartTime(), changes.getEndTime())) {
+                        || eventCourtReservationDAO.existsOtherAcceptedEventOverlap(courtId, eventRequest.getId(), changes.getStartTime(), changes.getEndTime())
+                        || courtClosureDAO.existsOverlappingClosure(courtId, changes.getStartTime(), changes.getEndTime())) {
                     throw new ApiException(409, "A selected court is unavailable during the updated event time");
                 }
             });

@@ -7,6 +7,7 @@ import alpha.domain.eventrequest.entity.EventRequest;
 import alpha.domain.eventrequest.enums.EventRequestStatus;
 import alpha.domain.court.entity.Court;
 import alpha.domain.booking.dao.BookingDAO;
+import alpha.domain.courtclosure.dao.CourtClosureDAO;
 import alpha.exception.ApiException;
 import alpha.service.EntityManagerService;
 import jakarta.persistence.EntityManager;
@@ -14,10 +15,10 @@ import jakarta.persistence.EntityManager;
 public class EventCourtReservationService extends EntityManagerService<EventCourtReservation> {
 
     // Attributes
-
     private final EntityManager em;
     private final EventCourtReservationDAO reservationDAO;
     private final BookingDAO bookingDAO;
+    private final CourtClosureDAO courtClosureDAO;
 
     // _________________________________________________________________________________________________________________
 
@@ -26,6 +27,7 @@ public class EventCourtReservationService extends EntityManagerService<EventCour
         this.em = em;
         this.reservationDAO = (EventCourtReservationDAO) this.entityManagerDAO;
         this.bookingDAO = new BookingDAO(em);
+        this.courtClosureDAO = new CourtClosureDAO(em);
     }
 
     // _________________________________________________________________________________________________________________
@@ -47,6 +49,9 @@ public class EventCourtReservationService extends EntityManagerService<EventCour
         }
         if (bookingDAO.existsOverlappingBooking(court.getId(), eventRequest.getStartTime(), eventRequest.getEndTime())) {
             throw new ApiException(409, "This court already has a member booking during that time");
+        }
+        if (courtClosureDAO.existsOverlappingClosure(court.getId(), eventRequest.getStartTime(), eventRequest.getEndTime())) {
+            throw new ApiException(409, "This court is closed during that time");
         }
         return create(EventCourtReservation.builder().eventRequest(eventRequest).court(court).build());
     }

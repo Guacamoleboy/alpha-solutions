@@ -1,10 +1,13 @@
 package alpha.domain.booking.route;
 
 import alpha.domain.booking.controller.BookingController;
+import alpha.domain.booking.dao.BookingDAO;
 import alpha.domain.booking.entity.Booking;
 import alpha.domain.booking.service.BookingService;
 import alpha.crud.CRUDRouting;
 import alpha.domain.court.service.CourtService;
+import alpha.domain.courtclosure.dao.CourtClosureDAO;
+import alpha.domain.eventcourtreservation.dao.EventCourtReservationDAO;
 import alpha.domain.member.service.MemberService;
 import alpha.domain.settings.operatinghour.service.OperatingHourService;
 import jakarta.persistence.EntityManager;
@@ -37,7 +40,14 @@ public class BookingRouting extends CRUDRouting<Booking> {
         CourtService courtService = new CourtService(em);
         MemberService memberService = new MemberService(em);
         OperatingHourService operatingHourService = new OperatingHourService(em);
-        BookingService bookingService = new BookingService(em, courtService, memberService, operatingHourService);
+        BookingService bookingService = new BookingService(
+                new BookingDAO(em),
+                new EventCourtReservationDAO(em),
+                new CourtClosureDAO(em),
+                courtService,
+                memberService,
+                operatingHourService
+        );
         return new BookingController(bookingService);
     }
 

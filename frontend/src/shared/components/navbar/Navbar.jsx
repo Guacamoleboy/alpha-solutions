@@ -19,7 +19,8 @@ const Navbar = () => {
             {id: 3, label: 'Ansatte', icon: 'fa-users', path: '/dashboard/staff'},
             {id: 4, label: 'Åbningstider', icon: 'fa-clock-o', path: '/dashboard/operating-hours'},
             {id: 5, label: 'Baner', icon: 'fa-th-large', path: '/dashboard/courts'},
-            {id: 6, label: 'Events', icon: 'fa-calendar', path: '/dashboard/events'},
+            {id: 6, label: 'Luk baner', icon: 'fa-ban', path: '/dashboard/court-closures'},
+            {id: 7, label: 'Events', icon: 'fa-calendar', path: '/dashboard/events'},
         ]
         : [
             {id: 1, label: 'Forside', icon: 'fa-home', path: '/member'},

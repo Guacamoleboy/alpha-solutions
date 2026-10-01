@@ -3,11 +3,14 @@ package alpha.domain.populate;
 import alpha.domain.membership.entity.Membership;
 import alpha.domain.membership.service.MembershipService;
 import alpha.domain.booking.dto.request.BookingRequestDTO;
+import alpha.domain.booking.dao.BookingDAO;
 import alpha.domain.booking.entity.Booking;
 import alpha.domain.booking.service.BookingService;
 import alpha.domain.court.entity.Court;
 import alpha.domain.court.enums.CourtSurface;
 import alpha.domain.court.service.CourtService;
+import alpha.domain.courtclosure.dao.CourtClosureDAO;
+import alpha.domain.eventcourtreservation.dao.EventCourtReservationDAO;
 import alpha.domain.member.entity.Member;
 import alpha.domain.member.service.MemberService;
 import alpha.domain.settings.operatinghour.entity.OperatingHour;
@@ -216,7 +219,14 @@ public class PopulateDB {
         MemberService memberService = new MemberService(em);
         CourtService courtService = new CourtService(em);
         OperatingHourService operatingHourService = new OperatingHourService(em);
-        BookingService bookingService = new BookingService(em, courtService, memberService, operatingHourService);
+        BookingService bookingService = new BookingService(
+                new BookingDAO(em),
+                new EventCourtReservationDAO(em),
+                new CourtClosureDAO(em),
+                courtService,
+                memberService,
+                operatingHourService
+        );
 
         List<Court> courts = courtService.getAll().stream()
                 .filter(court -> Boolean.TRUE.equals(court.getActive()))

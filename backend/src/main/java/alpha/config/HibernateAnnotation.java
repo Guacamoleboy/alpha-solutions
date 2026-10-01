@@ -2,6 +2,7 @@ package alpha.config;
 
 import alpha.domain.booking.entity.Booking;
 import alpha.domain.court.entity.Court;
+import alpha.domain.courtclosure.entity.CourtClosure;
 import alpha.domain.eventcourtreservation.entity.EventCourtReservation;
 import alpha.domain.eventorganizer.entity.EventOrganizer;
 import alpha.domain.eventrequest.entity.EventRequest;
@@ -29,6 +30,7 @@ public class HibernateAnnotation {
         configuration.addAnnotatedClass(EventRequest.class);
         configuration.addAnnotatedClass(EventOrganizer.class);
         configuration.addAnnotatedClass(EventCourtReservation.class);
+        configuration.addAnnotatedClass(CourtClosure.class);
     }
 
 }

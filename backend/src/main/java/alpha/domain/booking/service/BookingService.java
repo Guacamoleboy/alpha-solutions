@@ -6,6 +6,7 @@ import alpha.domain.booking.entity.Booking;
 import alpha.domain.court.entity.Court;
 import alpha.domain.court.service.CourtService;
 import alpha.domain.eventcourtreservation.dao.EventCourtReservationDAO;
+import alpha.domain.courtclosure.dao.CourtClosureDAO;
 import alpha.domain.member.entity.Member;
 import alpha.domain.member.service.MemberService;
 import alpha.domain.settings.operatinghour.entity.OperatingHour;
@@ -25,16 +26,18 @@ public class BookingService extends EntityManagerService<Booking> {
     private final MemberService memberService;
     private final OperatingHourService operatingHourService;
     private final EventCourtReservationDAO eventCourtReservationDAO;
+    private final CourtClosureDAO courtClosureDAO;
 
     // _________________________________________________________________________________________________________________
 
-    public BookingService(EntityManager em, CourtService courtService, MemberService memberService, OperatingHourService operatingHourService) {
-        super(new BookingDAO(em), Booking.class);
-        this.bookingDAO = (BookingDAO) this.entityManagerDAO;
+    public BookingService(BookingDAO bookingDAO, EventCourtReservationDAO eventCourtReservationDAO, CourtClosureDAO courtClosureDAO, CourtService courtService, MemberService memberService, OperatingHourService operatingHourService) {
+        super(bookingDAO, Booking.class);
+        this.bookingDAO = bookingDAO;
         this.courtService = courtService;
         this.memberService = memberService;
         this.operatingHourService = operatingHourService;
-        this.eventCourtReservationDAO = new EventCourtReservationDAO(em);
+        this.eventCourtReservationDAO = eventCourtReservationDAO;
+        this.courtClosureDAO = courtClosureDAO;
     }
 
     // _________________________________________________________________________________________________________________
@@ -175,6 +178,9 @@ public class BookingService extends EntityManagerService<Booking> {
     private void validateBookingAvailability(Integer courtId, LocalDateTime startTime, LocalDateTime endTime) {
         if (eventCourtReservationDAO.existsAcceptedReservationOverlap(courtId, startTime, endTime)) {
             throw new ApiException(409, "Banen er reserveret til et event i dette tidsrum.");
+        }
+        if (courtClosureDAO.existsOverlappingClosure(courtId, startTime, endTime)) {
+            throw new ApiException(409, "Banen er lukket i dette tidsrum.");
         }
         if (bookingDAO.existsOverlappingBooking(courtId, startTime, endTime)) {
             throw new ApiException(

@@ -14,6 +14,7 @@ import alpha.domain.resources.staff.route.StaffRouting;
 import alpha.domain.eventrequest.route.EventRequestRouting;
 import alpha.domain.eventorganizer.route.EventOrganizerRouting;
 import alpha.domain.eventcourtreservation.route.EventCourtReservationRouting;
+import alpha.domain.courtclosure.route.CourtClosureRouting;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -40,6 +41,7 @@ public class Routes {
         EventRequestRouting eventRequestRouting = new EventRequestRouting(entityManagerFactory);
         EventOrganizerRouting eventOrganizerRouting = new EventOrganizerRouting(entityManagerFactory);
         EventCourtReservationRouting eventCourtReservationRouting = new EventCourtReservationRouting(entityManagerFactory);
+        CourtClosureRouting courtClosureRouting = new CourtClosureRouting(entityManagerFactory);
 
         // EndpointGroup Return to server
         return () -> {
@@ -57,6 +59,7 @@ public class Routes {
             eventRequestRouting.routes().addEndpoints();
             eventOrganizerRouting.routes().addEndpoints();
             eventCourtReservationRouting.routes().addEndpoints();
+            courtClosureRouting.routes().addEndpoints();
         };
 
     }
