@@ -2,9 +2,11 @@ package alpha.domain.membership.controller;
 
 import alpha.ATest;
 import io.restassured.RestAssured;
+import alpha.testdata.TestJsonData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.UUID;
+import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 
 class MembershipControllerTest extends ATest {
@@ -25,7 +27,8 @@ class MembershipControllerTest extends ATest {
         Integer membershipId = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{\"name\":\"Test Membership %s\",\"active\":true}".formatted(UUID.randomUUID()))
+                .body(TestJsonData.body("membership.json", "create", Map.of(
+                        "name", "Test Membership " + UUID.randomUUID())))
                 .when()
                 .post("/membership/")
                 .then()
@@ -38,7 +41,8 @@ class MembershipControllerTest extends ATest {
         RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{\"description\":\"Updated description\",\"active\":false}")
+                .body(TestJsonData.body("membership.json", "update", Map.of(
+                        "description", "Updated description", "active", false)))
                 .when()
                 .put("/membership/" + membershipId)
                 .then()

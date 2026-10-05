@@ -1,13 +1,15 @@
 package alpha.domain.eventrequest.controller;
 
 import alpha.ATest;
-import alpha.domain.eventrequest.EventTestData;
+import alpha.testdata.domain.EventTestData;
 import alpha.domain.member.entity.Member;
 import alpha.domain.role.enums.RoleName;
 import alpha.security.jwt.JwtService;
+import alpha.testdata.TestJsonData;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.Map;
 
 class EventWorkflowControllerAuthorizationTest extends ATest {
 
@@ -30,7 +32,7 @@ class EventWorkflowControllerAuthorizationTest extends ATest {
         RestAssured.given()
                 .auth().oauth2(memberToken)
                 .contentType("application/json")
-                .body("{}")
+                .body(TestJsonData.body("event-workflow.json", "empty", Map.of()))
                 .put("/event-requests/1")
                 .then()
                 .statusCode(403);
@@ -43,7 +45,7 @@ class EventWorkflowControllerAuthorizationTest extends ATest {
         RestAssured.given()
                 .auth().oauth2(memberToken)
                 .contentType("application/json")
-                .body("{}")
+                .body(TestJsonData.body("event-workflow.json", "empty", Map.of()))
                 .post("/event-court-reservations/")
                 .then()
                 .statusCode(403);
@@ -62,7 +64,7 @@ class EventWorkflowControllerAuthorizationTest extends ATest {
         RestAssured.given()
                 .auth().oauth2(memberToken)
                 .contentType("application/json")
-                .body("{}")
+                .body(TestJsonData.body("event-workflow.json", "empty", Map.of()))
                 .post("/event-organizers/")
                 .then()
                 .statusCode(403);

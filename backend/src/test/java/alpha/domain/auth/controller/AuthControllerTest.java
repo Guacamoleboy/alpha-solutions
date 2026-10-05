@@ -2,6 +2,7 @@ package alpha.domain.auth.controller;
 
 import alpha.ATest;
 import io.restassured.RestAssured;
+import alpha.testdata.TestJsonData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -33,20 +34,14 @@ class AuthControllerTest extends ATest {
         Integer memberId = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("""
-                        {
-                          "first_name": "Auth",
-                          "last_name": "Controller",
-                          "email": "%s",
-                          "password": "%s"
-                        }
-                        """.formatted(email, password))
+                .body(TestJsonData.bodyFromSample("auth.json", "register", "jonas",
+                        Map.of("email", email, "password", password)))
                 .when()
                 .post("/auth/register")
                 .then()
                 .statusCode(200)
                 .body("status", equalTo("success"))
-                .body("data.first_name", equalTo("Auth"))
+                .body("data.first_name", equalTo("Jonas"))
                 .body("data.membership_name", equalTo("Free"))
                 .extract()
                 .path("data.id");
@@ -54,7 +49,7 @@ class AuthControllerTest extends ATest {
         String accessToken = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{\"email\":\"%s\",\"password\":\"%s\"}".formatted(email, password))
+                .body(TestJsonData.body("auth.json", "login", Map.of("email", email, "password", password)))
                 .when()
                 .post("/auth/login")
                 .then()
@@ -68,7 +63,7 @@ class AuthControllerTest extends ATest {
         String refreshToken = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{\"email\":\"%s\",\"password\":\"%s\"}".formatted(email, password))
+                .body(TestJsonData.body("auth.json", "login", Map.of("email", email, "password", password)))
                 .when()
                 .post("/auth/login")
                 .then()
@@ -89,7 +84,7 @@ class AuthControllerTest extends ATest {
         RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{\"refresh_token\":\"%s\"}".formatted(refreshToken))
+                .body(TestJsonData.body("auth.json", "refresh", Map.of("refreshToken", refreshToken)))
                 .when()
                 .post("/auth/refresh")
                 .then()
@@ -116,7 +111,7 @@ class AuthControllerTest extends ATest {
             RestAssured
                     .given()
                     .contentType("application/json")
-                    .body("{\"name\":\"%s\"}".formatted(roleName))
+                    .body(TestJsonData.body("role.json", "named", Map.of("name", roleName)))
                     .when()
                     .post("/role/")
                     .then()
@@ -142,7 +137,7 @@ class AuthControllerTest extends ATest {
             RestAssured
                     .given()
                     .contentType("application/json")
-                    .body("{\"name\":\"Free\",\"active\":true}")
+                    .body(TestJsonData.body("membership.json", "create", Map.of("name", "Free")))
                     .when()
                     .post("/membership/")
                     .then()

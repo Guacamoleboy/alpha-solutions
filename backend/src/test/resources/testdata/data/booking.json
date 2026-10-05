@@ -1,0 +1,17 @@
+{
+  "create": {
+    "court_id": "$courtId",
+    "start_time": "$startTime",
+    "end_time": "$endTime"
+  },
+  "samples": {
+    "confirmed": {
+      "status": "CONFIRMED",
+      "durationMinutes": 60
+    },
+    "cancelled": {
+      "status": "CANCELLED",
+      "durationMinutes": 60
+    }
+  }
+}

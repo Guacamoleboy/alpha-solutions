@@ -1,0 +1,24 @@
+{
+  "create": {
+    "name": "$name",
+    "active": true
+  },
+  "createWithMembership": {
+    "name": "$name",
+    "active": true,
+    "required_membership_id": "$membershipId"
+  },
+  "updateMembership": {
+    "required_membership_id": "$membershipId"
+  },
+  "samples": {
+    "active": {
+      "namePrefix": "Court",
+      "active": true
+    },
+    "inactive": {
+      "namePrefix": "Closed Court",
+      "active": false
+    }
+  }
+}

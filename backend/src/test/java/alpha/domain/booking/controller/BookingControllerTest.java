@@ -3,21 +3,21 @@ package alpha.domain.booking.controller;
 import alpha.ATest;
 import alpha.domain.booking.dao.BookingDAO;
 import alpha.domain.court.entity.Court;
-import alpha.domain.eventcourtreservation.dao.EventCourtReservationDAO;
-import alpha.domain.eventcourtreservation.entity.EventCourtReservation;
-import alpha.domain.eventrequest.EventTestData;
+import alpha.testdata.domain.EventTestData;
 import alpha.domain.eventrequest.enums.EventRequestStatus;
 import alpha.domain.member.entity.Member;
-import alpha.domain.role.entity.Role;
-import alpha.domain.role.enums.RoleName;
+import alpha.domain.member.dao.MemberDAO;
+import alpha.domain.court.dao.CourtDAO;
 import alpha.domain.settings.operatinghour.dao.OperatingHourDAO;
 import alpha.security.jwt.JwtService;
+import alpha.testdata.TestJsonData;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
@@ -33,7 +33,7 @@ class BookingControllerTest extends ATest {
 
     @BeforeEach
     void setupBookingController() {
-        clearBookingFixtures();
+        clearBookingProfiles();
         startServer();
         setBookingStart();
         ensureMemberRole();
@@ -44,7 +44,7 @@ class BookingControllerTest extends ATest {
 
     // _________________________________________________________________________________________________________________
 
-    private void clearBookingFixtures() {
+    private void clearBookingProfiles() {
         bookingDAO = new BookingDAO(em);
         bookingDAO.deleteAll();
         new OperatingHourDAO(em).deleteAll();
@@ -75,7 +75,7 @@ class BookingControllerTest extends ATest {
             RestAssured
                     .given()
                     .contentType("application/json")
-                    .body("{\"name\":\"MEMBER\"}")
+                    .body(TestJsonData.body("role.json", "named", Map.of("name", "MEMBER")))
                     .when()
                     .post("/role/")
                     .then()
@@ -89,14 +89,8 @@ class BookingControllerTest extends ATest {
         Integer memberId = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("""
-                        {
-                          "firstName": "Booking",
-                          "lastName": "Controller",
-                          "email": "%s",
-                          "passwordHashed": "Password12345!"
-                        }
-                        """.formatted("booking.controller." + UUID.randomUUID() + "@example.com"))
+                .body(TestJsonData.bodyFromSample("member.json", "create", "dennis", Map.of(
+                        "email", "booking.controller." + UUID.randomUUID() + "@example.com")))
                 .when()
                 .post("/member/")
                 .then()
@@ -104,12 +98,7 @@ class BookingControllerTest extends ATest {
                 .extract()
                 .path("data.id");
 
-        member = Member.builder()
-                .id(memberId)
-                .firstName("Booking")
-                .lastName("Controller")
-                .role(Role.builder().name(RoleName.MEMBER).build())
-                .build();
+        member = new MemberDAO(em).getById(memberId);
     }
 
     // _________________________________________________________________________________________________________________
@@ -118,12 +107,8 @@ class BookingControllerTest extends ATest {
         Integer courtId = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("""
-                        {
-                          "name": "%s",
-                          "active": true
-                        }
-                        """.formatted("Controller Court " + UUID.randomUUID()))
+                .body(TestJsonData.body("court.json", "create", Map.of(
+                        "name", "Controller Court " + UUID.randomUUID())))
                 .when()
                 .post("/court/")
                 .then()
@@ -131,11 +116,7 @@ class BookingControllerTest extends ATest {
                 .extract()
                 .path("data.id");
 
-        court = Court.builder()
-                .id(courtId)
-                .name("Controller Court")
-                .active(true)
-                .build();
+        court = new CourtDAO(em).getById(courtId);
     }
 
     // _________________________________________________________________________________________________________________
@@ -144,14 +125,8 @@ class BookingControllerTest extends ATest {
         RestAssured
                 .given()
                 .contentType("application/json")
-                .body("""
-                        {
-                          "dayOfWeek": "%s",
-                          "openTime": "00:00:00",
-                          "closeTime": "23:59:59",
-                          "closed": false
-                        }
-                        """.formatted(bookingStart.getDayOfWeek()))
+                .body(TestJsonData.body("operating-hour.json", "bookingController", Map.of(
+                        "dayOfWeek", bookingStart.getDayOfWeek().toString())))
                 .when()
                 .post("/settings/operating-hours/")
                 .then()
@@ -168,13 +143,7 @@ class BookingControllerTest extends ATest {
                 .given()
                 .auth().oauth2(accessToken)
                 .contentType("application/json")
-                .body("""
-                        {
-                          "court_id": %d,
-                          "start_time": "%s",
-                          "end_time": "%s"
-                        }
-                        """.formatted(court.getId(), bookingStart, bookingStart.plusHours(1)))
+                .body(bookingRequestBody())
                 .when()
                 .post("/booking/")
                 .then()
@@ -210,10 +179,7 @@ class BookingControllerTest extends ATest {
                 bookingStart,
                 bookingStart.plusHours(2)
         );
-        new EventCourtReservationDAO(em).create(EventCourtReservation.builder()
-                .eventRequest(eventRequest)
-                .court(Court.builder().id(court.getId()).build())
-                .build());
+        testData.createReservation(eventRequest, court);
 
         String accessToken = JwtService.generateAccessToken(member);
 
@@ -221,17 +187,17 @@ class BookingControllerTest extends ATest {
                 .given()
                 .auth().oauth2(accessToken)
                 .contentType("application/json")
-                .body("""
-                        {
-                          "court_id": %d,
-                          "start_time": "%s",
-                          "end_time": "%s"
-                        }
-                        """.formatted(court.getId(), bookingStart, bookingStart.plusHours(1)))
+                .body(bookingRequestBody())
                 .when()
                 .post("/booking/")
                 .then()
                 .statusCode(409);
+    }
+
+    private String bookingRequestBody() {
+        return TestJsonData.body("booking.json", "create", Map.of(
+                "courtId", court.getId(), "startTime", bookingStart.toString(),
+                "endTime", bookingStart.plusHours(1).toString()));
     }
 
 }

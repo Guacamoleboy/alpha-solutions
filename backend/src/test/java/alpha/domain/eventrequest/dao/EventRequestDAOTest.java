@@ -1,9 +1,7 @@
 package alpha.domain.eventrequest.dao;
 
 import alpha.ATest;
-import alpha.domain.eventorganizer.dao.EventOrganizerDAO;
-import alpha.domain.eventorganizer.entity.EventOrganizer;
-import alpha.domain.eventrequest.EventTestData;
+import alpha.testdata.domain.EventTestData;
 import alpha.domain.eventrequest.entity.EventRequest;
 import alpha.domain.eventrequest.enums.EventRequestStatus;
 import alpha.domain.member.entity.Member;
@@ -40,18 +38,12 @@ class EventRequestDAOTest extends ATest {
         Member member = testData.createMember(RoleName.MEMBER, true);
         EventRequest requestedEvent = testData.createEventRequest(
                 member, EventRequestStatus.PENDING, eventStart, eventStart.plusHours(1));
-        new EventOrganizerDAO(em).create(EventOrganizer.builder()
-                .eventRequest(requestedEvent)
-                .member(member)
-                .build());
+        testData.addOrganizer(requestedEvent, member);
 
         Member otherRequester = testData.createMember(RoleName.OWNER, false);
         EventRequest organizedEvent = testData.createEventRequest(
                 otherRequester, EventRequestStatus.ACCEPTED, eventStart.plusHours(2), eventStart.plusHours(3));
-        new EventOrganizerDAO(em).create(EventOrganizer.builder()
-                .eventRequest(organizedEvent)
-                .member(member)
-                .build());
+        testData.addOrganizer(organizedEvent, member);
 
         List<EventRequest> memberEvents = eventRequestDAO.findAllForMember(member.getId());
 

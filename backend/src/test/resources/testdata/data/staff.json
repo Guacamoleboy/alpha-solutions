@@ -1,0 +1,44 @@
+{
+  "create": {
+    "first_name": "$firstName",
+    "last_name": "$lastName",
+    "email": "$email",
+    "phone": "$phone",
+    "salary": "$salary",
+    "working_hours_weekly": "$workingHours"
+  },
+  "createWithoutPhone": {
+    "first_name": "$firstName",
+    "last_name": "$lastName",
+    "email": "$email",
+    "salary": "$salary",
+    "working_hours_weekly": "$workingHours"
+  },
+  "update": {
+    "first_name": "$firstName",
+    "salary": "$salary",
+    "working_hours_weekly": "$workingHours"
+  },
+  "samples": {
+    "kamilla": {
+      "firstName": "Kamilla",
+      "lastName": "Andersen",
+      "email": "kamilla.controller@example.com",
+      "phone": "+4512345678",
+      "salary": 25000.00,
+      "workingHours": 37.5
+    },
+    "jorgen": {
+      "firstName": "Jørgen",
+      "lastName": "Hansen",
+      "email": "jorgen.controller@example.com",
+      "salary": 28000.00,
+      "workingHours": 30.0
+    },
+    "updatedJorgen": {
+      "firstName": "Updated Jørgen",
+      "salary": 30000.00,
+      "workingHours": 37.0
+    }
+  }
+}

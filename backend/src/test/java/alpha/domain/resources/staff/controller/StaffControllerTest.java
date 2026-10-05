@@ -3,15 +3,16 @@ package alpha.domain.resources.staff.controller;
 import alpha.ATest;
 import alpha.domain.resources.staff.dao.StaffDAO;
 import alpha.domain.resources.staff.entity.Staff;
-import alpha.domain.role.dao.RoleDAO;
-import alpha.domain.role.entity.Role;
 import alpha.domain.role.enums.RoleName;
 import alpha.util.BCryptHash;
+import alpha.testdata.TestDataFactory;
+import alpha.testdata.TestJsonData;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.math.BigDecimal;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,18 +42,14 @@ class StaffControllerTest extends ATest {
             RestAssured
                     .given()
                     .contentType("application/json")
-                    .body("{\"name\":\"STAFF\"}")
+                    .body(TestJsonData.body("role.json", "named", Map.of("name", "STAFF")))
                     .when()
                     .post("/role/")
                     .then()
                     .statusCode(200);
         }
 
-        RoleDAO roleDAO = new RoleDAO(em);
-        Role staffRole = roleDAO.getByName(RoleName.STAFF);
-        if (staffRole == null) {
-            staffRole = roleDAO.create(Role.builder().name(RoleName.STAFF).build());
-        }
+        new TestDataFactory(em).role(RoleName.STAFF);
     }
 
     // _________________________________________________________________________________________________________________
@@ -62,23 +59,14 @@ class StaffControllerTest extends ATest {
         Integer staffId = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("""
-                        {
-                          "first_name": "Anna",
-                          "last_name": "Jensen",
-                          "email": "anna.controller@example.com",
-                          "phone": "+4512345678",
-                          "salary": 25000.00,
-                          "working_hours_weekly": 37.5
-                        }
-                        """)
+                .body(TestJsonData.bodyFromSample("staff.json", "create", "kamilla", Map.of()))
                 .when()
                 .post("/staff/")
                 .then()
                 .statusCode(200)
                 .body("status", equalTo("success"))
-                .body("data.first_name", equalTo("Anna"))
-                .body("data.last_name", equalTo("Jensen"))
+                .body("data.first_name", equalTo("Kamilla"))
+                .body("data.last_name", equalTo("Andersen"))
                 .body("data.role", equalTo("STAFF"))
                 .body("data.password_hashed", nullValue())
                 .extract()
@@ -97,15 +85,7 @@ class StaffControllerTest extends ATest {
         Integer staffId = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("""
-                        {
-                          "first_name": "Mikkel",
-                          "last_name": "Hansen",
-                          "email": "mikkel.controller@example.com",
-                          "salary": 28000.00,
-                          "working_hours_weekly": 30.0
-                        }
-                        """)
+                .body(TestJsonData.bodyFromSample("staff.json", "createWithoutPhone", "jorgen", Map.of()))
                 .when()
                 .post("/staff/")
                 .then()
@@ -118,19 +98,13 @@ class StaffControllerTest extends ATest {
         RestAssured
                 .given()
                 .contentType("application/json")
-                .body("""
-                        {
-                          "first_name": "Updated Mikkel",
-                          "salary": 30000.00,
-                          "working_hours_weekly": 37.0
-                        }
-                        """)
+                .body(TestJsonData.bodyFromSample("staff.json", "update", "updatedJorgen", Map.of()))
                 .when()
                 .put("/staff/" + staffId)
                 .then()
                 .statusCode(200)
                 .body("status", equalTo("success"))
-                .body("data.first_name", equalTo("Updated Mikkel"))
+                .body("data.first_name", equalTo("Updated J\u00f8rgen"))
                 .body("data.salary", equalTo(30000.00F))
                 .body("data.working_hours_weekly", equalTo(37.0F))
                 .body("data.role", equalTo("STAFF"));

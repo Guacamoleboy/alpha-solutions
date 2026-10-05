@@ -1,0 +1,123 @@
+{
+  "create": {
+    "firstName": "$firstName",
+    "lastName": "$lastName",
+    "email": "$email",
+    "passwordHashed": "$password"
+  },
+  "update": {
+    "first_name": "$firstName"
+  },
+  "passwordUpdate": {
+    "current_password": "$currentPassword",
+    "new_password": "$newPassword",
+    "confirm_password": "$newPassword"
+  },
+  "samples": {
+    "jonas": {
+      "firstName": "Jonas",
+      "lastName": "Nielsen",
+      "emailPrefix": "jonas.nielsen",
+      "role": "MEMBER",
+      "passwordHashed": "hashedPassword",
+      "requestPassword": "Password12345!",
+      "phone": "+4512345001",
+      "dateOfBirth": "1990-05-15",
+      "gender": "Male",
+      "lastPlayed": "2026-09-11"
+    },
+    "tine": {
+      "firstName": "Tine",
+      "lastName": "Jensen",
+      "emailPrefix": "tine.jensen",
+      "role": "MEMBER",
+      "passwordHashed": "hashedPassword",
+      "requestPassword": "Password12345!",
+      "phone": "+4512345002",
+      "dateOfBirth": "1995-08-20",
+      "gender": "Female",
+      "lastPlayed": null
+    },
+    "dennis": {
+      "firstName": "Dennis",
+      "lastName": "Hansen",
+      "emailPrefix": "dennis.hansen",
+      "role": "MEMBER",
+      "passwordHashed": "hashedPassword",
+      "requestPassword": "Password12345!",
+      "phone": null,
+      "dateOfBirth": null,
+      "gender": null,
+      "lastPlayed": null
+    },
+    "kamilla": {
+      "firstName": "Kamilla",
+      "lastName": "Lund",
+      "emailPrefix": "kamilla.lund",
+      "role": "MEMBER",
+      "passwordHashed": "hashedPassword",
+      "requestPassword": "Password12345!",
+      "phone": null,
+      "dateOfBirth": null,
+      "gender": null,
+      "lastPlayed": null
+    },
+    "jorgen": {
+      "firstName": "Jørgen",
+      "lastName": "Andersen",
+      "emailPrefix": "jorgen.andersen",
+      "role": "MEMBER",
+      "passwordHashed": "hashedPassword",
+      "requestPassword": "Password12345!",
+      "phone": null,
+      "dateOfBirth": null,
+      "gender": null,
+      "lastPlayed": null
+    },
+    "passwordChange": {
+      "firstName": "Tine",
+      "lastName": "Jensen",
+      "emailPrefix": "tine.password-change",
+      "role": "MEMBER",
+      "password": "OldPassword123!",
+      "phone": null,
+      "dateOfBirth": null,
+      "gender": null,
+      "lastPlayed": null
+    },
+    "wrongPassword": {
+      "firstName": "Dennis",
+      "lastName": "Hansen",
+      "emailPrefix": "dennis.wrong-password",
+      "role": "MEMBER",
+      "password": "CorrectPassword123!",
+      "wrongPassword": "WrongPassword123!",
+      "phone": null,
+      "dateOfBirth": null,
+      "gender": null,
+      "lastPlayed": null
+    },
+    "nullOptionalFields": {
+      "firstName": "Kamilla",
+      "lastName": "Lund",
+      "emailPrefix": "kamilla.null-fields",
+      "role": "MEMBER",
+      "passwordHashed": "hashedPassword",
+      "phone": null,
+      "dateOfBirth": null,
+      "gender": null,
+      "lastPlayed": null
+    },
+    "eventMember": {
+      "firstName": "Kamilla",
+      "lastName": "Lund",
+      "emailPrefix": "event.member",
+      "role": "MEMBER",
+      "passwordHashed": "hashedPassword!67",
+      "phone": null,
+      "dateOfBirth": null,
+      "gender": null,
+      "lastPlayed": null
+    }
+  }
+}
