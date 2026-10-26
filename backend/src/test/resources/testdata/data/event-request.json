@@ -1,0 +1,10 @@
+{
+  "samples": {
+    "standard": {
+      "name": "Club Event",
+      "guestCount": 4,
+      "requestedCourtCount": 1,
+      "equipmentRequired": false
+    }
+  }
+}

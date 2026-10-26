@@ -3,6 +3,7 @@ package alpha.domain.role.dao;
 import alpha.ATest;
 import alpha.domain.role.entity.Role;
 import alpha.domain.role.enums.RoleName;
+import alpha.testdata.TestDataFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,11 +25,7 @@ class RoleDAOTest extends ATest {
 
     @Test
     void shouldFindRoleByName() {
-        Role staffRole = roleDAO.getByName(RoleName.STAFF);
-
-        if (staffRole == null) {
-            staffRole = roleDAO.create(Role.builder().name(RoleName.STAFF).build());
-        }
+        Role staffRole = new TestDataFactory(em).role(RoleName.STAFF);
 
         Role foundRole = roleDAO.getByName(RoleName.STAFF);
 

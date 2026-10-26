@@ -1,0 +1,16 @@
+{
+  "create": {
+    "name": "$name",
+    "active": true
+  },
+  "update": {
+    "description": "$description",
+    "active": "$active"
+  },
+  "samples": {
+    "premium": {
+      "namePrefix": "Premium Membership",
+      "active": true
+    }
+  }
+}

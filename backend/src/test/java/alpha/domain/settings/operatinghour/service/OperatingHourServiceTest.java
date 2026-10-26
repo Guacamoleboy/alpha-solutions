@@ -2,8 +2,10 @@ package alpha.domain.settings.operatinghour.service;
 
 import alpha.ATest;
 import alpha.domain.settings.operatinghour.entity.OperatingHour;
+import alpha.testdata.TestDataFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import alpha.testdata.domain.OperatingHourProfile;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,19 +28,13 @@ class OperatingHourServiceTest extends ATest {
 
     @Test
     void shouldFindOperatingHourByDayOfWeek() {
-        OperatingHour mondayHours = OperatingHour.builder()
-                .dayOfWeek(DayOfWeek.MONDAY)
-                .openTime(LocalTime.of(8, 0))
-                .closeTime(LocalTime.of(21, 0))
-                .closed(false)
-                .build();
-        operatingHourService.create(mondayHours);
+        OperatingHour mondayHours = new TestDataFactory(em).operatingHour(OperatingHourProfile.MONDAY);
 
         OperatingHour foundHours = operatingHourService.getByDayOfWeek(DayOfWeek.MONDAY);
 
         assertNotNull(foundHours);
         assertEquals(mondayHours.getId(), foundHours.getId());
-        assertEquals(LocalTime.of(8, 0), foundHours.getOpenTime());
+        assertEquals(mondayHours.getOpenTime(), foundHours.getOpenTime());
     }
 
 }

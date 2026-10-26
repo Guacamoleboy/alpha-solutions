@@ -2,9 +2,11 @@ package alpha.domain.court.controller;
 
 import alpha.ATest;
 import io.restassured.RestAssured;
+import alpha.testdata.TestJsonData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.UUID;
+import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 
 class CourtControllerTest extends ATest {
@@ -28,13 +30,8 @@ class CourtControllerTest extends ATest {
         Integer courtId = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("""
-                        {
-                          "name": "%s",
-                          "active": true,
-                          "required_membership_id": %d
-                        }
-                        """.formatted("Test Court " + UUID.randomUUID(), firstMembershipId))
+                .body(TestJsonData.body("court.json", "createWithMembership", Map.of(
+                        "name", "Test Court " + UUID.randomUUID(), "membershipId", firstMembershipId)))
                 .when()
                 .post("/court/")
                 .then()
@@ -47,7 +44,7 @@ class CourtControllerTest extends ATest {
         RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{\"required_membership_id\":%d}".formatted(secondMembershipId))
+                .body(TestJsonData.body("court.json", "updateMembership", Map.of("membershipId", secondMembershipId)))
                 .when()
                 .put("/court/" + courtId)
                 .then()
@@ -62,7 +59,7 @@ class CourtControllerTest extends ATest {
         return RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{\"name\":\"%s\",\"active\":true}".formatted(name))
+                .body(TestJsonData.body("membership.json", "create", Map.of("name", name)))
                 .when()
                 .post("/membership/")
                 .then()

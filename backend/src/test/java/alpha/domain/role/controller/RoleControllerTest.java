@@ -5,8 +5,10 @@ import alpha.domain.role.dao.RoleDAO;
 import alpha.domain.role.entity.Role;
 import alpha.domain.role.enums.RoleName;
 import io.restassured.RestAssured;
+import alpha.testdata.TestJsonData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 
 class RoleControllerTest extends ATest {
@@ -32,7 +34,7 @@ class RoleControllerTest extends ATest {
             Integer roleId = RestAssured
                     .given()
                     .contentType("application/json")
-                    .body("{\"name\":\"STAFF\"}")
+                    .body(TestJsonData.body("role.json", "named", Map.of("name", "STAFF")))
                     .when()
                     .post("/role/")
                     .then()
@@ -47,7 +49,7 @@ class RoleControllerTest extends ATest {
         RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{\"name\":\"STAFF\"}")
+                .body(TestJsonData.body("role.json", "named", Map.of("name", "STAFF")))
                 .when()
                 .put("/role/" + staffRole.getId())
                 .then()

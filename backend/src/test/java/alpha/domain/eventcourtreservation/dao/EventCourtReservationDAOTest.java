@@ -2,7 +2,7 @@ package alpha.domain.eventcourtreservation.dao;
 
 import alpha.ATest;
 import alpha.domain.court.entity.Court;
-import alpha.domain.eventrequest.EventTestData;
+import alpha.testdata.domain.EventTestData;
 import alpha.domain.eventrequest.entity.EventRequest;
 import alpha.domain.eventrequest.enums.EventRequestStatus;
 import alpha.domain.member.entity.Member;

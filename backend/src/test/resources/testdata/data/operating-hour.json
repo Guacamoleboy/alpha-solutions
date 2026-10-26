@@ -1,0 +1,27 @@
+{
+  "create": {
+    "dayOfWeek": "$dayOfWeek",
+    "openTime": "$openTime",
+    "closeTime": "$closeTime",
+    "closed": "$closed"
+  },
+  "bookingController": {
+    "dayOfWeek": "$dayOfWeek",
+    "openTime": "00:00:00",
+    "closeTime": "23:59:59",
+    "closed": false
+  },
+  "samples": {
+    "monday": {
+      "dayOfWeek": "MONDAY",
+      "openTime": "08:00:00",
+      "closeTime": "21:00:00",
+      "closed": false
+    },
+    "eventOpen": {
+      "openTime": "08:00:00",
+      "closeTime": "22:00:00",
+      "closed": false
+    }
+  }
+}
