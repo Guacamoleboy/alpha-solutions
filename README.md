@@ -6,6 +6,11 @@ Project created by Jonas for the 4th Term of AP Computer Science Denmark.
 
 ---
 
+> [!IMPORTANT]  
+> School Project has been completed and accepted by PO + Alpha Solutions.
+
+---
+
 > [!NOTE]  
 > All files in the **[main]** branch are final
 
